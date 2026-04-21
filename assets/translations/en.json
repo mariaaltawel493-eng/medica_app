@@ -1,3 +1,42 @@
 {
-    "welcome":"ًWelcome"
+    
+        "Welcome back!": "Welcome back!",
+        "Enter your Phone number": "Enter your Phone number",
+        "Enter your password": "Enter your password",
+        "Forgot your password?": "Forgot your password?",
+        "Log in": "Log in",
+        "You don’t have an account?": "You don’t have an account?",
+        "make a new one": "Make a new one",
+        "يرجى إدخال رقم الهاتف": "Please enter your phone number",
+        "رقم الهاتف يجب ان يكون 10 أرقام": "Phone number must be 10 digits",
+        "يرجى إدخال كلمة المرور": "Please enter your password",
+        "كلمة المرور قصيرة جداً": "Password is too short",
+        "حدث خطأ ما، يرجى المحاولة لاحقاً": "Something went wrong, please try again later",
+        "رقم الهاتف أو كلمة المرور غير صحيحة": "Invalid phone number or password",
+        "لا يوجد اتصال بالإنترنت، تأكد من الشبكة": "No internet connection, check your network",
+        "يرجى ملء جميع الحقول المطلوبة": "Please fill in all required fields",
+        "هذا الحساب غير موجود": "This account does not exist",
+        
+        "phone_already_exists": "Phone number already registered",
+        "invalid_phone_number": "Invalid phone number",
+        "connection_error": "Network connection error",
+        "unknown_error": "An unexpected error occurred",
+
+
+                    
+        "Welcome to Medica!":"Welcome to Medica!",
+        "Join our community for a healthier life!":"Join our community for a healthier life!",
+        "Continue":"Continue",
+
+        "We sent you a verification code": "We sent you a verification code",
+        "Resend Code": "Resend Code",
+        "Didn't receive a code? Resend in": "Didn't receive a code? Resend in",
+    
+        "Please enter the full 6-digit code": "Please enter the full 6-digit code",
+      
+        "otp_expired": "OTP has expired, please request a new one",
+        "invalid_otp": "Invalid verification code",
+        "too_many_requests": "Too many requests, try again later",
+        "server_error": "Something went wrong, please try again later"
+      
 }

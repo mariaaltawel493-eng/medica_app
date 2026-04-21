@@ -1,0 +1,21 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+
+class ImagePickerHelper {
+  static final ImagePicker picker = ImagePicker();
+  static Future<File?> picImageFromGallery() async {
+    try {
+      final XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+      );
+      if (pickedFile != null) {
+        return File(pickedFile.path); //بترجع الصورة ك File
+      }
+    } catch (e) {
+      print("Error picking image:$e");
+    }
+    return null;
+  }
+}
