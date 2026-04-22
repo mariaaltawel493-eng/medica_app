@@ -1,43 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 class Appsnackbar {
   static void showError(BuildContext context, String message) {
-    // أولاً: نمسح أي رسالة قديمة عشان ما يتراكموا
-    ScaffoldMessenger.of(context).clearMaterialBanners();
-
-    // ثانياً: نعرض البانر في الأعلى
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      MaterialBanner(
-        elevation: 0,
-        backgroundColor: Colors.redAccent,
-        content: Row(
-          children: [
-            const Icon(Icons.error_outline, color: Colors.white),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ),
-          ],
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.error(
+        message: message,
+        backgroundColor: const Color(0xFFFF5252), // أحمر هادئ واحترافي
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+          fontSize: 14,
         ),
-        actions: [
-          // لازم يكون في زر إغلاق أو نتركه فاضي بس فلاتر بيطلبه
-          TextButton(
-            onPressed: () =>
-                ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-            child: const Icon(Icons.close, color: Colors.white),
-          ),
-        ],
       ),
+      displayDuration: const Duration(seconds: 2), // بتختفي لحالها بعد ثانيتين
     );
+  }
 
-    // ثالثاً: نخليه يختفي تلقائياً بعد 3 ثواني
-    Future.delayed(const Duration(seconds: 3), () {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-      }
-    });
+  static void showSuccess(BuildContext context, String message) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.success(
+        message: message,
+        backgroundColor: const Color(0xFF4CAF50), // أخضر مريح للعين
+      ),
+      displayDuration: const Duration(seconds: 2),
+    );
   }
 }

@@ -61,8 +61,15 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                 if (state is RegisterOtpsuccess) {
                   Navigator.pushNamed(context, "new_pass");
                 } else if (state is AuthBlocError) {
+                  String errorkey = "error.something_wrong".tr();
                   print("  من اسيرفر خطأ :${state.message}");
-                  Appsnackbar.showError(context, state.message.tr());
+                  if (state.message.contains("Invalid") ||
+                      state.message.contains("wrong")) {
+                    errorkey = "otp.invalid_code";
+                  } else if (state.message.contains("Network")) {
+                    errorkey = "errors.no_internet";
+                  }
+                  Appsnackbar.showError(context, errorkey.tr());
                 }
               },
               builder: (context, state) {
@@ -84,7 +91,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          "OTP Code Verification".tr(),
+                          "otp.title".tr(),
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -101,7 +108,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
 
                     // 2. النص الوصفي تحت العنوان
                     Text(
-                      "${"Code has been sent to".tr()} +1 111 **99",
+                      "${"otp.sent_to".tr()} +1 111 **99",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -128,8 +135,8 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                           : null,
                       child: Text(
                         _start == 0
-                            ? "Resend Code".tr()
-                            : "${"Resend code in".tr()} ${_start}s",
+                            ? "otp.resend_button".tr()
+                            : "${"otp.resend_text".tr()} ${_start}s",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -145,7 +152,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                     state is AuthBlocLoading
                         ? const Center(child: CircularProgressIndicator())
                         : AppButton(
-                            text: "Verify".tr(),
+                            text: "otp.verify_button".tr(),
                             onPressed: () {
                               print("Button pressed");
                               if (otpController.text.length == 6) {
@@ -158,7 +165,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                               } else {
                                 Appsnackbar.showError(
                                   context,
-                                  'Please enter the full 6-digit code'.tr(),
+                                  'otp.error_incomplete'.tr(),
                                 );
                               }
                             },

@@ -40,10 +40,8 @@ class NewPassScreenstate extends State<NewPassScreen> {
               // حالة النجاح من البلوك
               AppAlerts.showResultDialog(
                 context: context,
-                title: "Congratulion!".tr(),
-                subtitle:
-                    "Your accoount is ready to use.You will be redirected to the Home page"
-                        .tr(),
+                title: "new_password.success_title".tr(),
+                subtitle: "new_password.success_message".tr(),
                 type: DialogType.success,
                 onSuccessFinished: () {
                   Navigator.pushNamedAndRemoveUntil(
@@ -54,6 +52,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                 },
               );
             } else if (state is AuthBlocError) {
+              print("SERVER ERROR LOG ${state.message}");
               Appsnackbar.showError(context, state.message.tr());
             }
           },
@@ -80,11 +79,13 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           ),
                           const SizedBox(width: 16),
                           Text(
-                            "Create New Password".tr(),
+                            "new_password.title".tr(),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : Colors.black,
+                              color: isDark
+                                  ? AppColors.darktextPrimary
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -101,18 +102,20 @@ class NewPassScreenstate extends State<NewPassScreen> {
 
                       const SizedBox(height: 30),
                       Text(
-                        "Create Your New Password".tr(),
+                        "new_password.instruction".tr(),
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: isDark
+                              ? AppColors.darktextSecondary
+                              : AppColors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 24),
 
                       AppTextField(
                         controller: passwordController,
-                        hintText: "Password".tr(),
+                        hintText: "new_password.".tr(),
                         isPassword: !isPasswordVisible,
                         prefixIcon: Icons.lock,
                         suffixIcon: IconButton(
@@ -128,10 +131,9 @@ class NewPassScreenstate extends State<NewPassScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return "Please enter password".tr();
+                            return "validation.password_required".tr();
                           if (value.length < 8)
-                            return "Password must be at least 8 characters"
-                                .tr();
+                            return "validation.password_short".tr();
                           return null;
                         },
                       ),
@@ -140,7 +142,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
 
                       AppTextField(
                         controller: confirmPasswordController,
-                        hintText: "Confirm Password".tr(),
+                        hintText: "new_password.Confirm_Password".tr(),
                         isPassword: !isConfirmVisible,
                         prefixIcon: Icons.lock,
                         suffixIcon: IconButton(
@@ -156,7 +158,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                         ),
                         validator: (value) {
                           if (value != passwordController.text)
-                            return "Passwords do not match".tr();
+                            return "validation.password_mismatch".tr();
                           return null;
                         },
                       ),
@@ -172,7 +174,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                             onChanged: (v) => setState(() => rememberMe = v!),
                           ),
                           Text(
-                            "Remember me".tr(),
+                            "new_password.remember_me".tr(),
                             style: TextStyle(
                               color: isDark ? Colors.white : Colors.black,
                             ),
@@ -189,7 +191,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                               ),
                             )
                           : AppButton(
-                              text: "Continue".tr(),
+                              text: "new_password.continue_button".tr(),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBlocBloc>().add(

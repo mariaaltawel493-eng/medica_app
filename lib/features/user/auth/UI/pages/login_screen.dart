@@ -2,9 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as sharedPrefHelper;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/data/models/login_request_model.dart';
@@ -45,20 +47,29 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pushReplacementNamed(context, "/home");
           } else if (state is AuthBlocError) {
             print("error from server:${state.message}");
-            String errorMessage = "حدث خطأ ما، يرجى المحاولة لاحقاً"
-                .tr(); // رسالة افتراضية
-            if (state.message.contains("Invalid credentials")) {
-              errorMessage = "رقم الهاتف أو كلمة المرور غير صحيحة".tr();
-            } else if (state.message.contains("Network is unreachable")) {
-              errorMessage = "لا يوجد اتصال بالإنترنت، تأكد من الشبكة".tr();
-            } else if (state.message.contains("required")) {
-              errorMessage = "يرجى ملء جميع الحقول المطلوبة".tr();
-            } else if (state.message.contains("not found")) {
-              errorMessage = "هذا الحساب غير موجود".tr();
+            String errorkey;
+            bool isCritical = true;
+            if (state.message.contains("not found")) {
+              errorkey = "errors.user_not_found".tr();
+            } else if (state.message.contains("Invalid credentials")) {
+              errorkey = "errors.unathorized".tr();
+            } else if (state.message.contains("Networ") ||
+                state.message.contains("connection")) {
+              errorkey = "errors.no_internet".tr();
+              isCritical = false;
+            } else {
+              errorkey = "errors.unknown".tr();
             }
-
-            // استدعاء السناك بار اللي جهزناه
-            Appsnackbar.showError(context, errorMessage.tr());
+            if (isCritical) {
+              AppAlerts.showResultDialog(
+                context: context,
+                title: "errors.error_title".tr(),
+                subtitle: errorkey.tr(),
+                type: DialogType.error,
+              );
+            } else {
+              Appsnackbar.showError(context, errorkey.tr());
+            }
           }
         },
         child: Padding(
@@ -76,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
                   Text(
-                    "Welcome back!".tr(),
+                    "auth.welcome_back".tr(),
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -87,29 +98,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
                   AppTextField(
-                    hintText: "Enter your Phone number".tr(),
+                    hintText: "auth.phone_hint".tr(),
                     prefixIcon: Icons.call_outlined,
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return "يرجى إدخال رقم الهاتف".tr();
+                        return "validation.phone_required".tr();
                       if (value.length < 10)
-                        return "رقم الهاتف يجب ان يكون 10 أرقام".tr();
+                        return "validation.phone_invalid".tr();
                       return null;
                     },
                   ),
                   const SizedBox(height: 20),
                   AppTextField(
-                    hintText: "Enter your password".tr(),
+                    hintText: "auth.password_hint".tr(),
                     prefixIcon: Icons.lock_outlined,
                     isPassword: true,
                     controller: passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty)
-                        return "يرجى إدخال كلمة المرور".tr();
+                        return "validation.password_required".tr();
                       if (value.length < 8)
-                        return "كلمة المرور قصيرة جداً".tr();
+                        return "validation.password_short".tr();
                       return null;
                     },
                   ),
@@ -120,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(context, 'reset_password');
                       },
                       child: Text(
-                        "Forgot your password?".tr(),
+                        "auth.forgot_password".tr(),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -141,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return const Center(child: CircularProgressIndicator());
                       }
                       return AppButton(
-                        text: "Log in".tr(),
+                        text: "auth.login_button".tr(),
                         onPressed: () {
                           if (formkey.currentState!.validate()) {
                             context.read<AuthBlocBloc>().add(
@@ -163,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "You don’t have an account?".tr(),
+                        "auth.no_account".tr(),
                         style: TextStyle(
                           color: isDark
                               ? AppColors.darktextPrimary
@@ -175,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushNamed(context, '/register');
                         },
                         child: Text(
-                          "make a new one".tr(),
+                          "auth.create_new".tr(),
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,

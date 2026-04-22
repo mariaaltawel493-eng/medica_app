@@ -75,7 +75,17 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                 if (state is RegisterOtpsuccess) {
                   Navigator.pushNamed(context, 'regi_password');
                 } else if (state is AuthBlocError) {
-                  Appsnackbar.showError(context, state.message.tr());
+                  print("OTP_ERROR_LOG:${state.message}");
+                  String errorkey = "errors.something_wrong";
+                  if (state.message.contains("Invalid") ||
+                      state.message.contains("wrong") ||
+                      state.message.contains("expired")) {
+                    errorkey = "otp.invalid_code";
+                  } else if (state.message.contains("Network") ||
+                      state.message.contains("connection")) {
+                    errorkey = "errors.no_internet";
+                  }
+                  Appsnackbar.showError(context, errorkey.tr());
                 }
               },
               builder: (context, state) {
@@ -88,7 +98,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                     ),
                     const SizedBox(height: 40),
                     Text(
-                      "Welcome to Medica!".tr(),
+                      "otp.welcome".tr(),
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -99,7 +109,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      "We sent you a verification code".tr(),
+                      "otp.sent_code".tr(),
                       style: TextStyle(
                         fontSize: 14,
                         color: isDark
@@ -122,8 +132,8 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                           : null,
                       child: Text(
                         _start == 0
-                            ? "Resend Code".tr()
-                            : "${"Didn't receive a code? Resend in".tr()} : ${_start}s",
+                            ? "otp.resend_button".tr()
+                            : "${"otp.not_recevied".tr()} : ${_start}s",
                         style: TextStyle(
                           fontSize: 14,
                           color: _start == 0 ? AppColors.primary : Colors.grey,
@@ -137,7 +147,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                       const Center(child: CircularProgressIndicator())
                     else
                       AppButton(
-                        text: "Continue".tr(),
+                        text: "auth.continue_button".tr(),
                         onPressed: () {
                           if (otpController.text.length == 6) {
                             context.read<AuthBlocBloc>().add(
@@ -149,7 +159,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                           } else {
                             Appsnackbar.showError(
                               context,
-                              'Please enter the full 6-digit code'.tr(),
+                              'otp.error_incomplete'.tr(),
                             );
                           }
                         },

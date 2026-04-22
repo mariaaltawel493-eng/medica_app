@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/Image_picker_helper.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
@@ -37,7 +39,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: Text("Fill Your Profile".tr())),
+      appBar: AppBar(title: Text("profile.fill_title".tr())),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Form(
@@ -106,11 +108,11 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                 const SizedBox(height: 30), // مسافة بين الصورة وأول حقل
                 AppTextField(
                   controller: firstnameController,
-                  hintText: "First Name".tr(),
+                  hintText: "profile.first_name".tr(),
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return "Please enter your first name".tr();
+                      return "validation.first_name_req".tr();
                     return null;
                   },
                 ),
@@ -119,11 +121,11 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
 
                 AppTextField(
                   controller: lastnameController,
-                  hintText: "Last Name".tr(),
+                  hintText: "profile.last_name".tr(),
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return "Please enter your last name".tr();
+                      return "validation.last_name_req".tr();
                     return null;
                   },
                 ),
@@ -132,16 +134,16 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
 
                 AppTextField(
                   controller: emailController,
-                  hintText: "Email".tr(),
+                  hintText: "profile.email".tr(),
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your email".tr();
+                      return "validation.email_req".tr();
                     }
 
                     if (!value.contains('@') || !value.contains('.')) {
-                      return "Please enter a valid email address".tr();
+                      return "validation.email_invalid".tr();
                     }
                     return null;
                   },
@@ -151,7 +153,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
 
                 AppTextField(
                   controller: dobController,
-                  hintText: "Date of Birth".tr(),
+                  hintText: "profile.dob".tr(),
                   prefixIcon: Icons.calendar_month,
                   readOnly: true,
                   onTap: () async {
@@ -160,8 +162,6 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                       initialDate: DateTime(2000),
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
-
-                      // 2. هون الشغل كله لدعم الثيمين (الخلفية والألوان)
                       builder: (context, child) {
                         return Theme(
                           data: Theme.of(context).copyWith(
@@ -192,8 +192,6 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                             dialogBackgroundColor: isDark
                                 ? AppColors.darktextfield
                                 : Colors.white,
-
-                            // تعديل ألوان أزرار "OK" و "Cancel"
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 foregroundColor:
@@ -217,7 +215,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please select your date of birth".tr();
+                      return "validation.dob_req".tr();
                     }
                     return null;
                   },
@@ -245,7 +243,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              "Male".tr(),
+                              "profile.male".tr(),
                               style: TextStyle(
                                 color: selectGender == "Male"
                                     ? Colors.white
@@ -277,7 +275,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              "Female".tr(),
+                              "profile.female".tr(),
                               style: TextStyle(
                                 color: selectGender == "Female"
                                     ? Colors.white
@@ -296,12 +294,29 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                 BlocConsumer<AuthBlocBloc, AuthBlocState>(
                   listener: (context, state) {
                     if (state is AuthBlocSuccess) {
-                      Navigator.pushNamed(context, '/home');
-                    } else if (State is AuthBlocError) {
-                      Appsnackbar.showError(
-                        context,
-                        (state as AuthBlocError).message.tr(),
+                      AppAlerts.showResultDialog(
+                        context: context,
+                        title: "profile.congrats".tr(),
+                        subtitle: "profile.account_created".tr(),
+                        type: DialogType.success,
+                        onSuccessFinished: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/home',
+                            (route) => false,
+                          );
+                        },
                       );
+                    } else if (state is AuthBlocError) {
+                      print("PROFILE_LOG:${state.message}");
+                      String errorkey = "errors.something_wrong";
+                      if (state.message.contains("email") &&
+                          state.message.contains("taken")) {
+                        errorkey = "errors.email_exists";
+                      } else if (state.message.contains("Network")) {
+                        errorkey = "errors.no_internet";
+                      }
+                      Appsnackbar.showError(context, errorkey.tr());
                     }
                   },
                   builder: (context, state) {
@@ -309,13 +324,13 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                       return const Center(child: CircularProgressIndicator());
                     }
                     return AppButton(
-                      text: "Continue".tr(),
+                      text: "auth.continue_button".tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           if (selectGender.isEmpty) {
                             Appsnackbar.showError(
                               context,
-                              'Pleas select your gender'.tr(),
+                              'profile.select_gender'.tr(),
                             );
                             return;
                           }

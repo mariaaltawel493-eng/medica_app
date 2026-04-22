@@ -56,7 +56,7 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                 ),
                 const SizedBox(height: 32),
                 Text(
-                  "Secure your Account".tr(),
+                  "register_password.title".tr(),
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -67,8 +67,7 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Creat a strong password to prodect your medical records."
-                      .tr(),
+                  "register_password.subtitle".tr(),
                   style: TextStyle(
                     color: isDark
                         ? AppColors.darktextSecondary
@@ -80,7 +79,7 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
 
                 // حقل كلمة السر الأول
                 Text(
-                  "Password".tr(),
+                  "register_password.password_label".tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: isDark
@@ -91,20 +90,20 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                 const SizedBox(height: 8),
                 AppTextField(
                   controller: passwordController,
-                  hintText: "Enter password".tr(),
+                  hintText: "register_password.pass_hint".tr(),
                   prefixIcon: Icons.lock_outline,
                   isPassword: true,
                   validator: (value) {
                     if (value == null || value.isEmpty)
-                      return "يرجى إدخال كلمة المرور".tr();
-                    if (value.length < 6)
-                      return "password must be at least 6 digits".tr();
+                      return "validation.password_required".tr();
+                    if (value.length < 8)
+                      return "validation.password_short".tr();
                   },
                 ),
 
                 const SizedBox(height: 20),
                 Text(
-                  "Confirm Password".tr(),
+                  "register_password.confirm_label".tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: isDark
@@ -115,11 +114,11 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                 const SizedBox(height: 8),
                 AppTextField(
                   controller: confirmPasswordController,
-                  hintText: "Confirm your password".tr(),
+                  hintText: "register_password.confirm_hint".tr(),
                   isPassword: true,
                   prefixIcon: Icons.lock_outline,
                   validator: (val) => val != passwordController.text
-                      ? "Passwords do not match".tr()
+                      ? "validation.password_mismatch".tr()
                       : null,
                 ),
 
@@ -131,7 +130,14 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                       Navigator.pushNamed(context, 'fill_profile');
                       print("password is ${passwordController.text}");
                     } else if (state is AuthBlocError) {
-                      Appsnackbar.showError(context, state.message.tr());
+                      print("LOG:PASSWORD ERROR>>>${state.message}");
+                      String errorkey = "errors.something_wrong".tr();
+                      if (state.message.contains("weak")) {
+                        errorkey = "errors.weak_password";
+                      } else if (state.message.contains("Network")) {
+                        errorkey = "errors.no_internet";
+                      }
+                      Appsnackbar.showError(context, errorkey.tr());
                     }
                   },
                   builder: (context, state) {
@@ -139,7 +145,7 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                       return const Center(child: CircularProgressIndicator());
 
                     return AppButton(
-                      text: "Continue".tr(),
+                      text: "auth.continue_button".tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           context.read<AuthBlocBloc>().add(

@@ -35,7 +35,16 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
           if (state is RegisterPhoneSuccess) {
             Navigator.pushNamed(context, '/otp_view');
           } else if (state is AuthBlocError) {
-            Appsnackbar.showError(context, state.message);
+            print("ERROR_SERVER:${state.message}");
+            String errorkey = "errors.something_wrong".tr();
+            if (state.message.contains("already") ||
+                state.message.contains("exists")) {
+              errorkey = "errors.phone_exists".tr();
+            } else if (state.message.contains("Network") ||
+                state.message.contains("connection")) {
+              errorkey = "errors.no_internet";
+            }
+            Appsnackbar.showError(context, errorkey.tr());
           }
         },
         builder: (context, state) {
@@ -69,7 +78,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        "Welcome to Medica!".tr(),
+                        "auth.welcome_title".tr(),
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -80,7 +89,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "Join our community for a healthier life!".tr(),
+                        "auth.welcome_subtitle".tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -91,15 +100,15 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                       ),
                       const SizedBox(height: 48),
                       AppTextField(
-                        hintText: "Enter your phone number".tr(),
+                        hintText: "auth.phone_hint".tr(),
                         prefixIcon: Icons.call_outlined,
                         controller: phonecontroller,
                         keyboardType: TextInputType.phone,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return "يرجى إدخال رقم الهاتف".tr();
+                            return "validation.phone_required ".tr();
                           if (value.length < 10)
-                            return "رقم الهاتف يجب ان يكون 10 أرقام".tr();
+                            return "validation.phone_invalid".tr();
                           return null;
                         },
                       ),
@@ -112,7 +121,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                             );
                           }
                           return AppButton(
-                            text: "Continue".tr(),
+                            text: "auth.continue_button".tr(),
                             onPressed: () {
                               if (formkey.currentState!.validate()) {
                                 context.read<AuthBlocBloc>().add(
