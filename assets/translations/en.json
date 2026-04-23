@@ -1,4 +1,15 @@
 {
+  "onboarding":{
+    "app_name":"Medica",
+    "skip": "Skip",
+    "next": "Next",
+    "title1": "Easy appointment booking",
+    "desc1": "Book with confidence - Easy to use - Quick Operation",
+    "title2": "Profile Security",
+    "desc2": "Keep a careful record of your health examinations",
+    "title3": "Data Privacy First",
+"desc3": "Your health information is fully encrypted, we ensure the highest levels of security and privacy"
+  },
         "auth": {
           "welcome_back": "Welcome back!",
           "phone_hint": "Enter your Phone number",

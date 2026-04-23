@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/theme/app_theme.dart';
+import 'package:medica_app/features/onboarding/onboarding_screen.dart';
+import 'package:medica_app/features/onboarding/splash_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/fill_profil_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/forgetpassword_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/home_screen.dart';
@@ -64,8 +66,10 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system, // يتبع نظام الموبايل
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
+        '/': (context) => SplashScreen(),
+        '/onboarding': (context) => OnboardingScreen(),
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/register': (context) => RegisterPhoneScreen(),

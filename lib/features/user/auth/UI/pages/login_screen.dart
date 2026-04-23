@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: isDark
-          ? AppColors.darkcardBackground
+          ? AppColors.darkscaffoldBackground
           : AppColors.scaffoldBackground,
       body: BlocListener<AuthBlocBloc, AuthBlocState>(
         listener: (context, state) async {

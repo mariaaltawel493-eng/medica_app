@@ -59,7 +59,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
 
     return Scaffold(
       backgroundColor: isDark
-          ? AppColors.darkcardBackground
+          ? AppColors.darkscaffoldBackground
           : AppColors.scaffoldBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

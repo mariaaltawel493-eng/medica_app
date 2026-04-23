@@ -28,7 +28,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
 
     return Scaffold(
       backgroundColor: isDark
-          ? AppColors.darkcardBackground
+          ? AppColors.darkscaffoldBackground
           : AppColors.scaffoldBackground,
       body: BlocConsumer<AuthBlocBloc, AuthBlocState>(
         listener: (context, state) {
