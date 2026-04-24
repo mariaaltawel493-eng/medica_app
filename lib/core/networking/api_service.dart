@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:medica_app/core/helpers/constants.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
@@ -44,6 +45,26 @@ class ApiService {
       throw Exception('لايوجد اتصال بالإنترنت،يرجى التأكد من الشبكة');
     } on http.ClientException {
       throw Exception("خطأ في الأتصال في السيرفر");
+    } catch (e) {
+      throw Exception("حدث خطأ غير متوقع:${e.toString()}");
+    }
+  }
+
+  ////دالة PUT التي سنحتاجها  لتحديث البروفايل
+  Future<dynamic> put(String endpoint, {Object? body, String? token}) async {
+    try {
+      final response = await http.put(
+        Uri.parse("$baseUrl/$endpoint"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(body),
+      );
+      return _handleResponse(response);
+    } on SocketException {
+      throw Exception('لايوجد اتصال بالإنترنت،يرجى التأكد من الشبكة');
     } catch (e) {
       throw Exception("حدث خطأ غير متوقع:${e.toString()}");
     }

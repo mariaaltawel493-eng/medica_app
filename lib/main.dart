@@ -34,8 +34,11 @@ void main() async {
 
   runApp(
     // 1. الـ BlocProvider هو الأب ليكون متاحاً في كل مكان
-    BlocProvider(
-      create: (context) => AuthBlocBloc(authRepo),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBlocBloc>(create: (context) => AuthBlocBloc(authRepo)),
+      ],
+
       // 2. بداخل الـ child نضع مكتبة الترجمة
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) async {
           if (state is AuthBlocSuccess) {
             await SharedPrefHelper.saveUserToken(state.user.token);
-            Navigator.pushReplacementNamed(context, "/home");
+            Navigator.pushReplacementNamed(context, Routes.HomeScreen);
           } else if (state is AuthBlocError) {
             print("error from server:${state.message}");
             String errorkey;
