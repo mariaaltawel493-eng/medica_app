@@ -3,12 +3,14 @@
     "app_name":"Medica",
     "skip": "Skip",
     "next": "Next",
+   
+   "start":"get_started",
     "title1": "Easy appointment booking",
     "desc1": "Book with confidence - Easy to use - Quick Operation",
     "title2": "Profile Security",
     "desc2": "Keep a careful record of your health examinations",
     "title3": "Data Privacy First",
-"desc3": "Your health information is fully encrypted, we ensure the highest levels of security and privacy"
+    "desc3": "Your health information is fully encrypted, we ensure the highest levels of security and privacy"
   },
         "auth": {
           "welcome_back": "Welcome back!",
@@ -71,7 +73,19 @@
   "female": "Female",
   "select_gender": "Please select your gender",
   "congrats":"Congratulations!",
-  "account_created":"your medical account has been Created success,welcome to Medica"
+  "account_created":"your medical account has been Created success,welcome to Medica",
+
+  "title": "Profile",
+    "medical_records": "Medical Records",
+    "edit_profile": "Edit Profile",
+    "payment": "Payment",
+    "change_password": "Change Password",
+    "language": "Language",
+    "dark_mode": "Dark Mode",
+    "invite_friends": "Invite Friends",
+    "help_center": "Help Center",
+    "logout": "Logout",
+    "retry": "Retry"
 },
 
         "validation": {

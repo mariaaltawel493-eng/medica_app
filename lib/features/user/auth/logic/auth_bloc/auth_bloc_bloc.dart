@@ -18,8 +18,10 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
   final AuthRepo authRepo;
 
   String? phoneNumber;
-  String? otpcode;
+  String? code;
   String? password;
+  String? dateOfBirth;
+  String? gender;
   AuthBlocBloc(this.authRepo) : super(AuthBlocInitial()) {
     //عند استقبال حدث تسجيل الدخول
     on<LoginSubmittedEvent>((event, emit) async {
@@ -58,6 +60,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           code: event.otpCode,
           type: event.type,
         );
+        code = event.otpCode;
         emit(RegisterOtpsuccess());
       } catch (e) {
         emit(AuthBlocError(e.toString()));
@@ -83,11 +86,15 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           phone: phoneNumber!,
           email: event.email,
           password: password!,
+          code: code!,
+          dateOfBirth: event.dateofBirth!,
+          gender: event.gender!,
+          password_confirmation: password!,
         );
         final user = await authRepo.register(Request);
         emit(AuthBlocSuccess(user));
       } catch (e) {
-        emit(AuthBlocError(e.toString()));
+        emit(AuthBlocError(" ERROR_LOG${e.toString()}"));
       }
     });
 

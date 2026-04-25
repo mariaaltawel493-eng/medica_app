@@ -36,10 +36,10 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
             Navigator.pushNamed(context, '/otp_view');
           } else if (state is AuthBlocError) {
             print("ERROR_SERVER:${state.message}");
-            String errorkey = "errors.something_wrong".tr();
+            String errorkey = "errors.something_wrong";
             if (state.message.contains("already") ||
                 state.message.contains("exists")) {
-              errorkey = "errors.phone_exists".tr();
+              errorkey = "errors.phone_exists";
             } else if (state.message.contains("Network") ||
                 state.message.contains("connection")) {
               errorkey = "errors.no_internet";
@@ -106,7 +106,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                         keyboardType: TextInputType.phone,
                         validator: (value) {
                           if (value == null || value.isEmpty)
-                            return "validation.phone_required ".tr();
+                            return "validation.phone_required".tr();
                           if (value.length < 10)
                             return "validation.phone_invalid".tr();
                           return null;

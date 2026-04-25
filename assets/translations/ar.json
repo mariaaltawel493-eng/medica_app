@@ -70,7 +70,19 @@
   "female": "أنثى",
   "select_gender": "يرجى اختيار الجنس",
   "congrats":"تهانينا",
-  "account_created":"تم إنشاء حسابك الطبي بنجاح، أهلا بك في ميديكا"
+  "account_created":"تم إنشاء حسابك الطبي بنجاح، أهلا بك في ميديكا",
+  
+  "title": "الملف الشخصي",
+    "medical_records": "السجلات الطبية",
+    "edit_profile": "تعديل الملف الشخصي",
+    "payment": "الدفع",
+    "change_password": "تغيير كلمة المرور",
+    "language": "اللغة",
+    "dark_mode": "الوضع الداكن",
+    "invite_friends": "دعوة أصدقاء",
+    "help_center": "مركز المساعدة",
+    "logout": "تسجيل الخروج",
+    "retry": "إعادة المحاولة"
 },
     "validation": {
       "phone_required": "يرجى إدخال رقم الهاتف",

@@ -31,6 +31,18 @@ class UserDataModel {
       profile: json['profile'],
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'uuid': uuid,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone': phone,
+      'email': email,
+      'role': role,
+      'profile': profile,
+    };
+  }
 
   // ميزة إضافية: الحصول على الاسم الكامل مباشرة
   String get fullName => "$firstName $lastName";

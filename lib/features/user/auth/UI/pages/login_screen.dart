@@ -8,6 +8,7 @@ import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_Dialod.dart';
+import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/data/models/login_request_model.dart';
@@ -49,28 +50,17 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is AuthBlocError) {
             print("error from server:${state.message}");
             String errorkey;
-            bool isCritical = true;
             if (state.message.contains("not found")) {
-              errorkey = "errors.user_not_found".tr();
+              errorkey = "errors.user_not_found";
             } else if (state.message.contains("Invalid credentials")) {
-              errorkey = "errors.unathorized".tr();
+              errorkey = "errors.unathorized";
             } else if (state.message.contains("Networ") ||
                 state.message.contains("connection")) {
-              errorkey = "errors.no_internet".tr();
-              isCritical = false;
+              errorkey = "errors.no_internet";
             } else {
-              errorkey = "errors.unknown".tr();
+              errorkey = "errors.unknown";
             }
-            if (isCritical) {
-              AppAlerts.showResultDialog(
-                context: context,
-                title: "errors.error_title".tr(),
-                subtitle: errorkey.tr(),
-                type: DialogType.error,
-              );
-            } else {
-              Appsnackbar.showError(context, errorkey.tr());
-            }
+            Appsnackbar.showError(context, errorkey.tr());
           }
         },
         child: Padding(
@@ -150,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   BlocBuilder<AuthBlocBloc, AuthBlocState>(
                     builder: (context, state) {
                       if (state is AuthBlocLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(child: AppLoadingIndicator());
                       }
                       return AppButton(
                         text: "auth.login_button".tr(),

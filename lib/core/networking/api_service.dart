@@ -105,7 +105,7 @@ class ApiService {
     } on SocketException {
       throw Exception('لا يوجد اتصال بالإنترنت، يرجى التأكد من الشبكة');
     } catch (e) {
-      throw Exception("حدث خطأ أثناء رفع البيانات: ${e.toString()}");
+      rethrow;
     }
   }
 

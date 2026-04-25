@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefHelper {
   // مفاتيح ثابتة مشان ما نغلط بكتابة اسمها كل مرة
   static const String _userTokenKey = 'user_token';
+  static const String _onboardingKey = 'onboarding_seen';
 
   // دالة لحفظ التوكن
   static Future<void> setData(String key, dynamic value) async {

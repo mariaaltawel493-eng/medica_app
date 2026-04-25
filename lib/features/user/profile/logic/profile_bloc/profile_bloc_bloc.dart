@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/features/user/profile/data/models/profileRequestModel.dart';
 import 'package:medica_app/features/user/profile/data/repos/profile_repo.dart';
+import 'package:medica_app/features/user/profile/data/repos/profile_repo_mock.dart';
 import 'package:meta/meta.dart';
 
 part 'profile_bloc_event.dart';
@@ -13,7 +14,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
   final ProfileRepo profileRepo;
   ProfileBlocBloc(this.profileRepo) : super(ProfileBlocInitial()) {
     on<FetchProfileDataEvent>((event, emit) async {
-      emit(ProfileLoding());
+      emit(ProfileLoading());
       try {
         final userModel = await profileRepo.getprofile();
         if (userModel.success) {
@@ -26,7 +27,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
       }
     });
     on<UpdateProfileEvent>((event, emit) async {
-      emit(ProfileLoding());
+      emit(ProfileLoading());
       try {
         final userModel = await profileRepo.UpdateProfile(event.requestModel);
         if (userModel.success) {
@@ -40,7 +41,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     });
 
     on<UpdateImageEvent>((event, emit) async {
-      emit(ProfileLoding());
+      emit(ProfileLoading());
       try {
         final userModel = await profileRepo.UpdateProfileImage(event.imageFile);
         if (userModel.success) {
@@ -55,7 +56,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
 
     on<UpdatePhoneEvent>((event, emit) async {
       try {
-        final userModel = await profileRepo.UpdatePhone(event.phomeNumber);
+        final userModel = await profileRepo.UpdatePhone(event.phoneNumber);
         if (userModel.success) {
           emit(ProfileUpdateSuccess(userModel.message));
         } else {

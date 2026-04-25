@@ -50,23 +50,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           }
           if (state is AuthBlocError) {
             String errorKey = "errors.something_wrong";
-            bool isCritical = false;
+
             if (state.message.contains("not found")) {
               errorKey = "errors.user_not_found";
-              isCritical = true;
             } else if (state.message.contains("Network")) {
               errorKey = "errors.no_internet";
             }
-            if (isCritical) {
-              AppAlerts.showResultDialog(
-                context: context,
-                title: "errors.error_title".tr(),
-                subtitle: errorKey.tr(),
-                type: DialogType.error,
-              );
-            } else {
-              Appsnackbar.showError(context, errorKey.tr());
-            }
+            Appsnackbar.showError(context, errorKey.tr());
           }
         },
         builder: (context, state) {

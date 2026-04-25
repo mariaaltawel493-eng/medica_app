@@ -227,16 +227,16 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                     // خيار ذكر (Male)
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => selectGender = "Male"),
+                        onTap: () => setState(() => selectGender = "male"),
                         child: Container(
                           height: 55,
                           decoration: BoxDecoration(
-                            color: selectGender == "Male"
+                            color: selectGender == "male"
                                 ? AppColors.primary
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: selectGender == "Male"
+                              color: selectGender == "male"
                                   ? AppColors.primary
                                   : Colors.grey.shade400,
                             ),
@@ -245,7 +245,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                             child: Text(
                               "profile.male".tr(),
                               style: TextStyle(
-                                color: selectGender == "Male"
+                                color: selectGender == "male"
                                     ? Colors.white
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -259,16 +259,16 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                     // خيار أنثى (Female)
                     Expanded(
                       child: GestureDetector(
-                        onTap: () => setState(() => selectGender = "Female"),
+                        onTap: () => setState(() => selectGender = "female"),
                         child: Container(
                           height: 55,
                           decoration: BoxDecoration(
-                            color: selectGender == "Female"
+                            color: selectGender == "female"
                                 ? AppColors.primary
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: selectGender == "Female"
+                              color: selectGender == "female"
                                   ? AppColors.primary
                                   : Colors.grey.shade400,
                             ),
@@ -277,7 +277,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                             child: Text(
                               "profile.female".tr(),
                               style: TextStyle(
-                                color: selectGender == "Female"
+                                color: selectGender == "female"
                                     ? Colors.white
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold,

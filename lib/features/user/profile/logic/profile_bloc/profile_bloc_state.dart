@@ -5,11 +5,18 @@ sealed class ProfileBlocState {}
 
 final class ProfileBlocInitial extends ProfileBlocState {}
 
-class ProfileLoding extends ProfileBlocState {}
+class ProfileLoading extends ProfileBlocState {}
 
+//نجاح جلب البيانات
 class ProfileSuccess extends ProfileBlocState {
   final UserModel userModel;
   ProfileSuccess(this.userModel);
+}
+
+///نجاح عملية تعديل المعلومات
+class ProfileUpdateSuccess extends ProfileBlocState {
+  final message;
+  ProfileUpdateSuccess(this.message);
 }
 
 class ProfileError extends ProfileBlocState {

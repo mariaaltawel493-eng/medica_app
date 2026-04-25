@@ -20,6 +20,6 @@ class UpdateImageEvent extends ProfileBlocEvent {
 
 //4.حدث تحديث ؤقم الهاتف
 class UpdatePhoneEvent extends ProfileBlocEvent {
-  final String phomeNumber;
-  UpdatePhoneEvent(this.phomeNumber);
+  final String phoneNumber;
+  UpdatePhoneEvent(this.phoneNumber);
 }

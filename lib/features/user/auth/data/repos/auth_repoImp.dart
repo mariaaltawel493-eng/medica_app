@@ -48,28 +48,19 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<UserModel> register(RegisterRequestModel registerRequest) async {
     try {
-      // 1. إرسال البيانات والصورة
-      final streamedResponse = await apiService.postMultipart(
+      // الـ apiService هون بترجع Map جاهز (لأنها نادت _handleResponse داخلياً)
+      final responseData = await apiService.postMultipart(
         endpoint: 'auth/register',
         fields: registerRequest.toMap(),
         imageFile: registerRequest.profileImage,
       );
 
-      // 2. تحويل الرد لقراءة محتواه
-      final response = await http.Response.fromStream(streamedResponse);
-
-      // 3. تحليل الـ JSON
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-
-      //فحص الحالة
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserModel.fromJson(responseData['data']);
-      } else {
-        // رمي رسالة الخطأ القادمة من السيرفر
-        throw responseData['message'] ?? "فشل إنشاء الحساب";
-      }
+      // بما إن الـ ApiService بترمي Exception إذا الـ status كود مو 200
+      // فإذن بمجرد وصولنا لهون يعني العملية نجحت والبيانات Map
+      return UserModel.fromJson(responseData);
     } catch (e) {
-      // إعادة رمي الخطأ للـ Bloc
+      // طباعة الخطأ الحقيقي لنعرف إذا السيرفر رفض شي (مثل gender)
+      print("REGISTER_ERROR_LOG: $e");
       rethrow;
     }
   }

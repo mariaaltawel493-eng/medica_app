@@ -31,7 +31,7 @@ class AppAlerts {
 
     // المنطق الخاص بالاختفاء التلقائي فقط للنجاح
     if (type == DialogType.success) {
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 4), () {
         if (Navigator.canPop(context)) {
           Navigator.pop(context); // إغلاق الديالوغ
           if (onSuccessFinished != null) {

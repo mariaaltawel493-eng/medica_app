@@ -76,7 +76,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                   Navigator.pushNamed(context, 'regi_password');
                 } else if (state is AuthBlocError) {
                   print("OTP_ERROR_LOG:${state.message}");
-                  String errorkey = "errors.something_wrong";
+                  String errorkey = state.message.toLowerCase();
                   if (state.message.contains("Invalid") ||
                       state.message.contains("wrong") ||
                       state.message.contains("expired")) {

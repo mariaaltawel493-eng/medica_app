@@ -1,4 +1,4 @@
-import 'package:medica_app/core/models/patiant_data_model.dart';
+import 'package:medica_app/core/models/patient_data_model.dart';
 
 import 'user_data_model.dart';
 
@@ -22,7 +22,7 @@ class UserModel {
       success: json['success'],
       message: json['message'],
       // استخراج التوكن من داخل حقل data
-      token: json['data']['token'],
+      token: json['data']['token'] ?? "",
       // نمرر جزء "user" للموديل الخاص به
       userData: UserDataModel.fromJson(json['data']['user']),
       // نمرر جزء "patient" للموديل الخاص به
