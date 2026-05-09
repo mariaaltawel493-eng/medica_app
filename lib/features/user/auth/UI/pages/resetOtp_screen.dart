@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/Otp_fields.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
@@ -59,7 +60,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
             child: BlocConsumer<AuthBlocBloc, AuthBlocState>(
               listener: (context, state) {
                 if (state is RegisterOtpsuccess) {
-                  Navigator.pushNamed(context, "new_pass");
+                  Navigator.pushNamed(context, Routes.NewPassScreen);
                 } else if (state is AuthBlocError) {
                   String errorkey = "error.something_wrong".tr();
                   print("  من اسيرفر خطأ :${state.message}");
@@ -108,7 +109,7 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
 
                     // 2. النص الوصفي تحت العنوان
                     Text(
-                      "${"otp.sent_to".tr()} +1 111 **99",
+                      "${"otp.sent_to".tr()} +963 9******",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,

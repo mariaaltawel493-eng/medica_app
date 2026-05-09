@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medica_app/core/networking/api_service.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/features/onboarding/onboarding_screen.dart';
 import 'package:medica_app/features/onboarding/splash_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/fill_profil_screen.dart';
@@ -10,8 +12,14 @@ import 'package:medica_app/features/user/auth/UI/pages/registerOtpView.dart';
 import 'package:medica_app/features/user/auth/UI/pages/register_password_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/register_phone_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/resetOtp_screen.dart';
+import 'package:medica_app/features/user/profile/UI/pages/editprofile_screen.dart';
+import 'package:medica_app/features/user/profile/UI/pages/profile_screen.dart';
+import 'package:medica_app/features/user/profile/data/repos/profile_repoImp.dart';
 
 class AppRouter {
+  // تعريف المستودع هون لتوفير استهلاك الذاكرة
+  final ProfileRepo = ProfileRepoImp(ApiService());
+
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
@@ -36,7 +44,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ResetOtpScreen());
       case '/new_password':
         return MaterialPageRoute(builder: (_) => NewPassScreen());
-
+      case '/profile_screen':
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case Routes.EditProfileScreen:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       default:
         return null;
     }

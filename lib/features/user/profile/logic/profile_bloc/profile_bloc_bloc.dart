@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/features/user/profile/data/models/profileRequestModel.dart';
+import 'package:medica_app/features/user/profile/data/models/userprofileModel.dart';
 import 'package:medica_app/features/user/profile/data/repos/profile_repo.dart';
-import 'package:medica_app/features/user/profile/data/repos/profile_repo_mock.dart';
 import 'package:meta/meta.dart';
 
 part 'profile_bloc_event.dart';
@@ -16,54 +16,65 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     on<FetchProfileDataEvent>((event, emit) async {
       emit(ProfileLoading());
       try {
-        final userModel = await profileRepo.getprofile();
-        if (userModel.success) {
-          emit(ProfileSuccess(userModel));
-        } else {
-          emit(ProfileError(userModel.message));
-        }
+        final profiledata = await profileRepo.getprofile();
+        emit(ProfileSuccess(profiledata));
       } catch (e) {
+        print("ERROR IN PROFILE BLOC:$e");
+        print("STACKTRACE:$StackTrace");
         emit(ProfileError(e.toString()));
       }
     });
     on<UpdateProfileEvent>((event, emit) async {
-      emit(ProfileLoading());
+      emit(UpdateProfileLoding());
       try {
-        final userModel = await profileRepo.UpdateProfile(event.requestModel);
-        if (userModel.success) {
-          emit(ProfileUpdateSuccess(userModel.message));
-        } else {
-          emit(ProfileError(userModel.message));
-        }
+        final response = await profileRepo.UpdateProfile(event.requestModel);
+        final newData = await profileRepo.getprofile();
+
+        emit(UpdateProfileSuccess(response));
+        emit(ProfileSuccess(newData));
       } catch (e) {
         emit(ProfileError(e.toString()));
       }
     });
 
-    on<UpdateImageEvent>((event, emit) async {
+    on<UpdateProfileImageEvent>((event, emit) async {
       emit(ProfileLoading());
       try {
-        final userModel = await profileRepo.UpdateProfileImage(event.imageFile);
-        if (userModel.success) {
-          emit(ProfileUpdateSuccess(userModel.message));
-        } else {
-          emit(ProfileError(userModel.message));
-        }
+        final String responsMessage = await profileRepo.UpdateProfileImage(
+          event.imageFile,
+        );
+        emit(UpdateImageSuccess(responsMessage));
+        add(FetchProfileDataEvent());
+      } catch (e) {
+        emit(UpdateImageError(e.toString()));
+      }
+    });
+
+    /// ارسال ال OTP
+    on<sendUpdatePhoneOtpEvent>((event, emit) async {
+      emit(UpdateProfileLoding());
+      try {
+        final message = await profileRepo.sendUpdatePhoneOtp(type: event.type);
+        emit(sendUpdatePhoneOtpSuccess(message));
       } catch (e) {
         emit(ProfileError(e.toString()));
       }
     });
-
-    on<UpdatePhoneEvent>((event, emit) async {
+    on<verifyAndUpdatePhoneEvent>((event, emit) async {
+      emit(UpdateProfileLoding());
       try {
-        final userModel = await profileRepo.UpdatePhone(event.phoneNumber);
-        if (userModel.success) {
-          emit(ProfileUpdateSuccess(userModel.message));
-        } else {
-          emit(ProfileError(userModel.message));
-        }
+        final message = await profileRepo.verifyAndUpdatePhone(
+          new_phone: event.new_Phone,
+          code: event.code,
+        );
+        emit(UpdatePhoneSuccess(message));
       } catch (e) {
         emit(ProfileError(e.toString()));
+      }
+    });
+    on<ResentProfileStateEvent>((event, emit) {
+      if (state is ProfileError || state is UpdateProfileSuccess) {
+        add(FetchProfileDataEvent());
       }
     });
   }

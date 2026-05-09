@@ -9,14 +9,46 @@ class ProfileLoading extends ProfileBlocState {}
 
 //نجاح جلب البيانات
 class ProfileSuccess extends ProfileBlocState {
-  final UserModel userModel;
-  ProfileSuccess(this.userModel);
+  final Userprofilemodel userprofilemodel;
+  ProfileSuccess(this.userprofilemodel);
 }
 
 ///نجاح عملية تعديل المعلومات
 class ProfileUpdateSuccess extends ProfileBlocState {
-  final message;
+  final String message;
   ProfileUpdateSuccess(this.message);
+}
+
+///////تعدبل الصورة
+class UpdateImageLoding extends ProfileBlocState {}
+
+class UpdateImageSuccess extends ProfileBlocState {
+  final String message;
+  UpdateImageSuccess(this.message);
+}
+
+class UpdateImageError extends ProfileBlocState {
+  final String error;
+  UpdateImageError(this.error);
+}
+
+///////تعديل البيانات
+class UpdateProfileLoding extends ProfileBlocState {}
+
+class UpdateProfileSuccess extends ProfileBlocState {
+  final Userprofilemodel profileData;
+  UpdateProfileSuccess(this.profileData);
+}
+
+///تحديث الرقم
+class sendUpdatePhoneOtpSuccess extends ProfileBlocState {
+  final String message;
+  sendUpdatePhoneOtpSuccess(this.message);
+}
+
+class UpdatePhoneSuccess extends ProfileBlocState {
+  final String message;
+  UpdatePhoneSuccess(this.message);
 }
 
 class ProfileError extends ProfileBlocState {

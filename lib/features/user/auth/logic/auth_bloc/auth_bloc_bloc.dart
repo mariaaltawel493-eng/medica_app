@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
+import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/features/user/auth/data/models/login_request_model.dart';
 import 'package:medica_app/features/user/auth/data/models/register_request_model.dart';
@@ -30,6 +31,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         final UserModel = await authRepo.login(event.loginRequest);
         if (UserModel.success) {
+          await SharedPrefHelper.saveUserToken(UserModel.token);
           emit(AuthBlocSuccess(UserModel));
         } else {
           emit(AuthBlocError(UserModel.message));
@@ -53,6 +55,10 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
 
     ///2.صفحة ال otp
     on<RegisterOtpVerified>((event, emit) async {
+      if (event.type == "reset-password") {
+        code = event.otpCode;
+        emit(RegisterOtpsuccess());
+      }
       emit(AuthBlocLoading());
       try {
         await authRepo.verifyOtp(
@@ -90,8 +96,10 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
           dateOfBirth: event.dateofBirth!,
           gender: event.gender!,
           password_confirmation: password!,
+          profileImage: event.profileImage,
         );
         final user = await authRepo.register(Request);
+        await SharedPrefHelper.saveUserToken(user.token);
         emit(AuthBlocSuccess(user));
       } catch (e) {
         emit(AuthBlocError(" ERROR_LOG${e.toString()}"));
@@ -104,7 +112,7 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
       try {
         final request = ResetpasswordRequestModel(
           phoneNumber!, // عم نستخدم الرقم المخزن من أول خطوة
-          event.code!,
+          code!,
           event.Password,
           event.confirmPassword,
         );

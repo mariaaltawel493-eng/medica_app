@@ -13,13 +13,21 @@ class UpdateProfileEvent extends ProfileBlocEvent {
 }
 
 //3. حدث تحديث الصورة الشخصية
-class UpdateImageEvent extends ProfileBlocEvent {
+class UpdateProfileImageEvent extends ProfileBlocEvent {
   final File imageFile;
-  UpdateImageEvent(this.imageFile);
+  UpdateProfileImageEvent(this.imageFile);
 }
 
-//4.حدث تحديث ؤقم الهاتف
-class UpdatePhoneEvent extends ProfileBlocEvent {
-  final String phoneNumber;
-  UpdatePhoneEvent(this.phoneNumber);
+///حدث تحديث الرقم
+class sendUpdatePhoneOtpEvent extends ProfileBlocEvent {
+  final String type;
+  sendUpdatePhoneOtpEvent({required this.type});
 }
+
+class verifyAndUpdatePhoneEvent extends ProfileBlocEvent {
+  final String new_Phone;
+  final String code;
+  verifyAndUpdatePhoneEvent(this.new_Phone, this.code);
+}
+
+class ResentProfileStateEvent extends ProfileBlocEvent {}

@@ -3,7 +3,7 @@ import 'package:medica_app/core/theme/app_colors.dart';
 
 class AppTextField extends StatelessWidget {
   final String hintText;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final Widget? suffixIcon;
   final bool isPassword;
   final TextEditingController controller;
@@ -12,11 +12,12 @@ class AppTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool readOnly;
   final VoidCallback? onTap;
+  final Function(String)? onChanged;
 
   const AppTextField({
     super.key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.isPassword = false,
     required this.controller,
     this.validator,
@@ -25,6 +26,7 @@ class AppTextField extends StatelessWidget {
     this.suffixIcon,
     this.readOnly = false,
     this.onTap,
+    this.onChanged,
   });
 
   @override
@@ -38,6 +40,7 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       readOnly: readOnly,
       onTap: onTap,
+      onChanged: onChanged,
 
       decoration: InputDecoration(
         hintText: hintText,

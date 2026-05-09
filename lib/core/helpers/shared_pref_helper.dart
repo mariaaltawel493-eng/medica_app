@@ -9,6 +9,9 @@ class SharedPrefHelper {
   static Future<void> setData(String key, dynamic value) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
+    if (value == null) {
+      await sharedPreferences.remove(key);
+    }
     if (value is String) await sharedPreferences.setString(key, value);
     if (value is int) await sharedPreferences.setInt(key, value);
     if (value is bool) await sharedPreferences.setBool(key, value);

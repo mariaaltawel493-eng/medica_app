@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
@@ -46,7 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: BlocConsumer<AuthBlocBloc, AuthBlocState>(
         listener: (context, state) {
           if (state is RegisterPhoneSuccess) {
-            Navigator.pushNamed(context, 'otp_reset');
+            Navigator.pushNamed(context, Routes.ResetOtpScreen);
           }
           if (state is AuthBlocError) {
             String errorKey = "errors.something_wrong";

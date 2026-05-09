@@ -4,7 +4,7 @@
     "skip": "Skip",
     "next": "Next",
    
-   "start":"get_started",
+   "start":"get started",
     "title1": "Easy appointment booking",
     "desc1": "Book with confidence - Easy to use - Quick Operation",
     "title2": "Profile Security",
@@ -12,6 +12,11 @@
     "title3": "Data Privacy First",
     "desc3": "Your health information is fully encrypted, we ensure the highest levels of security and privacy"
   },
+  "common":{
+  "continue":"continue",
+  "ok":"OK"
+
+},
         "auth": {
           "welcome_back": "Welcome back!",
           "phone_hint": "Enter your Phone number",
@@ -68,12 +73,15 @@
   "first_name": "First Name",
   "last_name": "Last Name",
   "email": "Email",
+  "phone_number":"Phone Number",
   "dob": "Date of Birth",
   "male": "Male",
   "female": "Female",
   "select_gender": "Please select your gender",
   "congrats":"Congratulations!",
   "account_created":"your medical account has been Created success,welcome to Medica",
+  "image_updated":"image updated successfully",
+
 
   "title": "Profile",
     "medical_records": "Medical Records",
@@ -85,7 +93,9 @@
     "invite_friends": "Invite Friends",
     "help_center": "Help Center",
     "logout": "Logout",
-    "retry": "Retry"
+    "retry": "Retry",
+    "Update":"Update"
+    
 },
 
         "validation": {
@@ -113,7 +123,9 @@
           "connection_error": "Network connection error",
           "unknown": "An unexpected error occurred",
           "unauthorized":"Invalid phone or password",
-          "weak_password":"weak password"
+          "weak_password":"weak password",
+          "image_error":"Failed to update image,try again",
+          "session_expired":"please login again"
 
         }
       }

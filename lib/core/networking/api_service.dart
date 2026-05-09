@@ -21,7 +21,7 @@ class ApiService {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        if (token != null) 'Authorization': 'Bearer $token',
+        if (token != null) 'Authorization': 'Bearer ${token.trim()}',
       },
       body: jsonEncode(body),
     );
@@ -32,19 +32,20 @@ class ApiService {
   Future<dynamic> get(String endpoint, {String? token}) async {
     try {
       String? token = await SharedPrefHelper.getUserToken();
+      print("Chek Token value:$token");
       final response = await http.get(
         Uri.parse("$baseUrl/$endpoint"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          if (token != null) 'Authorization': 'Bearer $token',
+          if (token != null) 'Authorization': 'Bearer ${token.trim()}',
         },
       );
       return _handleResponse(response);
     } on SocketException {
-      throw Exception('لايوجد اتصال بالإنترنت،يرجى التأكد من الشبكة');
+      throw Exception('errors.no_internet'.tr());
     } on http.ClientException {
-      throw Exception("خطأ في الأتصال في السيرفر");
+      throw Exception("errors.connection_error".tr());
     } catch (e) {
       throw Exception("حدث خطأ غير متوقع:${e.toString()}");
     }
@@ -53,18 +54,21 @@ class ApiService {
   ////دالة PUT التي سنحتاجها  لتحديث البروفايل
   Future<dynamic> put(String endpoint, {Object? body, String? token}) async {
     try {
+      String? token = await SharedPrefHelper.getUserToken();
       final response = await http.put(
         Uri.parse("$baseUrl/$endpoint"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          if (token != null) 'Authorization': 'Bearer $token',
+          if (token != null) 'Authorization': 'Bearer ${token.trim()}',
         },
         body: jsonEncode(body),
       );
       return _handleResponse(response);
     } on SocketException {
-      throw Exception('لايوجد اتصال بالإنترنت،يرجى التأكد من الشبكة');
+      throw Exception('errors.no_internet'.tr());
+    } on http.ClientException {
+      throw Exception("errors.connection_error".tr());
     } catch (e) {
       throw Exception("حدث خطأ غير متوقع:${e.toString()}");
     }
@@ -84,7 +88,7 @@ class ApiService {
       // 2. إضافة الهيدرز (Headers)
       request.headers.addAll({
         'Accept': 'application/json',
-        if (token != null) 'Authorization': 'Bearer $token',
+        if (token != null) 'Authorization': 'Bearer ${token.trim()}',
       });
       // 3. إضافة الحقول النصية (الاسم، الهاتف، إلخ)
       request.fields.addAll(fields);
@@ -103,7 +107,7 @@ class ApiService {
 
       return _handleResponse(response);
     } on SocketException {
-      throw Exception('لا يوجد اتصال بالإنترنت، يرجى التأكد من الشبكة');
+      throw 'errors.no_internet'.tr();
     } catch (e) {
       rethrow;
     }
@@ -114,8 +118,12 @@ class ApiService {
     final body = jsonDecode(response.body);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return body;
+    } else if (response.statusCode == 401) {
+      SharedPrefHelper.setData('user_token', null);
+      throw "errors.session_expired".tr();
     } else {
-      // نرمي رسالة الخطأ القادمة من الباك أند ليعرضها الـ Bloc في الـ UI
+      // نرمي رسالة الخطأ القادمة
+      // من الباك أند ليعرضها الـ Bloc في الـ UI
       throw body['message'] ?? "Something went wrong";
     }
   }

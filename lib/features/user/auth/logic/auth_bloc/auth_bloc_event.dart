@@ -43,10 +43,9 @@ class LoginSubmittedEvent extends AuthBlocEvent {
 }
 
 class ResetPasswordSubmitted extends AuthBlocEvent {
-  final String code;
   final String Password;
   final String confirmPassword;
-  ResetPasswordSubmitted(this.code, this.Password, this.confirmPassword);
+  ResetPasswordSubmitted(this.Password, this.confirmPassword);
 }
 
 class LogoutRequestedEvent extends AuthBlocEvent {}

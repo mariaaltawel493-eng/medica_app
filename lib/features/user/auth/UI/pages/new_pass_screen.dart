@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
@@ -40,13 +41,16 @@ class NewPassScreenstate extends State<NewPassScreen> {
               // حالة النجاح من البلوك
               AppAlerts.showResultDialog(
                 context: context,
-                title: "new_password.success_title".tr(),
-                subtitle: "new_password.success_message".tr(),
+                title: "profile.congrats".tr(),
+                subtitle: "profile.account_created".tr(),
                 type: DialogType.success,
-                onSuccessFinished: () {
+                onConfirm: () {
+                  print("STAMP:USER CLICED THE BUTTON!");
+                  Navigator.pop(context);
+
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    '/home',
+                    Routes.LoginScreen,
                     (route) => false,
                   );
                 },
@@ -196,7 +200,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBlocBloc>().add(
                                     ResetPasswordSubmitted(
-                                      "",
                                       passwordController.text,
                                       confirmPasswordController.text,
                                     ),

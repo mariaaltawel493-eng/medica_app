@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
@@ -127,7 +129,10 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                 BlocConsumer<AuthBlocBloc, AuthBlocState>(
                   listener: (context, state) {
                     if (state is RegisterPasswordSuccess) {
-                      Navigator.pushNamed(context, 'fill_profile');
+                      Navigator.pushReplacementNamed(
+                        context,
+                        Routes.FillProfilScreen,
+                      );
                       print("password is ${passwordController.text}");
                     } else if (state is AuthBlocError) {
                       print("LOG:PASSWORD ERROR>>>${state.message}");
@@ -142,7 +147,7 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                   },
                   builder: (context, state) {
                     if (state is AuthBlocLoading)
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: AppLoadingIndicator());
 
                     return AppButton(
                       text: "auth.continue_button".tr(),

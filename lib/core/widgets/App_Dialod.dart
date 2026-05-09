@@ -99,16 +99,25 @@ class _AppDialodState extends State<AppDialod> {
                   const SizedBox(height: 24),
                   const AppLoadingIndicator(size: 40),
                 ],
-
+                if (widget.type == DialogType.success) ...[
+                  const SizedBox(height: 28),
+                  _buildInteractiveButton(
+                    index: 0,
+                    text: "common.ok".tr(),
+                    onTap: widget.onConfirm,
+                  ),
+                ] else
                 // قسم الأزرار التفاعلية
                 if (widget.onConfirm != null || widget.onCancel != null) ...[
                   const SizedBox(height: 28),
                   _buildInteractiveButton(
                     index: 0,
-                    text: "validation.again".tr(),
+                    text: widget.type == DialogType.success
+                        ? "common.continue".tr()
+                        : "validation.again".tr(),
                     onTap: widget.onConfirm,
                   ),
-                  const SizedBox(height: 10), // مسافة أصغر بين الزرين
+                  const SizedBox(height: 10),
                   _buildInteractiveButton(
                     index: 1,
                     text: "validation.cancel".tr(),
@@ -132,7 +141,7 @@ class _AppDialodState extends State<AppDialod> {
     );
   }
 
-  // الدالة السحرية لتنسيق الأزرار حسب الثيم
+  // الدالة  لتنسيق الأزرار حسب الثيم
   Widget _buildInteractiveButton({
     required int index,
     required String text,
@@ -141,7 +150,7 @@ class _AppDialodState extends State<AppDialod> {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     bool isSelected = selectedButtonIndex == index;
 
-    // تحديد الألوان بناءً على حالة الضغط والثيم (مطابق للفيفما)
+    // تحديد الألوان بناءً على حالة الضغط والثيم
     Color bgColor;
     Color textColor;
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/features/onboarding/onboarding_model.dart';
+import '../../core/helpers/shared_pref_helper.dart'; // تأكدي من استيراد الهيلبر
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/app_button.dart';
 
@@ -16,13 +18,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // قائمة البيانات باستخدام مفاتيح الترجمة التي جهزناها
   late List<OnboardingModel> pages;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // نملأ القائمة هنا للتأكد من أن الترجمة جاهزة
     pages = [
       OnboardingModel(
         image: "assets/animations/animation_onboarding.json.json",
@@ -31,18 +31,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         isLottie: true,
       ),
       OnboardingModel(
-        image: "assets/images/security.gif", // الصورة الثانية
+        image: "assets/images/security.gif",
         title: "onboarding.title2".tr(),
         description: "onboarding.desc2".tr(),
         isLottie: false,
       ),
       OnboardingModel(
-        image: "assets/images/security.gif", // الصورة الثالثة
+        image: "assets/images/security.gif",
         title: "onboarding.title3".tr(),
         description: "onboarding.desc3".tr(),
         isLottie: false,
       ),
     ];
+  }
+
+  // ميثود مساعدة لإنهاء الـ Onboarding والانتقال
+  Future<void> _completeOnboarding() async {
+    // حفظ حالة المشاهدة في الجهاز
+    await SharedPrefHelper.setData('onboarding_seen', true);
+
+    if (mounted) {
+      // الانتقال لصفحة اللوجن وحذف صفحات الـ Onboarding من الذاكرة (Stack)
+      Navigator.pushReplacementNamed(context, Routes.LoginScreen);
+    }
   }
 
   @override
@@ -63,8 +74,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextButton(
                   onPressed: () {
-                    // الانتقال المباشر لآخر صفحة أو للـ Login
-                    _pageController.jumpToPage(pages.length - 1);
+                    // عند التخطي، ننهي العملية وننتقل فوراً
+                    _completeOnboarding();
                   },
                   child: Text(
                     "onboarding.skip".tr(),
@@ -90,7 +101,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // عرض الأنميشن أو الصورة
                         pages[index].isLottie
                             ? Lottie.asset(
                                 pages[index].image,
@@ -124,7 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
 
-            // زر التنقل (التالي / ابدأ) باستخدام AppButton تبعك
+            // زر التنقل (التالي / ابدأ)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
               child: AppButton(
@@ -138,8 +148,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    // هون الكود لما يضغط "ابدأ الآن" بعد آخر شاشة
-                    Navigator.pushNamed(context, '/login');
+                    // عند الوصول لآخر صفحة والضغط على "ابدأ"
+                    _completeOnboarding();
                   }
                 },
               ),

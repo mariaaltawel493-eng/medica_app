@@ -33,7 +33,7 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
       body: BlocConsumer<AuthBlocBloc, AuthBlocState>(
         listener: (context, state) {
           if (state is RegisterPhoneSuccess) {
-            Navigator.pushNamed(context, '/otp_view');
+            Navigator.pushReplacementNamed(context, '/otp_view');
           } else if (state is AuthBlocError) {
             print("ERROR_SERVER:${state.message}");
             String errorkey = "errors.something_wrong";

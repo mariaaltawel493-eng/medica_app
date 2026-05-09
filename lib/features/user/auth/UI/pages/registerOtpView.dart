@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
+import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/Otp_fields.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
 import 'package:pinput/pinput.dart';
@@ -73,7 +74,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
             child: BlocConsumer<AuthBlocBloc, AuthBlocState>(
               listener: (context, state) {
                 if (state is RegisterOtpsuccess) {
-                  Navigator.pushNamed(context, 'regi_password');
+                  Navigator.pushReplacementNamed(context, 'regi_password');
                 } else if (state is AuthBlocError) {
                   print("OTP_ERROR_LOG:${state.message}");
                   String errorkey = state.message.toLowerCase();
@@ -144,7 +145,7 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
 
                     const SizedBox(height: 60),
                     if (state is AuthBlocLoading)
-                      const Center(child: CircularProgressIndicator())
+                      const Center(child: AppLoadingIndicator())
                     else
                       AppButton(
                         text: "auth.continue_button".tr(),

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http show Response;
+import 'package:medica_app/core/models/patient_data_model.dart';
+import 'package:medica_app/core/models/user_data_model.dart';
 import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/features/user/auth/data/models/login_request_model.dart';
@@ -74,6 +76,15 @@ class AuthRepoImpl implements AuthRepo {
         'auth/reset-password',
         resetpassReuest.toJson(),
       );
+      if (response['data'] == null) {
+        return UserModel(
+          success: response['success'] ?? true,
+          message: response['message'] ?? "",
+          token: "",
+          userData: UserDataModel.empty(),
+          patientData: PatientDataModel.empty(),
+        );
+      }
       return UserModel.fromJson(response);
     } catch (e) {
       rethrow;

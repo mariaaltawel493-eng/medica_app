@@ -45,6 +45,8 @@ dependencies:
   confetti: ^0.8.0
   flutter_spinkit: ^5.2.2
   lottie: ^3.3.3
+  country_picker: ^2.0.27
+  flutter_getit: ^3.0.1
 
 dev_dependencies:
   flutter_test:

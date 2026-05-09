@@ -41,4 +41,8 @@ class PatientDataModel {
       'allergies': allergies,
     };
   }
+
+  factory PatientDataModel.empty() {
+    return PatientDataModel(id: 0, dateOfBirth: DateTime.now(), gender: '');
+  }
 }

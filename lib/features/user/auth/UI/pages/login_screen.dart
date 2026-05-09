@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as sharedPrefHelper;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
@@ -43,18 +43,18 @@ class _LoginScreenState extends State<LoginScreen> {
           ? AppColors.darkscaffoldBackground
           : AppColors.scaffoldBackground,
       body: BlocListener<AuthBlocBloc, AuthBlocState>(
-        listener: (context, state) async {
+        listener: (context, state) {
           if (state is AuthBlocSuccess) {
-            await SharedPrefHelper.saveUserToken(state.user.token);
             Navigator.pushReplacementNamed(context, Routes.HomeScreen);
           } else if (state is AuthBlocError) {
             print("error from server:${state.message}");
             String errorkey;
             if (state.message.contains("not found")) {
               errorkey = "errors.user_not_found";
-            } else if (state.message.contains("Invalid credentials")) {
+            } else if (state.message.contains("Invalid credentials") ||
+                state.message.contains("Unauthraized")) {
               errorkey = "errors.unathorized";
-            } else if (state.message.contains("Networ") ||
+            } else if (state.message.contains("Network") ||
                 state.message.contains("connection")) {
               errorkey = "errors.no_internet";
             } else {
@@ -119,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'reset_password');
+                        Navigator.pushNamed(
+                          context,
+                          Routes.ForgotPasswordScreen,
+                        );
                       },
                       child: Text(
                         "auth.forgot_password".tr(),
@@ -174,7 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/register');
+                          Navigator.pushNamed(
+                            context,
+                            Routes.RegisterPhoneScreen,
+                          );
                         },
                         child: Text(
                           "auth.create_new".tr(),

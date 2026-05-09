@@ -6,11 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/Image_picker_helper.dart';
+import 'package:medica_app/core/helpers/shared_pref_helper.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
+import 'package:medica_app/main.dart';
 
 class FillProfilScreen extends StatefulWidget {
   const FillProfilScreen({super.key});
@@ -294,19 +297,14 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                 BlocConsumer<AuthBlocBloc, AuthBlocState>(
                   listener: (context, state) {
                     if (state is AuthBlocSuccess) {
-                      AppAlerts.showResultDialog(
-                        context: context,
-                        title: "profile.congrats".tr(),
-                        subtitle: "profile.account_created".tr(),
-                        type: DialogType.success,
-                        onSuccessFinished: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            '/home',
-                            (route) => false,
-                          );
-                        },
-                      );
+                      if (context.mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.HomeScreen,
+                          (route) => false,
+                          arguments: "show_success_dialog",
+                        );
+                      }
                     } else if (state is AuthBlocError) {
                       print("PROFILE_LOG:${state.message}");
                       String errorkey = "errors.something_wrong";
