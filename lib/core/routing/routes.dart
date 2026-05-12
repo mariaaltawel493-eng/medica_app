@@ -13,4 +13,5 @@ class Routes {
 
   static const String ProfileScreen = "/profile_screen";
   static const String EditProfileScreen = "/edit_profile";
+  static const String ChangePasswordScreen = '/change_password';
 }

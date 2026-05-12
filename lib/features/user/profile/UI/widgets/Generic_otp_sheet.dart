@@ -9,9 +9,13 @@ import 'package:medica_app/core/widgets/Otp_fields.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 
-void showUpdatePhoneOtpSheet({
+void showGenericOtpSheet({
   required BuildContext context,
-  required String newPhone,
+  String? newPhone,
+  String? newPassword,
+  String? confirmPassword,
+  required bool isPassword,
+
   required ProfileBlocBloc profileBloc,
 }) {
   // تعريف متغيرات التايمر والـ Controller خارج الـ Builder
@@ -73,7 +77,9 @@ void showUpdatePhoneOtpSheet({
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  "${"otp.sent_to".tr()} $newPhone",
+                  isPassword
+                      ? "otp.sent_code".tr()
+                      : "${"otp.sent_to".tr()} $newPhone",
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
@@ -90,7 +96,11 @@ void showUpdatePhoneOtpSheet({
                           startSheetTimer();
                           // إعادة إرسال الـ OTP عن طريق البلوك
                           profileBloc.add(
-                            sendUpdatePhoneOtpEvent(type: 'phone_update'),
+                            sendUpdatePhoneOtpEvent(
+                              type: isPassword
+                                  ? 'password_change'
+                                  : 'phone_update',
+                            ),
                           );
                         }
                       : null,
@@ -116,12 +126,22 @@ void showUpdatePhoneOtpSheet({
                       text: "otp.verify_button".tr(),
                       onPressed: () {
                         if (sheetOtpController.text.length == 6) {
-                          profileBloc.add(
-                            verifyAndUpdatePhoneEvent(
-                              newPhone,
-                              sheetOtpController.text.trim(),
-                            ),
-                          );
+                          if (isPassword) {
+                            profileBloc.add(
+                              ChangePasswordEvent(
+                                sheetOtpController.text.trim(),
+                                newPassword!,
+                                confirmPassword!,
+                              ),
+                            );
+                          } else {
+                            profileBloc.add(
+                              verifyAndUpdatePhoneEvent(
+                                newPhone!,
+                                sheetOtpController.text.trim(),
+                              ),
+                            );
+                          }
                         } else {
                           Appsnackbar.showError(
                             context,

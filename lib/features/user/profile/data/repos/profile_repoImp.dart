@@ -76,4 +76,25 @@ class ProfileRepoImp implements ProfileRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<String> changePassword({
+    required String code,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      final response = await apiService.put(
+        'profile/password',
+        body: {
+          'code': code,
+          'new_password': newPassword,
+          'new_password_confirmation': confirmPassword,
+        },
+      );
+      return response['message'];
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

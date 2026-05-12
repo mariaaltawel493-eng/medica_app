@@ -2,14 +2,12 @@ import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'; // أضفنا هذا الاستيراد
-import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
-import 'package:medica_app/core/routing/service_locator.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
-import 'package:medica_app/features/user/profile/UI/widgets/update_phone_otp_sheet.dart';
+import 'package:medica_app/features/user/profile/UI/widgets/Generic_otp_sheet.dart';
 import 'package:medica_app/features/user/profile/data/models/profileRequestModel.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // تأكدي من مسار البلوك عندك
@@ -78,6 +76,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           'profile.edit_profile'.tr(),
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
+        leading: IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         foregroundColor: isDark ? Colors.white : Colors.black,
@@ -96,10 +100,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           }
           if (state is sendUpdatePhoneOtpSuccess) {
             Appsnackbar.showSuccess(context, state.message);
-            showUpdatePhoneOtpSheet(
+            showGenericOtpSheet(
               context: context,
               newPhone: phoneController.text.trim(),
               profileBloc: context.read<ProfileBlocBloc>(),
+              isPassword: false,
             );
           }
           if (state is UpdatePhoneSuccess) {

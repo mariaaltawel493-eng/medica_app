@@ -78,6 +78,7 @@
   "congrats":"تهانينا",
   "account_created":"تم إنشاء حسابك الطبي بنجاح، أهلا بك في ميديكا",
   "image_updated":"تم تحديث الصورة بنجاح",
+  "choose_language":"اختر اللغة",
 
   
   
@@ -95,6 +96,21 @@
     "Update":"تحديث"
     
 },
+"change_password": {
+  "title": "تغيير كلمة المرور",
+  "current_password": "كلمة المرور الحالية",
+  "current_password_hint": "أدخل كلمة المرور الحالية",
+  "new_password": "كلمة المرور الجديدة",
+  "new_password_hint": "أدخل كلمة المرور الجديدة",
+  "confirm_password": "تأكيد كلمة المرور الجديدة",
+  "confirm_password_hint": "أعد إدخال كلمة المرور الجديدة",
+  "button": "تغيير",
+  "success": "تم تغيير كلمة المرور بنجاح",
+  "error_mismatch": "كلمات المرور غير متطابقة"
+},
+
+
+
     "validation": {
       "phone_required": "يرجى إدخال رقم الهاتف",
       "phone_invalid": "رقم الهاتف يجب ان يكون 10 أرقام",

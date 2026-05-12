@@ -46,6 +46,7 @@ class sendUpdatePhoneOtpSuccess extends ProfileBlocState {
   sendUpdatePhoneOtpSuccess(this.message);
 }
 
+// نجاح تحديث الرقم
 class UpdatePhoneSuccess extends ProfileBlocState {
   final String message;
   UpdatePhoneSuccess(this.message);
@@ -54,4 +55,10 @@ class UpdatePhoneSuccess extends ProfileBlocState {
 class ProfileError extends ProfileBlocState {
   final String message;
   ProfileError(this.message);
+}
+
+// نجاح تحديث كلمة السر
+class ChangePasswordSuccess extends ProfileBlocState {
+  final String message;
+  ChangePasswordSuccess(this.message);
 }

@@ -81,6 +81,7 @@
   "congrats":"Congratulations!",
   "account_created":"your medical account has been Created success,welcome to Medica",
   "image_updated":"image updated successfully",
+  "choose_language":"choose language",
 
 
   "title": "Profile",
@@ -97,6 +98,19 @@
     "Update":"Update"
     
 },
+"change_password": {
+  "title": "Change the password",
+  "current_password": "Current password",
+  "current_password_hint": "Enter current password",
+  "new_password": "New password",
+  "new_password_hint": "Enter new password",
+  "confirm_password": "Confirm new password",
+  "confirm_password_hint": "Enter confirm new password",
+  "button": "Change",
+  "success": "Password changed successfully",
+  "error_mismatch": "Passwords do not match"
+},
+
 
         "validation": {
           "phone_required": "Please enter your phone number",

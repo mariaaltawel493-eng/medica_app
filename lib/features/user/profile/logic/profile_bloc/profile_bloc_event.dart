@@ -31,3 +31,10 @@ class verifyAndUpdatePhoneEvent extends ProfileBlocEvent {
 }
 
 class ResentProfileStateEvent extends ProfileBlocEvent {}
+
+class ChangePasswordEvent extends ProfileBlocEvent {
+  final String code;
+  final String newPassword;
+  final String confirmPassword;
+  ChangePasswordEvent(this.code, this.newPassword, this.confirmPassword);
+}

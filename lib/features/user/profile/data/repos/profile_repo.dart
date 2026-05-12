@@ -16,4 +16,9 @@ abstract class ProfileRepo {
     required String new_phone,
     required String code,
   });
+  Future<String> changePassword({
+    required String code,
+    required String newPassword,
+    required String confirmPassword,
+  });
 }

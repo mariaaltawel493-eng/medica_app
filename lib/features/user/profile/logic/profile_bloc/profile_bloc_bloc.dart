@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/features/user/profile/data/models/profileRequestModel.dart';
 import 'package:medica_app/features/user/profile/data/models/userprofileModel.dart';
 import 'package:medica_app/features/user/profile/data/repos/profile_repo.dart';
@@ -24,6 +23,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         emit(ProfileError(e.toString()));
       }
     });
+    ////تحديث بيانات البروفايل
     on<UpdateProfileEvent>((event, emit) async {
       emit(UpdateProfileLoding());
       try {
@@ -36,7 +36,7 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
         emit(ProfileError(e.toString()));
       }
     });
-
+    //// تحديث الصورة
     on<UpdateProfileImageEvent>((event, emit) async {
       emit(ProfileLoading());
       try {
@@ -75,6 +75,21 @@ class ProfileBlocBloc extends Bloc<ProfileBlocEvent, ProfileBlocState> {
     on<ResentProfileStateEvent>((event, emit) {
       if (state is ProfileError || state is UpdateProfileSuccess) {
         add(FetchProfileDataEvent());
+      }
+    });
+
+    //// تحديث كلمة السر
+    on<ChangePasswordEvent>((event, emit) async {
+      emit(UpdateProfileLoding());
+      try {
+        final message = await profileRepo.changePassword(
+          code: event.code,
+          newPassword: event.newPassword,
+          confirmPassword: event.confirmPassword,
+        );
+        emit(ChangePasswordSuccess(message));
+      } catch (e) {
+        emit(ProfileError(e.toString()));
       }
     });
   }

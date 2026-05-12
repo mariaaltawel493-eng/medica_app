@@ -12,6 +12,7 @@ import 'package:medica_app/features/user/auth/UI/pages/registerOtpView.dart';
 import 'package:medica_app/features/user/auth/UI/pages/register_password_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/register_phone_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/resetOtp_screen.dart';
+import 'package:medica_app/features/user/profile/UI/pages/changepassword_screen.dart';
 import 'package:medica_app/features/user/profile/UI/pages/editprofile_screen.dart';
 import 'package:medica_app/features/user/profile/UI/pages/profile_screen.dart';
 import 'package:medica_app/features/user/profile/data/repos/profile_repoImp.dart';
@@ -48,6 +49,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.EditProfileScreen:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+      case Routes.ChangePasswordScreen:
+        return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
       default:
         return null;
     }

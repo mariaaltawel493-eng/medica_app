@@ -8,9 +8,11 @@ import 'package:medica_app/core/helpers/Image_picker_helper.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/features/user/profile/UI/widgets/coustom_profile_menuItem.dart';
+import 'package:medica_app/features/user/profile/UI/widgets/lang_bottom_sheet.dart';
 import 'package:medica_app/features/user/profile/UI/widgets/profile_header.dart';
 import 'package:medica_app/features/user/profile/data/models/userprofileModel.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
+import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -82,6 +84,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     return Column(
                       children: [
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new,
+                                  size: 20,
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                "profile.title".tr(),
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark ? Colors.white : Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
                         ProfileHeader(
                           name:
                               userData?.fullName ??
@@ -150,19 +179,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomProfileMenuItem(
                       icon: Icons.shield_outlined,
                       title: "profile.change_password".tr(),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.ChangePasswordScreen,
+                        );
+                      },
                     ),
                     CustomProfileMenuItem(
                       icon: Icons.language_outlined,
                       title: "profile.language".tr(),
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => const LanguageBottomSheet(),
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                        );
+                      },
                     ),
                     CustomProfileMenuItem(
                       icon: Icons.dark_mode_outlined,
                       title: "profile.dark_mode".tr(),
                       isSwitch: true,
                       switchValue: isDark,
-                      onSwitchChanged: (val) {},
+                      onSwitchChanged: (val) {
+                        context.read<ThemeCubit>().toggleTheme(val);
+                      },
                       onTap: () {},
                     ),
                     CustomProfileMenuItem(
