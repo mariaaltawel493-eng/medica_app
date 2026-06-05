@@ -54,7 +54,8 @@ class AuthRepoImpl implements AuthRepo {
       final responseData = await apiService.postMultipart(
         endpoint: 'auth/register',
         fields: registerRequest.toMap(),
-        imageFile: registerRequest.profileImage,
+        File: registerRequest.profileImage,
+        fileKey: 'profile',
       );
 
       // بما إن الـ ApiService بترمي Exception إذا الـ status كود مو 200

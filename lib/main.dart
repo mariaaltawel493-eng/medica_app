@@ -9,6 +9,8 @@ import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_theme.dart';
 import 'package:medica_app/features/user/auth/data/repos/auth_repoImp.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
+import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_bloc.dart';
+import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_event.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 import 'package:medica_app/features/user/settings/language/cubit/language_cubit.dart';
 import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
@@ -47,6 +49,9 @@ void main() async {
         //language
         BlocProvider<LanguageCubit>(
           create: (context) => getIt<LanguageCubit>(),
+        ),
+        BlocProvider<MedicalRecordsBloc>(
+          create: (context) => getIt<MedicalRecordsBloc>(),
         ),
       ],
 

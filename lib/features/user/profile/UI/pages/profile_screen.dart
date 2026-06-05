@@ -161,7 +161,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomProfileMenuItem(
                       icon: Icons.assignment_outlined,
                       title: "profile.medical_records".tr(),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.MedicalRecordsScreen,
+                        );
+                      },
                     ),
                     CustomProfileMenuItem(
                       icon: Icons.person_outline,

@@ -47,6 +47,9 @@ dependencies:
   lottie: ^3.3.3
   country_picker: ^2.0.27
   flutter_getit: ^3.0.1
+  file_picker: ^11.0.2
+  equatable: ^2.0.8
+  speech_to_text: ^7.4.0
 
 dev_dependencies:
   flutter_test:

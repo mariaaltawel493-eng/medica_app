@@ -49,13 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("الصفحة الرئيسية")),
-      body: Center(
-        child: AppButton(
-          text: "Profile",
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.ProfileScreen);
-          },
-        ),
+      body: Column(
+        children: [
+          AppButton(
+            text: "Profile",
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.ProfileScreen);
+            },
+          ),
+          AppButton(
+            text: "chatbot",
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.ChatBotScreen);
+            },
+          ),
+        ],
       ),
     );
   }

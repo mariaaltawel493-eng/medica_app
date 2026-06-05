@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ImagePickerHelper {
   static final ImagePicker picker = ImagePicker();
@@ -15,6 +16,23 @@ class ImagePickerHelper {
       }
     } catch (e) {
       print("Error picking image:$e");
+    }
+    return null;
+  }
+
+  // الدالة الجديدة للملفات (PDF)
+  static Future<File?> pickDocument() async {
+    try {
+      FilePickerResult? result = await FilePicker.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx'],
+      );
+
+      if (result != null && result.files.single.path != null) {
+        return File(result.files.single.path!);
+      }
+    } catch (e) {
+      print("Error picking document: $e");
     }
     return null;
   }

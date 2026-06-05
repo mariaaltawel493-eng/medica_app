@@ -98,6 +98,70 @@
     "Update":"Update"
     
 },
+"medical": {
+  "medical_records": "Medical Records",
+  "vital_info": "Vital Information",
+  "blood_type": "Blood Type",
+  "phone": "Phone",
+  "address": "Address",
+  "emergency_contact": "Emergency Contact",
+  "health_status": "Health Status",
+  "chronic_diseases": "Chronic Diseases",
+  "allergies": "Allergies",
+  "current_medications": "Current Medications",
+  "medical_documents": "Medical Documents",
+  "add_new_document": "Add New Document",
+  "edit_medical_info": "Edit Medical Info",
+  "edit_info": "Edit Info",
+  "no_data_provided": "No data provided",
+  "save_changes": "Save Changes",
+  "delete_confirm": "Are you sure you want to delete this document?",
+
+  "edit_health_status": "Edit Health Status",
+"edit_physical_profile": "Edit Physical Profile",
+"emergency_contact_name": "Emergency Contact Name",
+"no_chronic_diseases": "No chronic diseases provided",
+"no_medications": "No current medications provided",
+"no_allergies":"No allergies diseases provided",
+  
+
+  "physical_profile": "Physical Profile",
+  "physical_profile_desc": "Please enter your basic health metrics.",
+  "medical_records_desc": "Manage your allergies and chronic diseases.",
+  "next": "Next",
+  "cancel": "Cancel",
+  "ok":"OK",
+  "relation": "Relation",
+  "select": "Select",
+  "add_other": "Add Other",
+  "other": "Other",
+  "write_here": "Write here...",
+  "father": "Father",
+"mother": "Mother",
+"brother": "Brother",
+"sister": "Sister",
+"friend": "Friend",
+"x_ray": "X-Ray",
+"lab_result": "Lab Result",
+"prescription": "Prescription",
+"gallery":"Gallery",
+  "files_pdf":"File",
+
+
+"upload_document": "Upload Document",
+"upload_new_document": "Upload New Document",
+"drop_file_here": "Drop file here or click to select",
+"select_file": "Select File",
+"document_type": "Document Type",
+"description_optional": "Description (Optional)",
+"start_upload": "Start Upload",
+"go_back": "Go Back",
+"folders": "Folders",
+"photos": "Photos",
+"files": "Files",
+"scan_document": "Scan Document",
+"upload_success": "Document uploaded successfully"
+},
 "change_password": {
   "title": "Change the password",
   "current_password": "Current password",
@@ -108,13 +172,28 @@
   "confirm_password_hint": "Enter confirm new password",
   "button": "Change",
   "success": "Password changed successfully",
-  "error_mismatch": "Passwords do not match"
+  "error_mismatch": "Passwords do not match",
+  "file_too_large":" File size is too large,please choose a smaller file"
+},
+"chatbot": {
+  "title": "AI Medical Assistant",
+  "hint_text": "Type your message here...",
+  "clear_chat": "Clear Chat",
+  "booking_button": "Book Now",
+  "no_messages": "Start chatting with your medical assistant",
+  "delete_title":"Clear Chat",
+  "delete_confirm_msg":"Are you sure want to delete the entire chat history?This action cannot be undone",
+  "cancel":"Cancel",
+  "delete":"Delete",
+  "copied_to_clipboard":"Text copied to clipboard"
+
 },
 
 
         "validation": {
           "phone_required": "Please enter your phone number",
           "phone_invalid": "Phone number must be 10 digits",
+          "invalid_data":"The entered data is invalid,pleas check again",
           "password_required": "Please enter your password",
           "password_short": "Password must be at least 8 characters",
           "password_mismatch": "Passwords do not match",
@@ -139,7 +218,13 @@
           "unauthorized":"Invalid phone or password",
           "weak_password":"weak password",
           "image_error":"Failed to update image,try again",
-          "session_expired":"please login again"
+          "session_expired":"please login again",
+            "unspported_file_type":"Unspported file type"
 
-        }
+        },
+    "success": {
+        "updated": "Data updated successfully",
+        "deleted": "Item deleted successfully",
+         "saved": "Saved successfully"
+}
       }

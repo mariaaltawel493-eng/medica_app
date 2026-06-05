@@ -96,6 +96,72 @@
     "Update":"تحديث"
     
 },
+"medical": {
+  "medical_records": "السجلات الطبية",
+  "vital_info": "البيانات الحيوية",
+  "phone": "الرقم",
+  "address": "العنوان",
+  "blood_type": "فصيلة الدم",
+  "emergency_contact": "جهة اتصال الطوارئ",
+  "health_status": "الحالة الصحية",
+  "chronic_diseases": "الأمراض المزمنة",
+  "allergies": "الحساسية",
+  "current_medications": "الأدوية الحالية",
+  "medical_documents": "الوثائق الطبية",
+  "add_new_document": "إضافة وثيقة جديدة",
+  "edit_medical_info": "تعديل البيانات الطبية",
+  "edit_info": "تعديل البيانات",
+  "no_data_provided": "لا توجد بيانات مدخلة",
+  "save_changes": "حفظ التغييرات",
+  "delete_confirm": "هل أنت متأكد من حذف هذه الوثيقة؟",
+
+  "edit_health_status": "تعديل الحالة الصحية",
+"edit_physical_profile": "تعديل الملف البدني",
+"emergency_contact_name": "اسم جهة اتصال الطوارئ",
+"no_chronic_diseases": "لا توجد أمراض مزمنة مدخلة",
+"no_medications": "لا توجد أدوية حالية مدخلة",
+"no_allergies":"  لا توجد امراض حساسية مدخلة",
+  
+ 
+  "physical_profile": "الملف البدني",
+  "physical_profile_desc": "يرجى إدخال مقاييس صحتك الأساسية.",
+  "medical_records_desc": "إدارة الحساسية والأمراض المزمنة الخاصة بك.",
+  "next": "التالي",
+  "cancel": "إلغاء",
+  "ok":"حسنا",
+  "relation": "الصلة",
+  "select": "اختر",
+  "add_other": "إضافة أخرى",
+  "other": "أخرى",
+  "write_here":"اكتب هنا",
+  "father": "أب",
+"mother": "أم",
+"brother": "أخ",
+"sister": "أخت",
+"friend": "صديق",
+
+  "x_ray": "أشعة سينية (X-Ray)",
+  "lab_result": "نتائج مخبرية",
+  "prescription": "وصفة طبية",
+  "gallery":"المعرض",
+  "files_pdf":"ملف",
+
+
+
+"upload_document": "رفع وثيقة",
+"upload_new_document": "رفع وثيقة جديدة",
+"drop_file_here": "ضع الملف هنا أو انقر للاختيار",
+"select_file": "اختر ملف",
+"document_type": "نوع الوثيقة",
+"description_optional": "الوصف (اختياري)",
+"start_upload": "بدء الرفع",
+"go_back": "رجوع",
+"folders": "المجلدات",
+"photos": "الصور",
+"files": "الملفات",
+"scan_document": "مسح وثيقة",
+"upload_success": "تم رفع الوثيقة بنجاح"
+},
 "change_password": {
   "title": "تغيير كلمة المرور",
   "current_password": "كلمة المرور الحالية",
@@ -109,11 +175,29 @@
   "error_mismatch": "كلمات المرور غير متطابقة"
 },
 
+"chatbot": {
+  "title": "مساعد الذكاء الاصطناعي",
+  "hint_text": "اكتب رسالتك هنا...",
+  "clear_chat": "مسح المحادثة",
+  "booking_button": "احجز الآن",
+  "no_messages": "ابدأ المحادثة مع المساعد الطبي",
+  "delete_title":"مسح المحادثة",
+  "delete_confirm_msg":"هل أنت متأكد أنك تريد حذف هذه المحادثة  بالكامل؟لا يمكن النراجع عن هذا الإجراء",
+  "cancel":"إلغاء",
+  "delete":"حذف",
+  "copied_to_clipboard":"تم نسخ النص الى الحافظة"
+
+
+
+
+},
+
 
 
     "validation": {
       "phone_required": "يرجى إدخال رقم الهاتف",
       "phone_invalid": "رقم الهاتف يجب ان يكون 10 أرقام",
+      "invalid_data":"البيانات المدخلة غير صحيحة،يرجى المراجعة",
       "password_required": "يرجى إدخال كلمة المرور",
       "password_short": "كلمة السر يجب أن تكون 8 محارف على الأقل",
   "password_mismatch": "كلمات المرور غير متطابقة",
@@ -137,6 +221,14 @@
       "unauthorized":"رقم الهاتف او كلمة السر غير صحيحة",
       "weak_password":"كلمة السر ضعيفة",
       "image_error":"فشل تحديث الصورة ،حاول مرة أخرى",
-      "session_expired":"يرجى تسجيل الدخول مرة أخرة"
-    }
+      "session_expired":"يرجى تسجيل الدخول مرة أخرة",
+      "file_too_large":"حجم الملف كبير جدا،يرجى اختيار ملف أصغر",
+      "unspported_file_type":"نوع الملف غير مدعوم"
+
+    },
+    "success": {
+      "updated": "تم تحديث البيانات بنجاح",
+      "deleted": "تم الحذف بنجاح",
+     "saved": "تم الحفظ بنجاح"
+}
   }

@@ -14,4 +14,15 @@ class Routes {
   static const String ProfileScreen = "/profile_screen";
   static const String EditProfileScreen = "/edit_profile";
   static const String ChangePasswordScreen = '/change_password';
+  // ── شاشات السجل الطبي ──────────────────────────────────────────
+  static const String MedicalRecordsScreen = '/Medical_record';
+
+  /// الشاشة الجديدة الأولى: تعديل الملف البدني ومعلومات الطوارئ
+  static const String EditPhysicalProfileScreen = '/edit_physical_profile';
+
+  /// الشاشة الجديدة الثانية: تعديل الحالة الصحية (الحساسية والأمراض)
+  // ignore: constant_identifier_names
+  static const String EditHealthStatusScreen = '/edit_health_status';
+  static const String UploadDocumentScreen = '/upload_document';
+  static const String ChatBotScreen = '/ChatBot';
 }

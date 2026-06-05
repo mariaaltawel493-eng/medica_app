@@ -41,7 +41,8 @@ class ProfileRepoImp implements ProfileRepo {
       final response = await apiService.postMultipart(
         endpoint: 'profile/image',
         fields: {},
-        imageFile: imageFile,
+        File: imageFile,
+        fileKey: 'profile',
       );
       return response['message'] ?? "success";
     } catch (e) {
