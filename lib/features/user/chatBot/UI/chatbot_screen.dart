@@ -6,8 +6,6 @@ import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:speech_to_text/speech_recognition_error.dart';
-
 import '../logic/chat_bot_bloc/chat_bot_bloc.dart';
 import '../data/models/chat_message_model.dart';
 import 'chat_bubble.dart';
@@ -33,16 +31,20 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
     _messageController.addListener(() {
       if (_messageController.text.trim().isNotEmpty != _isWriting) {
-        setState(() {
-          _isWriting = _messageController.text.trim().isNotEmpty;
-        });
+        if (mounted) {
+          setState(() {
+            _isWriting = _messageController.text.trim().isNotEmpty;
+          });
+        }
       }
     });
   }
 
   void _intitSpeech() async {
     await _speech.initialize();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // --- التعديل هنا في دالة _listen ---
@@ -53,22 +55,28 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     if (!_islistening) {
       bool available = await _speech.initialize();
       if (available) {
-        setState(() => _islistening = true);
+        if (mounted) {
+          setState(() => _islistening = true);
+        }
         _speech.listen(
           // ضبط اللغة ديناميكياً حسب لغة التطبيق
           localeId: currentLanguage == 'ar' ? 'ar_SA' : 'en_US',
           // وضع التأكيد لتقليل الأخطاء في فهم الكلام
           listenMode: ListenMode.confirmation,
           onResult: (val) {
-            setState(() {
-              _messageController.text = val.recognizedWords;
-              _isWriting = _messageController.text.trim().isNotEmpty;
-            });
+            if (mounted) {
+              setState(() {
+                _messageController.text = val.recognizedWords;
+                _isWriting = _messageController.text.trim().isNotEmpty;
+              });
+            }
           },
         );
       }
     } else {
-      setState(() => _islistening = false);
+      if (mounted) {
+        setState(() => _islistening = false);
+      }
       _speech.stop();
     }
   }
@@ -167,7 +175,16 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         body: BlocConsumer<ChatBotBloc, ChatBotState>(
           listener: (context, state) {
             if (state is ChatBotError) {
-              Appsnackbar.showError(context, state.message.tr());
+              print("chatbot error from server:${state.message}");
+              String errorKey = "errors.something_wrong";
+              if (state.message.contains('SoketException') ||
+                  state.message.contains('connection')) {
+                errorKey = "errors.no_internet";
+              } else if (state.message.contains('401') ||
+                  state.message.contains('unauthorized')) {
+                errorKey = 'errors.unauthorized';
+              }
+              Appsnackbar.showError(context, errorKey.tr());
             }
             if (state is ChatHistorySuccess ||
                 state is ChatMessageSendSuccess ||
@@ -295,7 +312,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 final text = _messageController.text.trim();
                 blocContext.read<ChatBotBloc>().add(SendMessageEvent(text));
                 _messageController.clear();
-                setState(() => _isWriting = false);
+                if (mounted) {
+                  setState(() => _isWriting = false);
+                }
                 _scrollToBottom();
               } else if (!isLoading) {
                 _listen();

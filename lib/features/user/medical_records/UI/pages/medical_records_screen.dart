@@ -103,11 +103,12 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
                     // ── كرت المعلومات الحيوية ──
                     VitalInfoCard(
                       bloodType: patient?.bloodType ?? '--',
-                      address: patient?.address ?? 'medical.no_address'.tr(),
+                      address:
+                          patient?.address ?? 'medical.no_data_provided'.tr(),
                       emergencyContact: patient?.emergencyContactName != null
                           ? '${patient!.emergencyContactName}'
                                 '${patient.emergencyContactRelation != null ? ' (${'medical.${patient.emergencyContactRelation}'.tr()})' : ''}'
-                          : 'medical.no_contact'.tr(),
+                          : 'medical.no_data_provided'.tr(),
                       phone: patient?.emergencyContactPhone ?? '--',
                       onEdit: () {
                         Navigator.pushNamed(

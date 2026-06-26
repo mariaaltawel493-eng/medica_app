@@ -188,6 +188,65 @@
   "copied_to_clipboard":"Text copied to clipboard"
 
 },
+"home": {
+  "good_morning": "Good Morning 👋",
+  "good_afternoon": "Good Afternoon 👋",
+  "good_evening": "Good Evening 👋",
+  "User": "User",
+  "complete_profile_banner":"pleas complete your medical profile for a batter Experience",
+
+  "read_more": "Read More",
+  "welcome_title": "Welcome to Medica! Explore our premium medical services",
+  "qr_title": "Use your personal QR Code for faster check-ins at clinics",
+  "articles_title": "Read our daily medical articles to stay healthy and fit",
+    "search_hint": "Search doctor, clinic...",
+    "top_clinics": "Top Clinics",
+    "see_all": "See All",
+    "specializations": "Specializations",
+     "top_doctors": "Top Doctors",
+     "my_qr_code":" My Personal Qr",
+    "qr_not_available":"  Sorry,QR is not available currently"
+},
+"profile_setup": {
+  "welcome_title": "Let's Personalize Your Experience!",
+  "welcome_desc": "It only takes 2 minutes to fill in your medical details and get more accurate diagnoses.",
+  "get_started": "Get Started",
+  "remind_later": "Remind me later",
+  
+  "physical_profile": "Physical Profile",
+  "physical_desc": "Please enter your basic health metrics.",
+  "blood_type": "Blood Type",
+  "address": "Your Address",
+  
+  "medical_background": "Medical Background",
+  "medical_desc": "Please list any medications you take regularly.",
+  "medications_hint": "Medications, chronic diseases...",
+  
+  "medications_safety": "Medications & Safety",
+  "safety_desc": "Please enter an emergency contact name.",
+  "emergency_name": "Enter full name",
+  "emergency_phone": "Mobile phone number",
+  "relationship": "Relationship",
+  
+  "next": "Next",
+  "done": "Done",
+
+  "errors": {
+    "fill_blood_and_address": "Please select your blood type and enter your address.",
+    "fill_medications": "Please list your medications or write 'None'.",
+    "fill_emergency": "Please fill all emergency contact details.",
+      "network_error": "Please check your internet connection and try again.",
+  "unknown_error": "An unexpected error occurred, please try again later."
+  },
+   "success_message": "Your medical profile has been saved successfully!"
+},
+"nav_bar": {
+  "home": "Home",
+  "appointments": "Appointments",
+  "chatbot": "Chatbot",
+  "articles": "Articles",
+  "profile": "Profile"
+},
 
 
         "validation": {

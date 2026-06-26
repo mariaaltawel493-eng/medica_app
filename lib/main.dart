@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/App_router.dart';
-import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_theme.dart';
+import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
+import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
 import 'package:medica_app/features/user/auth/data/repos/auth_repoImp.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
 import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_bloc.dart';
-import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_event.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 import 'package:medica_app/features/user/settings/language/cubit/language_cubit.dart';
 import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
@@ -52,6 +52,9 @@ void main() async {
         ),
         BlocProvider<MedicalRecordsBloc>(
           create: (context) => getIt<MedicalRecordsBloc>(),
+        ),
+        BlocProvider<HomeBlocBloc>(
+          create: (context) => getIt<HomeBlocBloc>()..add(FetchHomeDataEvent()),
         ),
       ],
 

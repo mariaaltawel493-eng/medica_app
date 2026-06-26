@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/routes.dart';
+import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
+import 'package:medica_app/features/discover/Home/UI/pages/main_screen.dart';
 import 'package:medica_app/features/onboarding/onboarding_screen.dart';
 import 'package:medica_app/features/onboarding/splash_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/fill_profil_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/forgetpassword_screen.dart';
-import 'package:medica_app/features/user/auth/UI/pages/home_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/login_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/new_pass_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/registerOtpView.dart';
@@ -34,8 +35,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => OnboardingScreen());
       case Routes.LoginScreen:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
-      case Routes.HomeScreen:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.MainScreen:
+        return MaterialPageRoute(builder: (_) => const MainScreen());
       case Routes.RegisterPhoneScreen:
         return MaterialPageRoute(builder: (_) => RegisterPhoneScreen());
       case Routes.RegisterOtpView:

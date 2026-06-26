@@ -300,7 +300,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                       if (context.mounted) {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          Routes.HomeScreen,
+                          Routes.MainScreen,
                           (route) => false,
                           arguments: "show_success_dialog",
                         );

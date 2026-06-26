@@ -142,6 +142,13 @@ class PatientDataModel {
     );
   }
 
+  bool get isProfileComplete {
+    // نعتبر الملف غير مكتمل إذا كانت أي من هذه الحقول فارغة
+    return (bloodType != null && bloodType!.isNotEmpty) &&
+        (address != null && address!.isNotEmpty) &&
+        (emergencyContactName != null && emergencyContactName!.isNotEmpty) &&
+        (emergencyContactPhone != null && emergencyContactPhone!.isNotEmpty);
+  }
   // PRIVATE HELPERS: تحليل آمن للـ JSON
 
   /// تحويل آمن لقيمة int — يرجع 0 في حال null أو نوع خاطئ

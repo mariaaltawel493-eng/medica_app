@@ -62,7 +62,7 @@ class ChatBubble extends StatelessWidget {
             ),
 
             // زر الحجز - يظهر فقط إذا كانت الرسالة من البوت وكانت canBook تساوي true
-            /*  if (!message.isUser &&
+            if (!message.isUser &&
                 (message.canBook == true || message.content.contains('دكتور')))
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -83,7 +83,7 @@ class ChatBubble extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
-              ),*/
+              ),
           ],
         ),
       ),

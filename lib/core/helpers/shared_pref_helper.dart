@@ -4,6 +4,7 @@ class SharedPrefHelper {
   // مفاتيح ثابتة مشان ما نغلط بكتابة اسمها كل مرة
   static const String _userTokenKey = 'user_token';
   static const String _onboardingKey = 'onboarding_seen';
+  static const String _remindLaterKey = 'remind_later_status';
 
   // دالة لحفظ التوكن
   static Future<void> setData(String key, dynamic value) async {
@@ -33,5 +34,17 @@ class SharedPrefHelper {
   // دالة لجلب التوكن
   static Future<String?> getUserToken() async {
     return await getData(_userTokenKey);
+  }
+
+  //دالة لحفظ حالة التذكير لاحقا
+  static Future<void> setRemindLater(bool isRemindLater) async {
+    await setData(_remindLaterKey, isRemindLater);
+  }
+
+  //دالة لجلب حالة التذكير
+  static Future<bool> isRemindLater() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    return sharedPreferences.getBool(_remindLaterKey) ?? false;
   }
 }

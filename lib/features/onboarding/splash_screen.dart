@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // فحص حي لصلاحية التوكن عبر طلب بيانات البروفايل
 
         // إذا نجح الطلب، نتوجه للهوم
-        if (mounted) Navigator.pushReplacementNamed(context, '/home');
+        if (mounted) Navigator.pushReplacementNamed(context, Routes.MainScreen);
       } catch (e) {
         //في حال منتهي الصلاحية التوكن
         if (mounted)

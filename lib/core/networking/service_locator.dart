@@ -1,5 +1,8 @@
 import 'package:http/http.dart';
 import 'package:medica_app/core/networking/api_service.dart';
+import 'package:medica_app/features/discover/Home/data/repos/home_repo.dart';
+import 'package:medica_app/features/discover/Home/data/repos/home_repoImp.dart';
+import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo_imp.dart';
 import 'package:medica_app/features/user/chatBot/logic/chat_bot_bloc/chat_bot_bloc.dart';
@@ -37,9 +40,11 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<LanguageCubit>(
     () => LanguageCubit(getIt<ApiService>()),
   );
+  getIt.registerLazySingleton<HomeRepo>(() => HomeRepoimp(getIt<ApiService>()));
 
   // Bloc منستخدم Factory مشان كل ما نطلب بلوك جديد يعطينا نسخة نظيفة
   getIt.registerFactory(() => ProfileBlocBloc(getIt<ProfileRepo>()));
   getIt.registerFactory(() => ChatBotBloc(getIt<ChatBotRepo>()));
   getIt.registerFactory(() => MedicalRecordsBloc(getIt<MedicalRecordsRepo>()));
+  getIt.registerFactory(() => HomeBlocBloc(getIt<HomeRepo>()));
 }

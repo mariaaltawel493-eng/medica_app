@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocListener<AuthBlocBloc, AuthBlocState>(
         listener: (context, state) {
           if (state is AuthBlocSuccess) {
-            Navigator.pushReplacementNamed(context, Routes.HomeScreen);
+            Navigator.pushReplacementNamed(context, Routes.MainScreen);
           } else if (state is AuthBlocError) {
             print("error from server:${state.message}");
             String errorkey;

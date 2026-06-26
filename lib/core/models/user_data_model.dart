@@ -8,7 +8,7 @@ class UserDataModel {
   final String phone;
   final String? email;
   final String? role;
-  final String? profile; // وضعنا ? لأن الحقل قد يأتي null من السيرفر
+  final String? profile;
 
   UserDataModel({
     required this.id,

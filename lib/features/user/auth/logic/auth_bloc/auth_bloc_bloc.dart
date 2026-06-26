@@ -1,15 +1,12 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:http/http.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/models/user_model.dart';
 import 'package:medica_app/features/user/auth/data/models/login_request_model.dart';
 import 'package:medica_app/features/user/auth/data/models/register_request_model.dart';
 import 'package:medica_app/features/user/auth/data/models/resetpassword_request_model.dart';
 import 'package:medica_app/features/user/auth/data/repos/auth_repo.dart';
-import 'package:medica_app/features/user/auth/data/repos/auth_repoImp.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_bloc_event.dart';

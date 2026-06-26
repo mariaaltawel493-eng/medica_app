@@ -2,7 +2,9 @@ class Routes {
   static const String SplashScreen = "/";
   static const String OnboardingScreen = "/onboarding";
   static const String LoginScreen = "/login";
-  static const String HomeScreen = "/home";
+
+  static const String MainScreen = "/mainscreen";
+
   static const String RegisterPhoneScreen = "/register_phone";
   static const String RegisterOtpView = "/register_otp";
   static const String RegisterPasswordScreen = "/regi_password";

@@ -50,6 +50,8 @@ dependencies:
   file_picker: ^11.0.2
   equatable: ^2.0.8
   speech_to_text: ^7.4.0
+  qr_flutter: ^4.1.0
+  easy_stepper: ^1.1.0
 
 dev_dependencies:
   flutter_test:
