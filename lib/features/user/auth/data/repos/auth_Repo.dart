@@ -14,4 +14,6 @@ abstract class AuthRepo {
 
   Future<UserModel> register(RegisterRequestModel registerRequest);
   Future<UserModel> resetPassword(ResetpasswordRequestModel resetpassReuest);
+
+ Future<void>logout()async{}
 }

@@ -24,3 +24,9 @@ class AuthBlocError extends AuthBlocState {
   final String message;
   AuthBlocError(this.message);
 }
+
+class LogoutSuccess extends AuthBlocState {}
+
+class OtpResendLoading extends AuthBlocState {}
+
+class OtpResendSuccess extends AuthBlocState {}

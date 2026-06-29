@@ -6,6 +6,7 @@ import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/App_router.dart';
 import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_theme.dart';
+import 'package:medica_app/features/discover/Clinics/logic/hospitals_bloc/hospitals_bloc.dart';
 import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
 import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
 import 'package:medica_app/features/user/auth/data/repos/auth_repoImp.dart';

@@ -1,8 +1,16 @@
-import 'package:http/http.dart';
 import 'package:medica_app/core/networking/api_service.dart';
+import 'package:medica_app/features/articles/data/repos/articles_repo.dart';
+import 'package:medica_app/features/articles/data/repos/articles_repo_imp.dart';
+import 'package:medica_app/features/articles/logic/articles_bloc/articles_bloc.dart';
+import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
 import 'package:medica_app/features/discover/Home/data/repos/home_repo.dart';
 import 'package:medica_app/features/discover/Home/data/repos/home_repoImp.dart';
 import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
+import 'package:medica_app/features/discover/clinics/data/repos/clinics_repo.dart';
+import 'package:medica_app/features/discover/clinics/data/repos/clinics_repo_imp.dart';
+import 'package:medica_app/features/discover/clinics/logic/doctors_bloc/doctors_bloc.dart';
+import 'package:medica_app/features/discover/clinics/logic/hospitals_bloc/hospitals_bloc.dart';
+import 'package:medica_app/features/discover/clinics/logic/specializations_bloc/specializations_bloc.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo_imp.dart';
 import 'package:medica_app/features/user/chatBot/logic/chat_bot_bloc/chat_bot_bloc.dart';
@@ -21,7 +29,8 @@ final getIt = GetIt.instance;
 void setupServiceLocator() {
   // main service
   getIt.registerLazySingleton<ApiService>(() => ApiService());
-  //Repositry
+
+  // Repositories
   getIt.registerLazySingleton<ProfileRepo>(
     () => ProfileRepoImp(getIt<ApiService>()),
   );
@@ -31,20 +40,36 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<ChatBotRepo>(
     () => ChatBotRepoImp(getIt<ApiService>()),
   );
+  // ── Clinics Repository
+  getIt.registerLazySingleton<ClinicsRepo>(
+    () => ClinicsRepoImp(getIt<ApiService>()),
+  );
+  // ── Articles Repository
+  getIt.registerLazySingleton<ArticlesRepo>(
+    () => ArticlesRepoImp(getIt<ApiService>()),
+  );
 
   // theme
   getIt.registerLazySingleton<ThemeCubit>(
     () => ThemeCubit(getIt<ApiService>()),
   );
-  //language
+  // language
   getIt.registerLazySingleton<LanguageCubit>(
     () => LanguageCubit(getIt<ApiService>()),
   );
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepoimp(getIt<ApiService>()));
 
-  // Bloc منستخدم Factory مشان كل ما نطلب بلوك جديد يعطينا نسخة نظيفة
   getIt.registerFactory(() => ProfileBlocBloc(getIt<ProfileRepo>()));
   getIt.registerFactory(() => ChatBotBloc(getIt<ChatBotRepo>()));
   getIt.registerFactory(() => MedicalRecordsBloc(getIt<MedicalRecordsRepo>()));
   getIt.registerFactory(() => HomeBlocBloc(getIt<HomeRepo>()));
+
+  // ── Clinics BLoCs
+  getIt.registerFactory(() => HospitalsBloc(getIt<ClinicsRepo>()));
+  getIt.registerFactory(() => SpecializationsBloc(getIt<ClinicsRepo>()));
+  getIt.registerFactory(() => DoctorsBloc(getIt<ClinicsRepo>()));
+  getIt.registerFactory(() => DoctorDetailsBloc(getIt<ClinicsRepo>()));
+
+  // ── Articles BLoC
+  getIt.registerFactory(() => ArticlesBloc(getIt<ArticlesRepo>()));
 }

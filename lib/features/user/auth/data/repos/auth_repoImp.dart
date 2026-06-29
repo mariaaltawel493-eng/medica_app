@@ -91,4 +91,13 @@ class AuthRepoImpl implements AuthRepo {
       rethrow;
     }
   }
+  ///////////تسجيل الخروج (مضافة للدمج)
+
+  Future<void> logout() async {
+    try {
+      await apiService.post('auth/logout', {});
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

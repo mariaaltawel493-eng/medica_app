@@ -240,6 +240,46 @@
   },
    "success_message": "Your medical profile has been saved successfully!"
 },
+
+
+  "hospitals": {
+    "title": "Hospitals",
+    "search": "Search hospital",
+    "all_hospitals": "All Hospitals",
+    "no_hospitals": "No hospitals found"
+  },
+
+  "specializations": {
+    "title": "Choose Specialization",
+    "confirm": "Confirm",
+    "empty": "No specializations found"
+  },
+
+  "doctors": {
+    "all_doctors": "All Doctors",
+    "search": "Search doctor",
+    "empty": "No doctors available for this specialization"
+  },
+
+  "doctor_details": {
+    "consultation_fee": "Consultation Fee",
+    "availability": "Availability",
+    "about": "About",
+    "book": "Book Appointment"
+  },
+  "articles": {
+    "title": "Articles",
+    "see_all": "See All",
+    "trending": "Trending",
+    "newest": "Newest",
+    "health": "Health",
+    "covid": "Covid-19",
+    "lifestyle": "Lifestyle",
+    "search_hint": "Search for an article",
+    "no_articles": "No articles found"
+  },
+
+
 "nav_bar": {
   "home": "Home",
   "appointments": "Appointments",

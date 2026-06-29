@@ -1,6 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/features/articles/UI/pages/articles_screen.dart';
+import 'package:medica_app/features/articles/logic/articles_bloc/articles_bloc.dart';
 import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
 
 import 'package:medica_app/features/user/chatBot/UI/chatbot_screen.dart';
@@ -33,7 +37,10 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(), // شاشتنا الرئيسية الجاهزة
     const PlaceholderScreen(title: "Appointments Screen"),
     const ChatBotScreen(),
-    const PlaceholderScreen(title: "articals Screen"),
+    BlocProvider(
+      create: (_) => GetIt.I<ArticlesBloc>(),
+      child: const ArticlesScreen(),
+    ),
     const ProfileScreen(),
   ];
 

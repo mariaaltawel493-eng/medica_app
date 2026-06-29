@@ -49,3 +49,9 @@ class ResetPasswordSubmitted extends AuthBlocEvent {
 }
 
 class LogoutRequestedEvent extends AuthBlocEvent {}
+
+// ── مضاف للدمج: إعادة إرسال OTP ──────────────────────────────────
+class ResendOtpEvent extends AuthBlocEvent {
+  final String type;
+  ResendOtpEvent(this.type);
+}

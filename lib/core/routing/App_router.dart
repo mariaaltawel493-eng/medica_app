@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/routes.dart';
-import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
+import 'package:medica_app/features/discover/Clinics/UI/pages/All_doctor_screen.dart';
+import 'package:medica_app/features/discover/Clinics/UI/pages/hospitals_screen.dart';
+import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
+import 'package:medica_app/features/discover/Clinics/logic/doctors_bloc/doctors_bloc.dart';
+import 'package:medica_app/features/discover/Clinics/logic/hospitals_bloc/hospitals_bloc.dart';
+import 'package:medica_app/features/discover/Clinics/logic/specializations_bloc/specializations_bloc.dart';
 import 'package:medica_app/features/discover/Home/UI/pages/main_screen.dart';
 import 'package:medica_app/features/onboarding/onboarding_screen.dart';
 import 'package:medica_app/features/onboarding/splash_screen.dart';
@@ -89,6 +96,27 @@ class AppRouter {
 
       case Routes.ChatBotScreen:
         return MaterialPageRoute(builder: (_) => const ChatBotScreen());
+      // ── شاشات العيادات والأطباء (مضافة للدمج) ─────────────────────
+      case Routes.HospitalsScreen:
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => GetIt.I<HospitalsBloc>()),
+              BlocProvider(create: (_) => GetIt.I<SpecializationsBloc>()),
+              BlocProvider(create: (_) => GetIt.I<DoctorDetailsBloc>()),
+            ],
+            child: HospitalsScreen(),
+          ),
+        );
+
+      case Routes.AllDoctorsScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => GetIt.I<DoctorsBloc>(),
+            child: AllDoctorsScreen(),
+          ),
+        );
+
       default:
         MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -96,5 +124,6 @@ class AppRouter {
           ),
         );
     }
+    return null;
   }
 }

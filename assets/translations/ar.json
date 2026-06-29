@@ -246,6 +246,46 @@
   }
 },
 
+  "hospitals": {
+    "title": "المشافي",
+    "search": "ابحث عن مشفى",
+    "all_hospitals": "جميع المشافي",
+    "no_hospitals": "لا يوجد مشافٍ"
+  },
+
+  "specializations": {
+    "title": "اختر الاختصاص",
+    "confirm": "تأكيد",
+    "empty": "لا يوجد اختصاصات"
+  },
+
+  "doctors": {
+    "all_doctors": "جميع الأطباء",
+    "search": "ابحث عن طبيب",
+    "empty": "لا يوجد أطباء لهذا الاختصاص"
+  },
+
+  "doctor_details": {
+    "consultation_fee": "أجرة المعاينة",
+    "availability": "أوقات الدوام",
+    "about": "نبذة",
+    "book": "حجز موعد"
+  },
+
+  "articles": {
+    "title": "المقالات",
+    "see_all": "عرض الكل",
+    "trending": "الأكثر مشاهدة",
+    "newest": "الأحدث",
+    "health": "الصحة",
+    "covid": "كوفيد-19",
+    "lifestyle": "نمط الحياة",
+    "search_hint": "ابحث عن مقال",
+    "no_articles": "لا يوجد مقالات"
+  },
+
+
+
 "nav_bar": {
   "home": "الرئيسية",
   "appointments": "المواعيد",

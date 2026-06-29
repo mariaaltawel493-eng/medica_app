@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/features/discover/Clinics/UI/pages/doctor_details_screen.dart';
 import 'package:medica_app/features/discover/Home/data/models/topdoctor_model.dart';
 
 class TopDoctorsSection extends StatelessWidget {
@@ -32,7 +34,9 @@ class TopDoctorsSection extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.AllDoctorsScreen);
+              },
               child: Text(
                 "home.see_all".tr(),
                 style: TextStyle(
@@ -56,7 +60,14 @@ class TopDoctorsSection extends StatelessWidget {
               final doctor = doctors[index];
 
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => DoctorDetailsScreen(doctorId: doctor.id),
+                    ),
+                  );
+                },
                 child: Container(
                   width: 140,
                   padding: const EdgeInsets.all(10),

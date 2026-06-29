@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/features/discover/Clinics/UI/pages/specializations_screen.dart';
 import 'package:medica_app/features/discover/Home/data/models/topclinic_model.dart';
 
 class TopClinicsSection extends StatelessWidget {
@@ -32,7 +34,9 @@ class TopClinicsSection extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.HospitalsScreen);
+              },
               child: Text(
                 "home.see_all".tr(),
                 style: TextStyle(
@@ -57,7 +61,15 @@ class TopClinicsSection extends StatelessWidget {
               final clinic = clinics[index];
 
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          SpecializationsScreen(hospitalId: clinic.id),
+                    ),
+                  );
+                },
                 child: Container(
                   width: 280, // عرض محدد للكارد الواحد
                   padding: const EdgeInsets.all(12),

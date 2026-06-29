@@ -125,5 +125,30 @@ class AuthBlocBloc extends Bloc<AuthBlocEvent, AuthBlocState> {
         emit(AuthBlocError(e.toString()));
       }
     });
+
+    // ─── إعادة إرسال OTP (مضاف للدمج) ────────────────────────────
+    on<ResendOtpEvent>((event, emit) async {
+      emit(OtpResendLoading());
+      try {
+        await authRepo.sendOtp(phone: phoneNumber!, type: event.type);
+        emit(OtpResendSuccess());
+      } catch (e) {
+        emit(AuthBlocError(e.toString()));
+      }
+    });
+
+    on<LogoutRequestedEvent>((event, emit) async {
+      emit(AuthBlocLoading());
+      try {
+        await authRepo.logout();
+        // حذف التوكن المحلي بعد نجاح الـ API
+        await SharedPrefHelper.saveUserToken('');
+        emit(LogoutSuccess());
+      } catch (e) {
+        // حتى لو فشل الـ API نحذف التوكن المحلي ونُخرج المستخدم
+        await SharedPrefHelper.saveUserToken('');
+        emit(LogoutSuccess());
+      }
+    });
   }
 }

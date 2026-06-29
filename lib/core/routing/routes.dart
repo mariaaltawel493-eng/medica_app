@@ -27,4 +27,8 @@ class Routes {
   static const String EditHealthStatusScreen = '/edit_health_status';
   static const String UploadDocumentScreen = '/upload_document';
   static const String ChatBotScreen = '/ChatBot';
+
+  // ── شاشات العيادات والأطباء (مضافة للدمج) ─────────────────────
+  static const String HospitalsScreen = '/hospitals';
+  static const String AllDoctorsScreen = '/all_doctors';
 }
