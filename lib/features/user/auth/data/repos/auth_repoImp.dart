@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http show Response;
+import 'package:medica_app/core/helpers/fcm_helper.dart';
 import 'package:medica_app/core/models/patient_data_model.dart';
 import 'package:medica_app/core/models/user_data_model.dart';
 import 'package:medica_app/core/models/user_model.dart';
@@ -16,10 +18,10 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl(this.apiService);
   Future<UserModel> login(LoginRequestModel loginRequest) async {
     try {
-      final Response = await apiService.post(
-        'auth/login',
-        loginRequest.toJson(),
-      );
+      String? fcmToken = await FcmHelper.getToken();
+      Map<String, dynamic> loginData = loginRequest.toJson();
+      loginData['fcm_token'] = fcmToken;
+      final Response = await apiService.post('auth/login', loginData);
       return UserModel.fromJson(Response);
     } catch (e) {
       //إعادة رمي الخطأ ليصل إلى blc
@@ -50,10 +52,13 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<UserModel> register(RegisterRequestModel registerRequest) async {
     try {
+      String? fcmToken = await FcmHelper.getToken();
+      Map<String, String> registerData = registerRequest.toMap();
+      registerData['fcm_token'] = fcmToken!;
       // الـ apiService هون بترجع Map جاهز (لأنها نادت _handleResponse داخلياً)
       final responseData = await apiService.postMultipart(
         endpoint: 'auth/register',
-        fields: registerRequest.toMap(),
+        fields: registerData,
         File: registerRequest.profileImage,
         fileKey: 'profile',
       );

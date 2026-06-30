@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medica_app/core/helpers/fcm_helper.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/App_router.dart';
@@ -15,12 +17,15 @@ import 'package:medica_app/features/user/medical_records/logic/bloc/medical_reco
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 import 'package:medica_app/features/user/settings/language/cubit/language_cubit.dart';
 import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
+import 'package:medica_app/firebase_options.dart';
 
 bool isLoggedIn = false;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FcmHelper.initFcm();
   setupServiceLocator();
   String? userToken = await SharedPrefHelper.getData('user_token');
   print("User Token in Main:${userToken}");
@@ -30,8 +35,6 @@ void main() async {
 
   final apiService = ApiService();
   final authRepo = AuthRepoImpl(apiService);
-
-  ;
 
   runApp(
     // 1. الـ BlocProvider هو الأب ليكون متاحاً في كل مكان
