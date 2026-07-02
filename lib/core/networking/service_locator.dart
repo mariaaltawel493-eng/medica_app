@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/features/articles/data/repos/articles_repo.dart';
 import 'package:medica_app/features/articles/data/repos/articles_repo_imp.dart';
@@ -11,6 +12,9 @@ import 'package:medica_app/features/discover/clinics/data/repos/clinics_repo_imp
 import 'package:medica_app/features/discover/clinics/logic/doctors_bloc/doctors_bloc.dart';
 import 'package:medica_app/features/discover/clinics/logic/hospitals_bloc/hospitals_bloc.dart';
 import 'package:medica_app/features/discover/clinics/logic/specializations_bloc/specializations_bloc.dart';
+import 'package:medica_app/features/notifications/general/data/repos/notifications_repo.dart';
+import 'package:medica_app/features/notifications/general/data/repos/notifications_repo_imp.dart';
+import 'package:medica_app/features/notifications/general/logic/notifications_bloc/notifications_bloc.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo_imp.dart';
 import 'package:medica_app/features/user/chatBot/logic/chat_bot_bloc/chat_bot_bloc.dart';
@@ -48,6 +52,10 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<ArticlesRepo>(
     () => ArticlesRepoImp(getIt<ApiService>()),
   );
+  // Notifications
+  getIt.registerLazySingleton<NotificationsRepo>(
+    () => NotificationsRepoImpl(getIt<ApiService>()),
+  );
 
   // theme
   getIt.registerLazySingleton<ThemeCubit>(
@@ -72,4 +80,6 @@ void setupServiceLocator() {
 
   // ── Articles BLoC
   getIt.registerFactory(() => ArticlesBloc(getIt<ArticlesRepo>()));
+  //Notifications
+  getIt.registerFactory(() => NotificationsBloc(getIt<NotificationsRepo>()));
 }
