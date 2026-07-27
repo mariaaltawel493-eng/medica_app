@@ -10,10 +10,14 @@ class MedicationReminderLoadingState extends MedicationReminderState {}
 class MedicationReminderSuccessState extends MedicationReminderState {
   final List<MedicationReminderModel> reminders;
   final bool hasMore;
+  // 🎯 أضفنا هذا المتغير لحفظ الجرعات التي تم أخذها اليوم بصرياً في الذاكرة
+  final Set<String> loggedTakenSlots;
 
   MedicationReminderSuccessState({
     required this.reminders,
     required this.hasMore,
+    this.loggedTakenSlots =
+        const {}, // قيمة افتراضية فارغة لكي لا يحدث كراش في الأماكن الأخرى
   });
 }
 
@@ -37,4 +41,16 @@ class LogMedicationTakenSuccessState extends MedicationReminderState {
 class MedicationReminderErrorState extends MedicationReminderState {
   final String errorMessage;
   MedicationReminderErrorState(this.errorMessage);
+}
+
+// 5) حالة النجاح عند تعديل بيانات الدواء
+class UpdateMedicationReminderSuccessState extends MedicationReminderState {
+  final MedicationReminderModel updatedReminder;
+  UpdateMedicationReminderSuccessState(this.updatedReminder);
+}
+
+// 6) حالة النجاح عند حذف الدواء
+class DeleteMedicationReminderSuccessState extends MedicationReminderState {
+  final int reminderId;
+  DeleteMedicationReminderSuccessState(this.reminderId);
 }

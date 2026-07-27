@@ -2,11 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-import 'package:medica_app/core/widgets/App_Dialod.dart';
+import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
@@ -128,10 +127,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         keyboardType: TextInputType.phone,
                         prefixIcon: Icons.call_outlined,
                         validator: (value) {
-                          if (value == null || value.isEmpty)
+                          if (value == null || value.isEmpty) {
                             return "validation.phone_required".tr();
-                          if (value.length < 10)
+                          }
+                          if (value.length < 10) {
                             return "validation.phone_invalid".tr();
+                          }
                           return null;
                         },
                       ),
@@ -186,7 +187,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                       const SizedBox(height: 60),
                       state is AuthBlocLoading
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const AppLoadingIndicator()
                           : AppButton(
                               text: "forgot_password.continue_button".tr(),
                               onPressed: () {

@@ -61,9 +61,11 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
               listener: (context, state) {
                 if (state is RegisterOtpsuccess) {
                   Navigator.pushNamed(context, Routes.NewPassScreen);
+                } else if (state is OtpResendSuccess) {
+                  Appsnackbar.showSuccess(context, "otp.resend_success".tr());
                 } else if (state is AuthBlocError) {
                   String errorkey = "error.something_wrong".tr();
-                  print("  من اسيرفر خطأ :${state.message}");
+                  print(" من اسيرفر خطأ :${state.message}");
                   if (state.message.contains("Invalid") ||
                       state.message.contains("wrong")) {
                     errorkey = "otp.invalid_code";
@@ -104,12 +106,9 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
                       ],
                     ),
 
-                    // مسافة تعويضية بعد الهيدر لأننا حذفنا الصورة
                     const SizedBox(height: 60),
-
-                    // 2. النص الوصفي تحت العنوان
                     Text(
-                      "${"otp.sent_to".tr()} +963 9******",
+                      "${"otp.sent_to".tr()} +963 9**",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -121,32 +120,40 @@ class _ResetOtpScreenState extends State<ResetOtpScreen> {
 
                     const SizedBox(height: 60),
 
-                    // 3. مربعات إدخال الـ OTP
                     OtpFields(controller: otpController),
 
                     const SizedBox(height: 40),
 
-                    // 4. عداد إعادة الإرسال (Resend Timer)
                     TextButton(
-                      onPressed: _start == 0
+                      onPressed: (_start == 0 && state is! OtpResendLoading)
                           ? () {
                               startTimer();
-                              // منطق إعادة الإرسال يوضع هنا
+                              context.read<AuthBlocBloc>().add(
+                                ResendOtpEvent("password_reset"),
+                              );
                             }
                           : null,
-                      child: Text(
-                        _start == 0
-                            ? "otp.resend_button".tr()
-                            : "${"otp.resend_text".tr()} ${_start}s",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: _start == 0 ? AppColors.primary : Colors.grey,
-                          decoration: _start == 0
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
-                        ),
-                      ),
+                      child: state is OtpResendLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(
+                              _start == 0
+                                  ? "otp.resend_button".tr()
+                                  : "${"otp.resend_text".tr()} ${_start}s",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: _start == 0
+                                    ? AppColors.primary
+                                    : Colors.grey,
+                                decoration: _start == 0
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
+                              ),
+                            ),
                     ),
 
                     const SizedBox(height: 80),

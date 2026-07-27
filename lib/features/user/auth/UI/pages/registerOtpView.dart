@@ -7,7 +7,6 @@ import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/Otp_fields.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
-import 'package:pinput/pinput.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 
@@ -57,8 +56,6 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // تنسيق مربعات الـ OTP
-
     return Scaffold(
       backgroundColor: isDark
           ? AppColors.darkscaffoldBackground
@@ -79,6 +76,8 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                     context,
                     Routes.RegisterPasswordScreen,
                   );
+                } else if (state is OtpResendSuccess) {
+                  Appsnackbar.showSuccess(context, "otp.resend_success".tr());
                 } else if (state is AuthBlocError) {
                   print("OTP_ERROR_LOG:${state.message}");
                   String errorkey = state.message.toLowerCase();
@@ -129,22 +128,33 @@ class _RegisterOtpViewState extends State<RegisterOtpView> {
                     const SizedBox(height: 40),
 
                     TextButton(
-                      onPressed: _start == 0
+                      onPressed: (_start == 0 && state is! OtpResendLoading)
                           ? () {
-                              // نبرمج إعادة الإرسال هنا لاحقاً
                               startTimer();
+
+                              context.read<AuthBlocBloc>().add(
+                                ResendOtpEvent("register"),
+                              );
                             }
                           : null,
-                      child: Text(
-                        _start == 0
-                            ? "otp.resend_button".tr()
-                            : "${"otp.not_recevied".tr()} : ${_start}s",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: _start == 0 ? AppColors.primary : Colors.grey,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
+                      child: state is OtpResendLoading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(
+                              _start == 0
+                                  ? "otp.resend_button".tr()
+                                  : "${"otp.not_recevied".tr()} : ${_start}s",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: _start == 0
+                                    ? AppColors.primary
+                                    : Colors.grey,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                     ),
 
                     const SizedBox(height: 60),

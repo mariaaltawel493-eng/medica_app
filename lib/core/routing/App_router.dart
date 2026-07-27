@@ -10,6 +10,15 @@ import 'package:medica_app/features/discover/Clinics/logic/doctors_bloc/doctors_
 import 'package:medica_app/features/discover/Clinics/logic/hospitals_bloc/hospitals_bloc.dart';
 import 'package:medica_app/features/discover/Clinics/logic/specializations_bloc/specializations_bloc.dart';
 import 'package:medica_app/features/discover/Home/UI/pages/main_screen.dart';
+import 'package:medica_app/features/notifications/UI/pages/create_new_medicine_screen.dart';
+import 'package:medica_app/features/notifications/UI/pages/history_screen.dart';
+
+import 'package:medica_app/features/notifications/UI/pages/list_medicine_screen.dart';
+import 'package:medica_app/features/notifications/UI/pages/medicine_information_screen.dart';
+import 'package:medica_app/features/notifications/UI/pages/my_activity_screen.dart'
+    hide HistoryScreen;
+import 'package:medica_app/features/notifications/medication/data/models/medication_reminder_model.dart';
+import 'package:medica_app/features/notifications/medication/logic/medication_reminder_bloc/medication_reminder_bloc.dart';
 import 'package:medica_app/features/onboarding/onboarding_screen.dart';
 import 'package:medica_app/features/onboarding/splash_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/fill_profil_screen.dart';
@@ -116,6 +125,30 @@ class AppRouter {
             child: AllDoctorsScreen(),
           ),
         );
+
+      case Routes.MyActivityScreen:
+        // 🌟 استخراج الـ index الممرر (إن وجد) وتحويله كـ int
+        final tabIndex = settings.arguments as int? ?? 0;
+        return MaterialPageRoute(
+          builder: (_) => MyActivityScreen(initialTabIndex: tabIndex),
+          settings:
+              settings, // ضروري لتمرير الـ settings والـ arguments بشكل سليم
+        );
+      case Routes.MedicineInformationScreen:
+        final reminder = settings.arguments as MedicationReminderModel;
+        return MaterialPageRoute(
+          builder: (_) => MedicineInformationScreen(reminder: reminder),
+        );
+
+      case Routes.ListMedicineScreen:
+        return MaterialPageRoute(builder: (_) => const ListMedicineScreen());
+
+      case Routes.CreateNewMedicineScreen:
+        return MaterialPageRoute(
+          builder: (_) => const CreateNewMedicineScreen(),
+        );
+      case Routes.Historyscreen:
+        return MaterialPageRoute(builder: (_) => const HistoryScreen());
 
       default:
         MaterialPageRoute(

@@ -4,6 +4,7 @@ import 'package:medica_app/core/theme/app_colors.dart';
 
 class HomeHeader extends StatelessWidget {
   final String fullName;
+  final int unreadCount;
   final String? profileImageUrl;
   final VoidCallback onNotificationPressed;
   final VoidCallback onQrCodePressed;
@@ -14,6 +15,7 @@ class HomeHeader extends StatelessWidget {
     this.profileImageUrl,
     required this.onNotificationPressed,
     required this.onQrCodePressed,
+    required this.unreadCount,
   });
 
   String _getGreetingKey() {

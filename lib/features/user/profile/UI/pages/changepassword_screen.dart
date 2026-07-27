@@ -66,6 +66,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               listener: (context, state) {
                 if (state is sendUpdatePhoneOtpSuccess) {
                   Appsnackbar.showSuccess(context, state.message.tr());
+                  try {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  } catch (_) {}
                   showGenericOtpSheet(
                     context: context,
                     isPassword: true,
@@ -74,6 +77,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     profileBloc: context.read<ProfileBlocBloc>(),
                   );
                 } else if (state is ChangePasswordSuccess) {
+                  try {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  } catch (_) {}
                   if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                     Future.delayed(const Duration(seconds: 1), () {

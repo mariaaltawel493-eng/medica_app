@@ -31,4 +31,11 @@ class Routes {
   // ── شاشات العيادات والأطباء (مضافة للدمج) ─────────────────────
   static const String HospitalsScreen = '/hospitals';
   static const String AllDoctorsScreen = '/all_doctors';
+
+  ///الاشعارات
+  static const String MyActivityScreen = "/my_activity";
+  static const String MedicineInformationScreen = "/Medicine_information";
+  static const String ListMedicineScreen = "/List_Medicine";
+  static const String CreateNewMedicineScreen = "/add_medicine";
+  static const String Historyscreen = "/history_screen";
 }

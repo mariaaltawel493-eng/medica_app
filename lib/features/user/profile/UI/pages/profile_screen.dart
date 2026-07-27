@@ -12,6 +12,9 @@ import 'package:medica_app/features/user/profile/UI/widgets/lang_bottom_sheet.da
 import 'package:medica_app/features/user/profile/UI/widgets/profile_header.dart';
 import 'package:medica_app/features/user/profile/data/models/userprofileModel.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
+// --- تم التعديل هنا: استيراد الـ AuthBlocBloc و AuthBlocState لتمكين الاستماع لحالات الـ Logout ---
+import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
+// ------------------------------------------------------------------------------------------------
 import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -43,28 +46,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return BlocListener<ProfileBlocBloc, ProfileBlocState>(
-      listener: (context, state) {
-        if (state is UpdateImageSuccess) {
-          Appsnackbar.showSuccess(context, 'profile.image_updated'.tr());
-        } else if (state is UpdateImageError) {
-          String errorkey = "errors.something_wrong";
-          if (state.error.contains("Network") ||
-              state.error.contains("Connection")) {
-            errorkey = "errors.no_internet";
-          } else if (state.error.contains('Unauthraized')) {
-            errorkey = "errors.session_expired";
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.LoginScreen,
-              (route) => false,
-            );
-          } else {
-            errorkey = state.error;
-          }
-          Appsnackbar.showError(context, errorkey.tr());
-        }
-      },
+    // --- تم التعديل هنا: دمج MultiBlocListener أو استخدام BlocListener متداخل للتعامل مع حالات الـ Profile والـ Auth معاً ---
+    return MultiBlocListener(
+      listeners: [
+        // 1. استماع حالات البروفايل (مثل تحديث الصورة)
+        BlocListener<ProfileBlocBloc, ProfileBlocState>(
+          listener: (context, state) {
+            if (state is UpdateImageSuccess) {
+              Appsnackbar.showSuccess(context, 'profile.image_updated'.tr());
+            } else if (state is UpdateImageError) {
+              String errorkey = "errors.something_wrong";
+              if (state.error.contains("Network") ||
+                  state.error.contains("Connection")) {
+                errorkey = "errors.no_internet";
+              } else if (state.error.contains('Unauthraized')) {
+                errorkey = "errors.session_expired";
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.LoginScreen,
+                  (route) => false,
+                );
+              } else {
+                errorkey = state.error;
+              }
+              Appsnackbar.showError(context, errorkey.tr());
+            }
+          },
+        ),
+        // 2. استماع حالات المصادقة (تحديداً نجاح أو خطأ تسجيل الخروج Logout)
+        BlocListener<AuthBlocBloc, AuthBlocState>(
+          listener: (context, authState) {
+            if (authState is LogoutSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.LoginScreen,
+                (route) => false,
+              );
+            } else if (authState is AuthBlocError) {
+              Appsnackbar.showError(context, authState.message.tr());
+            }
+          },
+        ),
+      ],
+      // -----------------------------------------------------------------------------------------------------------------
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(
@@ -172,7 +196,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       icon: Icons.person_outline,
                       title: "profile.edit_profile".tr(),
                       onTap: () {
-                        // الانتقال لصفحة التعديل (الراوتر سيتكفل بالبقية)
                         Navigator.pushNamed(context, Routes.EditProfileScreen);
                       },
                     ),
@@ -213,12 +236,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       onTap: () {},
                     ),
-                    CustomProfileMenuItem(
-                      icon: Icons.logout,
-                      title: "profile.logout".tr(),
-                      color: Colors.red,
-                      onTap: () {},
+
+                    BlocBuilder<AuthBlocBloc, AuthBlocState>(
+                      builder: (context, authState) {
+                        final bool isLoggingOut = authState is AuthBlocLoading;
+                        return CustomProfileMenuItem(
+                          icon: Icons.logout,
+                          title: "profile.logout".tr(),
+                          color: Colors.red,
+                          onTap: isLoggingOut
+                              ? () {}
+                              : () {
+                                  context.read<AuthBlocBloc>().add(
+                                    LogoutRequestedEvent(),
+                                  );
+                                },
+                        );
+                      },
                     ),
+
                     const SizedBox(height: 40),
                   ]),
                 ),

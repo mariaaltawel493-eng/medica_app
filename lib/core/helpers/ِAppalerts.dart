@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medica_app/core/widgets/App_Dialod.dart';
+import 'package:medica_app/core/widgets/App_Dialog.dart';
 
 class AppAlerts {
   static void showResultDialog({

@@ -1,11 +1,10 @@
+import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-import 'package:medica_app/core/widgets/App_Dialod.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
@@ -38,22 +37,16 @@ class NewPassScreenstate extends State<NewPassScreen> {
         child: BlocConsumer<AuthBlocBloc, AuthBlocState>(
           listener: (context, state) {
             if (state is ResetPasswordSuccess) {
-              // حالة النجاح من البلوك
-              AppAlerts.showResultDialog(
-                context: context,
-                title: "profile.congrats".tr(),
-                subtitle: "profile.account_created".tr(),
-                type: DialogType.success,
-                onConfirm: () {
-                  print("STAMP:USER CLICED THE BUTTON!");
-                  Navigator.pop(context);
+              Appsnackbar.showSuccess(
+                context,
+                "new_password.reset_success_message".tr(),
+              );
 
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.LoginScreen,
-                    (route) => false,
-                  );
-                },
+              // التوجيه المباشر لصفحة تسجيل الدخول
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.LoginScreen,
+                (route) => false,
               );
             } else if (state is AuthBlocError) {
               print("SERVER ERROR LOG ${state.message}");
@@ -94,7 +87,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 30),
                       Center(
                         child: Image.asset(
@@ -134,10 +126,12 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           ),
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty)
+                          if (value == null || value.isEmpty) {
                             return "validation.password_required".tr();
-                          if (value.length < 8)
+                          }
+                          if (value.length < 8) {
                             return "validation.password_short".tr();
+                          }
                           return null;
                         },
                       ),
@@ -161,8 +155,9 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           ),
                         ),
                         validator: (value) {
-                          if (value != passwordController.text)
+                          if (value != passwordController.text) {
                             return "validation.password_mismatch".tr();
+                          }
                           return null;
                         },
                       ),
@@ -187,7 +182,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                       ),
 
                       const SizedBox(height: 40),
-
                       state is AuthBlocLoading
                           ? const Center(
                               child: CircularProgressIndicator(

@@ -7,7 +7,7 @@ import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-import 'package:medica_app/core/widgets/App_Dialod.dart';
+import 'package:medica_app/core/widgets/App_Dialog.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';

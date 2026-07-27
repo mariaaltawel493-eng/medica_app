@@ -3,9 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 class ErrorView extends StatelessWidget {
   final String message;
-  final VoidCallback onRetry;
+  final VoidCallback? onRetry; // 🌟 أصبحت اختيارية لدعم الحالة الفارغة
 
-  const ErrorView({required this.message, required this.onRetry});
+  const ErrorView({super.key, required this.message, this.onRetry});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,15 @@ class ErrorView extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(message, textAlign: TextAlign.center),
-          const SizedBox(height: 20),
-          ElevatedButton(onPressed: onRetry, child: Text("retry".tr())),
+
+          // 🌟 لا يظهر الزر إلا إذا كان هناك حدث إعادة محاولة فعلي (حالة الخطأ)
+          if (onRetry != null) ...[
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: onRetry,
+              child: Text("notification.retry".tr()),
+            ),
+          ],
         ],
       ),
     );

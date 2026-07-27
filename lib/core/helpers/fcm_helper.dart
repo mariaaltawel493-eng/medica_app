@@ -1,6 +1,18 @@
 import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medica_app/core/routing/routes.dart';
+import 'package:medica_app/main.dart';
+
+/// 🔔 معالج استقبال الإشعارات والتطبيق مغلق تماماً (Terminated) أو في الخلفية.
+/// ⚠️ يجب أن تكون top-level function (وليست داخل الكلاس) لأن Firebase
+/// تُنفّذها في Isolate منفصل عن التطبيق الأساسي.
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  log(
+    '🔔 FCM: استقبلنا إشعاراً والتطبيق في الخلفية/مغلق: ${message.notification?.title}',
+  );
+}
 
 class FcmHelper {
   static final FirebaseMessaging _firebaseMessaging =
@@ -21,6 +33,10 @@ class FcmHelper {
       log('🔔 FCM: تمت الموافقة على صلاحيات الإشعارات بنجاح.');
     }
 
+    // 🎯 تسجيل معالج الخلفية (Terminated / Background) — يجب أن يتم قبل
+    // أي مستمع آخر وقبل runApp لضمان استقبال الإشعارات حتى والتطبيق مغلق
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
     // إعدادات الأندرويد الأساسية للأيقونة
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -32,6 +48,9 @@ class FcmHelper {
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         log('🔔 FCM: تم الضغط على الإشعار المحلي: ${response.payload}');
+        // 🎯 حسب الـ Flow اقر: نفتح HistoryScreen مباشرة، وسجل الإشعارات هو
+        // من يتولى التنقل الدقيق حسب type عند الضغط داخل السجل نفسه
+        navigatorKey.currentState?.pushNamed(Routes.Historyscreen);
       },
     );
 
@@ -46,6 +65,14 @@ class FcmHelper {
     // [المستمع الثاني]: عند الضغط من الخلفية (Background)
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log('🔔 FCM: تم فتح التطبيق عبر الضغط على الإشعار من الخلفية!');
+      navigatorKey.currentState?.pushNamed(Routes.Historyscreen);
+    });
+
+    // [المستمع الثالث]: تحديث الـ FCM Token على السيرفر عند تجدده
+    // 🛑 TODO: بانتظار تأكيد وجود Endpoint مخصص لتحديث fcm_token بشكل مستقل
+    // (الحالي يُرسَل فقط ضمن طلبَي تسجيل الدخول/التسجيل) قبل ربطه بالـ API
+    _firebaseMessaging.onTokenRefresh.listen((String newToken) {
+      log('🔔 FCM: تم تجديد الـ Token: $newToken');
     });
   }
 

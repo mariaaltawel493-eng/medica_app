@@ -3,17 +3,14 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medica_app/core/helpers/%D9%90Appalerts.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/helpers/Image_picker_helper.dart';
-import 'package:medica_app/core/helpers/shared_pref_helper.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-import 'package:medica_app/core/widgets/App_Dialod.dart';
+import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/widgets/app_TextField.dart';
 import 'package:medica_app/core/widgets/app_button.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
-import 'package:medica_app/main.dart';
 
 class FillProfilScreen extends StatefulWidget {
   const FillProfilScreen({super.key});
@@ -114,8 +111,9 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                   hintText: "profile.first_name".tr(),
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return "validation.first_name_req".tr();
+                    }
                     return null;
                   },
                 ),
@@ -127,8 +125,9 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                   hintText: "profile.last_name".tr(),
                   prefixIcon: Icons.person_outline,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return "validation.last_name_req".tr();
+                    }
                     return null;
                   },
                 ),
@@ -319,7 +318,7 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                   },
                   builder: (context, state) {
                     if (state is AuthBlocLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const AppLoadingIndicator();
                     }
                     return AppButton(
                       text: "auth.continue_button".tr(),

@@ -12,7 +12,6 @@ class ChatBotBloc extends Bloc<ChatBotEvent, ChatBotState> {
   ChatBotBloc(this.chatBotRepo) : super(const ChatBotInitial()) {
     // 1. حدث جلب أرشيف المحادثة (GET)
     on<FetchChatHistoryEvent>((event, emit) async {
-      // نمرر القائمة الحالية (الفارغة في البداية) لحالة اللودنج
       emit(ChatBotLoading(state.messages));
       try {
         final messages = await chatBotRepo.getChatHistory();
@@ -24,27 +23,23 @@ class ChatBotBloc extends Bloc<ChatBotEvent, ChatBotState> {
 
     // 2. حدث إرسال رسالة جديدة للبوت وانتظار الرد (POST)
     on<SendMessageEvent>((event, emit) async {
-      // أخذ نسخة من الرسائل الحالية وإضافة رسالة المستخدم لها فوراً لتعرض بالـ UI بدون أي تأخير
+      // أخذ نسخة من الرسائل الحالية وإضافة رسالة المستخدم لها فوراً
       final updatedMessages = List<ChatMessageModel>.from(state.messages)
         ..add(ChatMessageModel(role: 'user', content: event.message));
 
-      // ننتقل لحالة التحميل ومعنا القائمة المحدثة لتبقى الشاشة ثابتة ومستقرة
       emit(ChatBotLoading(updatedMessages));
 
       try {
         // استدعاء السيرفر وانتظار الرد التفاعلي
         final response = await chatBotRepo.sendMessage(event.message);
-        bool shouldShowButton =
-            response.reply.contains("الدكتور") ||
-            response.reply.contains("طبيب") ||
-            response.reply.contains('doctor');
-        // إضافة رد البوت النظيف إلى القائمة المحدثة
+
+        // إضافة رد البوت إلى القائمة المحدثة مع الاعتماد حصرياً على بيانات الـ Backend
         updatedMessages.add(
           ChatMessageModel(
             role: 'assistant',
             content: response.reply,
-            canBook: shouldShowButton,
-            doctorId: null,
+            canBook: response.canBook,
+            doctorId: response.doctorId,
           ),
         );
 
@@ -57,7 +52,6 @@ class ChatBotBloc extends Bloc<ChatBotEvent, ChatBotState> {
           ),
         );
       } catch (e) {
-        // حماية هندسية: لو السيرفر ضرب 503 أو فصل، بنطلع حالة الخطأ بس بنحافظ على رسائل الشاشة تماماً بدون اختفاء!
         emit(
           ChatBotError(
             "Connection timed out, please try again",

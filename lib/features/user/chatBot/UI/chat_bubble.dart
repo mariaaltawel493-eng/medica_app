@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+import 'package:medica_app/features/discover/Clinics/UI/pages/doctor_details_screen.dart';
 import '../data/models/chat_message_model.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -61,16 +62,21 @@ class ChatBubble extends StatelessWidget {
               ),
             ),
 
-            // زر الحجز - يظهر فقط إذا كانت الرسالة من البوت وكانت canBook تساوي true
+            // زر عرض الطبيب المقترح - يظهر فقط إذا كان الباك إند قد حدد إمكانية الحجز ومعرف الطبيب
             if (!message.isUser &&
-                (message.canBook == true || message.content.contains('دكتور')))
+                (message.canBook == true && message.doctorId != null))
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: ElevatedButton(
                   onPressed: () {
-                    // هنا يتم تمرير الـ doctorId الذي يأتي من الموديل
-                    print("الانتقال لصفحة الحجز للطبيب رقم: ");
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => BookingScreen(doctorId: message.doctorId!)));
+                    // الانتقال المباشر لصفحة تفاصيل الطبيب باستخدام الـ doctorId القادم من الـ Backend
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DoctorDetailsScreen(doctorId: message.doctorId!),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -79,7 +85,7 @@ class ChatBubble extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "احجز الآن".tr(),
+                    "chatbot.view_recommended_doctor".tr(),
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),

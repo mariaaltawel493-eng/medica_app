@@ -55,4 +55,33 @@ class MedicationReminderRepoImpl implements MedicationReminderRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<MedicationReminderModel> updateMedicationReminder({
+    required int reminderId,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      // دالة الـ update في الباكيند ترسل البيانات عبر POST أو PUT/PATCH حسب تهيئة الـ ApiService
+      // الباكيند عندكِ يتعامل مع الـ update بـ Request يحتوي على البيانات ورقم الـ id في الرابط
+      final response = await apiService.put(
+        'medication-reminders/$reminderId',
+        body: data,
+      );
+      return MedicationReminderModel.fromJson(response['data']);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteMedicationReminder(int reminderId) async {
+    try {
+      // دالة الـ destroy في الباكيند تنتظر طلب حذف على المسار بالـ id الخاص بالدواء
+      // إذا كان الـ apiService يحتوي على دالة delete نستخدمها، أو نمررها بالطريقة المعتمدة لديكِ
+      await apiService.delete('medication-reminders/$reminderId');
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

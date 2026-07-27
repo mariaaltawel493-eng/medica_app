@@ -8,9 +8,8 @@ import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/App_router.dart';
 import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_theme.dart';
-import 'package:medica_app/features/discover/Clinics/logic/hospitals_bloc/hospitals_bloc.dart';
-import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
 import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
+import 'package:medica_app/features/notifications/general/logic/notifications_bloc/notifications_bloc.dart'; // 🌟 استيراد البلوك
 import 'package:medica_app/features/user/auth/data/repos/auth_repoImp.dart';
 import 'package:medica_app/features/user/auth/logic/auth_bloc/auth_bloc_bloc.dart';
 import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_bloc.dart';
@@ -21,53 +20,71 @@ import 'package:medica_app/firebase_options.dart';
 
 bool isLoggedIn = false;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  // 1. تهيئة فايربيس أولاً وقبل كل شيء
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FcmHelper.initFcm();
+
+  // 2. تجهيز الـ Service Locator (حقن التبعيات) قبل استخدام أي مساعدات تعتمد عليها
   setupServiceLocator();
+
+  // 3. فحص التوكن المحلي
   String? userToken = await SharedPrefHelper.getData('user_token');
-  print("User Token in Main:${userToken}");
+  print("User Token in Main: ${userToken}");
   if (userToken != null && userToken.isNotEmpty) {
     isLoggedIn = true;
+  }
+
+  // 4. تهيئة الـ FCM بعد جهوزية النظام الأساسي
+  try {
+    await FcmHelper.initFcm();
+    String? testToken = await FcmHelper.getToken();
+    print("🔑 TEST FCM TOKEN: $testToken");
+  } catch (e) {
+    print("FCM Init Error: $e");
   }
 
   final apiService = ApiService();
   final authRepo = AuthRepoImpl(apiService);
 
   runApp(
-    // 1. الـ BlocProvider هو الأب ليكون متاحاً في كل مكان
     MultiBlocProvider(
       providers: [
-        //auth
         BlocProvider<AuthBlocBloc>(create: (context) => AuthBlocBloc(authRepo)),
-        //profile
+
         BlocProvider<ProfileBlocBloc>(
           create: (context) => getIt<ProfileBlocBloc>(),
         ),
-        //theme
+
         BlocProvider<ThemeCubit>(
           create: (context) => getIt<ThemeCubit>()..loadTheme(),
         ),
-        //language
+
         BlocProvider<LanguageCubit>(
           create: (context) => getIt<LanguageCubit>(),
         ),
+
         BlocProvider<MedicalRecordsBloc>(
           create: (context) => getIt<MedicalRecordsBloc>(),
         ),
+
         BlocProvider<HomeBlocBloc>(
           create: (context) => getIt<HomeBlocBloc>()..add(FetchHomeDataEvent()),
         ),
+
+        // 🌟 تم إضافة البلوك هنا لضمان عمل الـ History وتحديث البيانات حياً في الخلفية
+        BlocProvider<NotificationsBloc>(
+          create: (context) => getIt<NotificationsBloc>(),
+        ),
       ],
 
-      // 2. بداخل الـ child نضع مكتبة الترجمة
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],
         path: 'assets/translations',
         fallbackLocale: const Locale('en'),
-
         child: MyApp(),
       ),
     ),
@@ -78,7 +95,6 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
   final AppRouter appRouter = AppRouter();
 
-  // This widget is the root of our application.
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
@@ -86,16 +102,12 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-
-          // إعدادات اللغات
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-
-          // إعدادات الثيم
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: state.themeMode, //صار بياخد قيمة ال state تبع ال cubit
+          themeMode: state.themeMode,
           onGenerateRoute: appRouter.generateRoute,
           initialRoute: "/",
         );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/core/widgets/App_loadingindicator.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
@@ -14,6 +15,7 @@ import 'package:medica_app/features/discover/Home/UI/widgets/top_clinics_section
 import 'package:medica_app/features/discover/Home/UI/widgets/top_doctor_section.dart';
 import 'package:medica_app/features/discover/Home/logic/home_bloc/home_bloc_bloc.dart';
 import 'package:medica_app/features/discover/profile_setup/UI/widgets/profile_setup-bottom_sheet.dart';
+import 'package:medica_app/features/notifications/general/logic/notifications_bloc/notifications_bloc.dart';
 import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_bloc.dart';
 import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_event.dart';
 import 'package:medica_app/features/user/medical_records/logic/bloc/medical_records_state.dart';
@@ -39,6 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeBlocBloc>().add(FetchHomeDataEvent());
     context.read<ProfileBlocBloc>().add(FetchProfileDataEvent());
     context.read<MedicalRecordsBloc>().add(GetMedicalProfileEvent());
+
+    // 🔥 جلب الإشعارات لجلب العداد فوراً عند فتح الـ HomeScreen
+    context.read<NotificationsBloc>().add(FetchNotificationsEvent());
 
     // قراءة الحالة المخزنة عند فتح الشاشة لتحديث البانر مبدئياً
     SharedPrefHelper.isRemindLater().then((value) {
@@ -79,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const ProfileSetupBottomSheet(),
           ),
         );
-
         // 🔥 تحديث الحالة فورياً عند الإغلاق: البانر يظهر بلحظتها بناءً على نتيجة الضغط
         if (mounted) {
           setState(() {
@@ -157,37 +161,60 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (showBanner)
-                                    Padding(
+                                    const Padding(
                                       padding: EdgeInsets.only(bottom: 12.0),
-                                      child: const HomeProfileReminderBanner(),
+                                      child: HomeProfileReminderBanner(),
                                     ),
 
-                                  HomeHeader(
-                                    fullName: name,
-                                    onNotificationPressed: () {},
-                                    onQrCodePressed: () {
-                                      if (qrUrl != null && qrUrl.isNotEmpty) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            title: Text('home.my_qr_code'.tr()),
-                                            content: SizedBox(
-                                              width: 250,
-                                              height: 250,
-                                              child: QrImageView(
-                                                data: qrUrl,
-                                                version: QrVersions.auto,
-                                                size: 200.0,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      } else {
-                                        Appsnackbar.showError(
-                                          context,
-                                          "qr_not_available".tr(),
-                                        );
+                                  // 🔥 تغليف الهيدر بـ BlocBuilder للإشعارات لجلب وتمرير العداد
+                                  BlocBuilder<
+                                    NotificationsBloc,
+                                    NotificationsState
+                                  >(
+                                    builder: (context, notifState) {
+                                      int unreadCount = 0;
+                                      if (notifState
+                                          is NotificationsSuccessState) {
+                                        unreadCount = notifState.unreadCount;
                                       }
+                                      return HomeHeader(
+                                        fullName: name,
+                                        unreadCount:
+                                            unreadCount, // تمرير العداد هنا
+                                        onNotificationPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            Routes.MyActivityScreen,
+                                          );
+                                        },
+                                        onQrCodePressed: () {
+                                          if (qrUrl != null &&
+                                              qrUrl.isNotEmpty) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: Text(
+                                                  'home.my_qr_code'.tr(),
+                                                ),
+                                                content: SizedBox(
+                                                  width: 250,
+                                                  height: 250,
+                                                  child: QrImageView(
+                                                    data: qrUrl,
+                                                    version: QrVersions.auto,
+                                                    size: 200.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            Appsnackbar.showError(
+                                              context,
+                                              "qr_not_available".tr(),
+                                            );
+                                          }
+                                        },
+                                      );
                                     },
                                   ),
                                 ],

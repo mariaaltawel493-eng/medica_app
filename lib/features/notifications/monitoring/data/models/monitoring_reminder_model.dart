@@ -12,7 +12,9 @@ class MonitoringReminderResponseModel {
       data: (json['data'] as List? ?? [])
           .map((e) => MonitoringReminderModel.fromJson(e))
           .toList(),
-      pagination: MonitoringPaginationModel.fromJson(json['pagination'] ?? {}),
+      // ⚠️ الباكيند (MonitoringReminderController@index) يرسل has_more و next_last_id
+      // في جذر الاستجابة مباشرة، وليس داخل كائن pagination متداخل كباقي الميزات
+      pagination: MonitoringPaginationModel.fromJson(json),
     );
   }
 }

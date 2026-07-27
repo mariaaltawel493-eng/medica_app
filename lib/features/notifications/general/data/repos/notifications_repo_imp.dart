@@ -14,7 +14,6 @@ class NotificationsRepoImpl implements NotificationsRepo {
     int limit = 15,
   }) async {
     try {
-      // بناء الـ URL مع الـ Query Parameters الخاصة بالـ Pagination كما يتوقعها Laravel
       String endpoint = 'notifications?limit=$limit';
       if (lastId != null) {
         endpoint += '&last_id=$lastId';
@@ -22,10 +21,9 @@ class NotificationsRepoImpl implements NotificationsRepo {
 
       final response = await apiService.get(endpoint);
 
-      // تحويل الـ JSON القادم من الـ ApiService مباشرة إلى الـ Model الذي شرحناه
       return NotificationResponseModel.fromJson(response);
     } catch (e) {
-      rethrow; // إعادة رمي الخطأ ليتم معالجته وعرضه في الـ BLoC والواجهات
+      rethrow;
     }
   }
 
@@ -33,7 +31,7 @@ class NotificationsRepoImpl implements NotificationsRepo {
   Future<int> getUnreadCount() async {
     try {
       final response = await apiService.get('notifications/unread-count');
-      // استخراج الـ unread_count من داخل الـ data Map كما يرسلها الكنترولر تماماً
+
       return response['data']['unread_count'] ?? 0;
     } catch (e) {
       rethrow;
@@ -43,8 +41,7 @@ class NotificationsRepoImpl implements NotificationsRepo {
   @override
   Future<void> markAsRead(int notificationId) async {
     try {
-      // إرسال طلب POST للمسار المخصص لتحديد الإشعار كمقروء
-      await apiService.post('notifications/$notificationId/mark-read', {});
+      await apiService.post('notifications/$notificationId/read', {});
     } catch (e) {
       rethrow;
     }
@@ -53,8 +50,7 @@ class NotificationsRepoImpl implements NotificationsRepo {
   @override
   Future<void> markAllAsRead() async {
     try {
-      // إرسال طلب POST للمسار المخصص لتحديد الكل كمقروء
-      await apiService.post('notifications/mark-all-read', {});
+      await apiService.post('notifications/read-all', {});
     } catch (e) {
       rethrow;
     }

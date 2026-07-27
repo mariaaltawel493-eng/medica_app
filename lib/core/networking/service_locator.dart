@@ -15,6 +15,12 @@ import 'package:medica_app/features/discover/clinics/logic/specializations_bloc/
 import 'package:medica_app/features/notifications/general/data/repos/notifications_repo.dart';
 import 'package:medica_app/features/notifications/general/data/repos/notifications_repo_imp.dart';
 import 'package:medica_app/features/notifications/general/logic/notifications_bloc/notifications_bloc.dart';
+import 'package:medica_app/features/notifications/medication/data/repos/medication_reminder_repo.dart';
+import 'package:medica_app/features/notifications/medication/data/repos/medication_reminder_repo_imp.dart';
+import 'package:medica_app/features/notifications/medication/logic/medication_reminder_bloc/medication_reminder_bloc.dart';
+import 'package:medica_app/features/notifications/monitoring/data/repos/monitoring_reminder_repo.dart';
+import 'package:medica_app/features/notifications/monitoring/data/repos/monitoring_reminder_repo_imp.dart';
+import 'package:medica_app/features/notifications/monitoring/logic/monitoring_reminder_bloc/monitoring_reminder_bloc.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo.dart';
 import 'package:medica_app/features/user/chatBot/data/repos/chat_bot_repo_imp.dart';
 import 'package:medica_app/features/user/chatBot/logic/chat_bot_bloc/chat_bot_bloc.dart';
@@ -56,6 +62,12 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<NotificationsRepo>(
     () => NotificationsRepoImpl(getIt<ApiService>()),
   );
+  getIt.registerLazySingleton<MedicationReminderRepo>(
+    () => MedicationReminderRepoImpl(getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<MonitoringReminderRepo>(
+    () => MonitoringReminderRepoImpl(getIt<ApiService>()),
+  );
 
   // theme
   getIt.registerLazySingleton<ThemeCubit>(
@@ -82,4 +94,11 @@ void setupServiceLocator() {
   getIt.registerFactory(() => ArticlesBloc(getIt<ArticlesRepo>()));
   //Notifications
   getIt.registerFactory(() => NotificationsBloc(getIt<NotificationsRepo>()));
+  getIt.registerFactory(
+    () => MedicationReminderBloc(getIt<MedicationReminderRepo>()),
+  );
+
+  getIt.registerFactory(
+    () => MonitoringReminderBloc(getIt<MonitoringReminderRepo>()),
+  );
 }

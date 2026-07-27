@@ -20,3 +20,21 @@ class LogMedicationTakenEvent extends MedicationReminderEvent {
   final String timeSlot;
   LogMedicationTakenEvent({required this.reminderId, required this.timeSlot});
 }
+
+// 5) حدث تعديل بيانات تذكير الدواء
+class UpdateMedicationReminderEvent extends MedicationReminderEvent {
+  final int reminderId;
+  final Map<String, dynamic> medicationData;
+
+  UpdateMedicationReminderEvent({
+    required this.reminderId,
+    required this.medicationData,
+  });
+}
+
+// 6) حدث حذف تذكير الدواء نهائياً
+class DeleteMedicationReminderEvent extends MedicationReminderEvent {
+  final int reminderId;
+
+  DeleteMedicationReminderEvent(this.reminderId);
+}

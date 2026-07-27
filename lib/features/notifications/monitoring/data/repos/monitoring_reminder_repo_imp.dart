@@ -32,9 +32,10 @@ class MonitoringReminderRepoImpl implements MonitoringReminderRepo {
   }) async {
     try {
       // دالة الـ logValue في الباكيند تنتظر POST على مسار: monitoring-reminders/{id}/log-value
+      // ⚠️ الباكيند يتحقق من الحقل باسم measured_value إلزاميًا (وليس value)
       final response = await apiService.post(
-        'monitoring-reminders/$reminderId/log-value',
-        {'value': value},
+        'monitoring-reminders/$reminderId/log',
+        {'measured_value': value},
       );
       return response;
     } catch (e) {

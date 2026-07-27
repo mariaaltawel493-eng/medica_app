@@ -46,7 +46,8 @@
   "resend_button": "إعادة إرسال الرمز",
   "verify_button": "تحقق",
   "error_incomplete": "يرجى إدخال الرمز المكون من 6 أرقام كاملاً",
-  "invalid_code": "رمز التحقق غير صحيح، حاول مرة أخرى"
+  "invalid_code": "رمز التحقق غير صحيح، حاول مرة أخرى",
+    "resend_success": "تم إعادة إرسال رمز التحقق بنجاح"
 }, 
 "new_password": {
   "title": "إنشاء كلمة مرور جديدة",
@@ -185,7 +186,8 @@
   "delete_confirm_msg":"هل أنت متأكد أنك تريد حذف هذه المحادثة  بالكامل؟لا يمكن النراجع عن هذا الإجراء",
   "cancel":"إلغاء",
   "delete":"حذف",
-  "copied_to_clipboard":"تم نسخ النص الى الحافظة"
+  "copied_to_clipboard":"تم نسخ النص الى الحافظة",
+    "view_recommended_doctor": "عرض الطبيب المقترح"
 
 
 
@@ -282,6 +284,83 @@
     "lifestyle": "نمط الحياة",
     "search_hint": "ابحث عن مقال",
     "no_articles": "لا يوجد مقالات"
+
+
+  },
+  "notification":
+  {
+"my_activity": "نشاطي",
+"today_medicine": "أدوية اليوم",
+"list_medicine": "قائمة الأدوية",
+"before_eating": "قبل الأكل",
+"after_eating": "بعد الأكل",
+"medication": "الأدوية",
+"monitoring": "المؤشرات الحيوية",
+"history": "السجل",
+
+"last_update": "آخر تحديث",
+"blood_pressure": "ضغط الدم",
+"blood_sugar": "مستوى السكر",
+"heart_rate": "نبضات القلب",
+"add_reading_success": "تم إضافة القراءة بنجاح",
+
+"add_new_reading": "إضافة قراءة جديدة",
+"enter_value": "أدخل القيمة الحالية",
+"cancel": "إلغاء",
+"field_required": "هذا الحقل مطلوب",
+
+"Information": "معلومات الدواء",
+"Medicine Name": "اسم الدواء",
+"Time": "الوقت",
+"Dosage": "الجرعة",
+"Applying": "طريقة الاستخدام",
+"Duration": "المدة",
+"Process": "مستوى الالتزام",
+"Change Schedule": "تعديل الجدول",
+
+"List Medicine": "قائمة الأدوية",
+"Add new medicine": "إضافة دواء جديد",
+"Enter medicine name": "أدخل اسم الدواء",
+"Dosage & Frequency": "الجرعة والتكرار",
+"Set Time": "تحديد الوقت",
+"Save": "حفظ",
+
+"Reminder Times": "أوقات التذكير",
+"Add Time": "إضافة وقت",
+
+"Select Start & End Date": "اختر تاريخ البداية والنهاية",
+
+
+"create_medicine": "إضافة دواء جديد",
+"edit_medicine": "تعديل الدواء",
+"medicine_name": "اسم الدواء",
+"enter_medicine_name": "أدخل اسم الدواء",
+"dosage": "الجرعة",
+"dosage_hint": "مثال: 500 ملغ / حبة واحدة",
+"frequency": "التكرار",
+"daily": "يوميًا",
+"twice_daily": "مرتين في اليوم",
+"three_times_daily": "ثلاث مرات في اليوم",
+"weekly": "أسبوعيًا",
+"custom": "مخصص",
+"notes": "ملاحظات",
+"notes_hint": "أضف تعليمات إضافية أو ملاحظات...",
+"save": "حفظ",
+"update": "تعديل",
+"medicine_added_success": "تم إضافة الدواء بنجاح",
+"please_enter_medicine_name": "يرجى إدخال اسم الدواء",
+"please_enter_dosage": "يرجى إدخال الجرعة",
+"medication_already_logged":"تم تسجيل أخذ هذه الجرعة مسبقًا",
+
+"retry": "إعادة المحاولة",
+"network_error": "يبدو أنك لست متصلاً بالإنترنت، يرجى التحقق من الشبكة.",
+"no_notifications": "لا توجد إشعارات حالياً",
+"time_minutes": "منذ {} دقيقة",
+"time_hours": "منذ {} ساعة",
+"time_yesterday": "أمس",
+"time_some_time": "منذ فترة",
+"mark_all_as_read":"تحديدالكل كمقروء"
+
   },
 
 

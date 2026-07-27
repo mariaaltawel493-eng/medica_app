@@ -17,4 +17,13 @@ abstract class MedicationReminderRepo {
     required int reminderId,
     required String timeSlot,
   });
+
+  // 4) تعديل تذكير الدواء
+  Future<MedicationReminderModel> updateMedicationReminder({
+    required int reminderId,
+    required Map<String, dynamic> data,
+  });
+
+  // 5) حذف تذكير الدواء
+  Future<void> deleteMedicationReminder(int reminderId);
 }

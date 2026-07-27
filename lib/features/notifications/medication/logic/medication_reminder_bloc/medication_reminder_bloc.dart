@@ -15,12 +15,19 @@ class MedicationReminderBloc
   bool _hasMore = false;
   bool _isFetchingMore = false;
 
+  // 🎯 متغير محلي لحفظ المواعيد التي تم تسجيلها كـ "مأخوذة" في الجلسة الحالية
+  final Set<String> _loggedTakenSlots = {};
+
   MedicationReminderBloc(this.medicationReminderRepo)
     : super(MedicationReminderInitialState()) {
     on<FetchMedicationRemindersEvent>(_onFetchMedicationReminders);
     on<FetchMoreMedicationRemindersEvent>(_onFetchMoreMedicationReminders);
     on<CreateMedicationReminderEvent>(_onCreateMedicationReminder);
     on<LogMedicationTakenEvent>(_onLogMedicationTaken);
+
+    // 🎯 تسجيل الأحداث الجديدة للتعديل والحذف
+    on<UpdateMedicationReminderEvent>(_onUpdateMedicationReminder);
+    on<DeleteMedicationReminderEvent>(_onDeleteMedicationReminder);
   }
 
   // 1) جلب القائمة لأول مرة (الصفحة الأولى)
@@ -42,6 +49,7 @@ class MedicationReminderBloc
         MedicationReminderSuccessState(
           reminders: _allReminders,
           hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
         ),
       );
     } catch (e) {
@@ -74,6 +82,7 @@ class MedicationReminderBloc
         MedicationReminderSuccessState(
           reminders: _allReminders,
           hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
         ),
       );
     } catch (_) {
@@ -104,6 +113,7 @@ class MedicationReminderBloc
         MedicationReminderSuccessState(
           reminders: _allReminders,
           hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
         ),
       );
     } catch (e) {
@@ -115,23 +125,105 @@ class MedicationReminderBloc
     }
   }
 
-  // 4) تسجيل أخذ جرعة الدواء
+  // 4) تعديل تذكير دواء موجود مسبقاً
+  Future<void> _onUpdateMedicationReminder(
+    UpdateMedicationReminderEvent event,
+    Emitter<MedicationReminderState> emit,
+  ) async {
+    emit(MedicationReminderLoadingState());
+    try {
+      // استدعاء الـ Repo لتعديل البيانات في السيرفر
+      final updatedReminder = await medicationReminderRepo
+          .updateMedicationReminder(
+            reminderId: event.reminderId,
+            data: event.medicationData,
+          );
+
+      // تحديث العنصر داخل القائمة المحلية فوراً للـ التزامن اللحظي
+      final index = _allReminders.indexWhere((r) => r.id == event.reminderId);
+      if (index != -1) {
+        _allReminders[index] = updatedReminder;
+      }
+
+      // بث حالة نجاح التعديل لإغلاق الشاشة أو إشعار المستخدم
+      emit(UpdateMedicationReminderSuccessState(updatedReminder));
+
+      // إعادة بث حالة النجاح للقائمة الكلية المحدثة بالبيانات الجديدة
+      emit(
+        MedicationReminderSuccessState(
+          reminders: List.from(_allReminders),
+          hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
+        ),
+      );
+    } catch (e) {
+      emit(
+        MedicationReminderErrorState(
+          e.toString().replaceAll('Exception: ', ''),
+        ),
+      );
+    }
+  }
+
+  // 5) حذف تذكير دواء نهائياً
+  Future<void> _onDeleteMedicationReminder(
+    DeleteMedicationReminderEvent event,
+    Emitter<MedicationReminderState> emit,
+  ) async {
+    emit(MedicationReminderLoadingState());
+    try {
+      // استدعاء الـ Repo لحذف الدواء من السيرفر
+      await medicationReminderRepo.deleteMedicationReminder(event.reminderId);
+
+      // إزالة الدواء محلياً فوراً من القائمة الكلية المتوفرة في الذاكرة
+      _allReminders.removeWhere((r) => r.id == event.reminderId);
+
+      // بث حالة نجاح الحذف
+      emit(DeleteMedicationReminderSuccessState(event.reminderId));
+
+      // إعادة بث حالة النجاح للقائمة الكلية لكي يختفي العنصر من الشاشة الرئيسية
+      emit(
+        MedicationReminderSuccessState(
+          reminders: List.from(_allReminders),
+          hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
+        ),
+      );
+    } catch (e) {
+      emit(
+        MedicationReminderErrorState(
+          e.toString().replaceAll('Exception: ', ''),
+        ),
+      );
+    }
+  }
+
+  // 6) تسجيل أخذ جرعة الدواء
   Future<void> _onLogMedicationTaken(
     LogMedicationTakenEvent event,
     Emitter<MedicationReminderState> emit,
   ) async {
     try {
-      // نبلغ السيرفر في الخلفية بأخذ الجرعة
       await medicationReminderRepo.logMedicationTaken(
         reminderId: event.reminderId,
         timeSlot: event.timeSlot,
       );
 
-      // بث حالة النجاح الخاصة بالجرعة لتحديث الزر الخاص بها في الواجهة
+      final String slotKey = "${event.reminderId}_${event.timeSlot}";
+      _loggedTakenSlots.add(slotKey);
+
       emit(
         LogMedicationTakenSuccessState(
           reminderId: event.reminderId,
           timeSlot: event.timeSlot,
+        ),
+      );
+
+      emit(
+        MedicationReminderSuccessState(
+          reminders: List.from(_allReminders),
+          hasMore: _hasMore,
+          loggedTakenSlots: Set.from(_loggedTakenSlots),
         ),
       );
     } catch (e) {

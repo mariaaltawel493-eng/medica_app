@@ -49,7 +49,8 @@
   "resend_button": "Resend Code",
   "verify_button": "Verify",
   "error_incomplete": "Please enter the full 6-digit code",
-  "invalid_code": "Invalid verification code, try again"
+  "invalid_code": "Invalid verification code, try again",
+   "resend_success": "Verification code resent successfully"
 },
 "new_password": {
   "title": "Create New Password",
@@ -185,7 +186,8 @@
   "delete_confirm_msg":"Are you sure want to delete the entire chat history?This action cannot be undone",
   "cancel":"Cancel",
   "delete":"Delete",
-  "copied_to_clipboard":"Text copied to clipboard"
+  "copied_to_clipboard":"Text copied to clipboard",
+  "view_recommended_doctor": "View Recommended Doctor"
 
 },
 "home": {
@@ -277,6 +279,87 @@
     "lifestyle": "Lifestyle",
     "search_hint": "Search for an article",
     "no_articles": "No articles found"
+  },
+  "notification":{
+"my_activity": "My Activity",
+"today_medicine": "Today Medicine",
+"list_medicine": "List Medicine",
+"before_eating": "Before Eating",
+"after_eating": "After Eating",
+"medication": "Medication",
+"monitoring": "Monitoring",
+"history": "History",
+
+"last_update": "Last update",
+"blood_pressure": "Blood Pressure",
+"blood_sugar": "Blood Sugar",
+"heart_rate": "Heart Rate",
+"add_reading_success": "Reading added successfully",
+
+
+"add_new_reading": "Add New Reading",
+"enter_value": "Enter current value",
+"save": "Save",
+"cancel": "Cancel",
+"field_required": "This field is required",
+
+"Information": "Information",
+"Medicine Name": "Medicine Name",
+"Time": "Time",
+"Dosage": "Dosage",
+"Applying": "Applying",
+"Duration": "Duration",
+"Process": "Process",
+"Change Schedule": "Change Schedule",
+
+"List Medicine": "List Medicine",
+"Add new medicine": "Add new medicine",
+
+"Create New Medicine": "Create New Medicine",
+"Enter medicine name": "Enter medicine name",
+"Select Color": "Select Color",
+"Dosage & Frequency": "Dosage & Frequency",
+"Set Time": "Set Time",
+"Save": "Save",
+
+"Reminder Times": "Reminder Times",
+"Add Time": "Add Time",
+"Food Relation": "Food Relation",
+"Before Eating": "Before Eating",
+"After Eating": "After Eating",
+
+"Select Start & End Date": "Select Start & End Date",
+
+
+
+"create_medicine": "Create New Medicine",
+"edit_medicine": "Edit Medicine",
+"medicine_name": "Medicine Name",
+"enter_medicine_name": "Enter medicine name",
+"dosage": "Dosage",
+"dosage_hint": "e.g. 500mg / 1 Pill",
+"frequency": "Frequency",
+"daily": "Daily",
+"twice_daily": "Twice Daily",
+"three_times_daily": "Three Times Daily",
+"weekly": "Weekly",
+"custom": "Custom",
+"notes": "Notes",
+"notes_hint": "Add additional instructions or notes...",
+"update": "Update",
+"medicine_added_success": "Medicine added successfully",
+"please_enter_medicine_name": "Please enter medicine name",
+"please_enter_dosage": "Please enter dosage",
+"medication_already_logged":"This dose has already been logged",
+
+"retry": "Retry",
+"network_error": "It looks like you are offline, please check your network connection.",
+"no_notifications": "No notifications available",
+"time_minutes": "{} mins ago",
+"time_hours": "{} hours ago",
+"time_yesterday": "Yesterday",
+"time_some_time": "Some time ago",
+"mark_all_as_read":"Mark all as read"
   },
 
 
