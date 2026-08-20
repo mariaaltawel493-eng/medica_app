@@ -106,14 +106,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (sentAt == null) return '';
     try {
       final difference = DateTime.now().difference(sentAt);
-      if (difference.inMinutes < 60)
+      if (difference.inMinutes < 60) {
         return "notification.time_minutes".tr(
           args: [difference.inMinutes.toString()],
         );
-      if (difference.inHours < 24)
+      }
+      if (difference.inHours < 24) {
         return "notification.time_hours".tr(
           args: [difference.inHours.toString()],
         );
+      }
       return "notification.time_yesterday".tr();
     } catch (_) {
       return "notification.time_some_time".tr();
@@ -128,12 +130,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ? AppColors.darkscaffoldBackground
         : AppColors.scaffoldBackground;
     final cardColor = isDarkMode ? const Color(0xFF1A1F2E) : Colors.white;
-    final textPrimary = isDarkMode
-        ? AppColors.darktextPrimary
-        : AppColors.textPrimary;
-    final textSecondary = isDarkMode
-        ? AppColors.darktextSecondary
-        : AppColors.textSecondary;
+    final textPrimary =
+        isDarkMode ? AppColors.darktextPrimary : AppColors.textPrimary;
+    final textSecondary =
+        isDarkMode ? AppColors.darktextSecondary : AppColors.textSecondary;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -156,8 +156,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           IconButton(
             onPressed: () {
               context.read<NotificationsBloc>().add(
-                MarkAllNotificationsAsReadEvent(),
-              );
+                    MarkAllNotificationsAsReadEvent(),
+                  );
             },
             icon: Icon(Icons.done_all_rounded, color: textPrimary),
             tooltip: 'notification.mark_all_as_read'.tr(),
@@ -176,8 +176,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             // 🌟 استخدمنا الـ ErrorView حصرياً هنا في حالة الخطأ (مثل انقطاع الإنترنت)
             if (state is NotificationsErrorState) {
               return ErrorView(
-                message:
-                    state.message.contains('connection') ||
+                message: state.message.contains('connection') ||
                         state.message.contains('Network')
                     ? "notification.network_error".tr()
                     : state.message,
@@ -219,10 +218,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   final tabIndex = _getNotificationTabIndex(notification.type);
                   return GestureDetector(
                     onTap: () {
-                      if (isUnread && notification.id != null) {
+                      if (isUnread) {
                         context.read<NotificationsBloc>().add(
-                          MarkNotificationAsReadEvent(notification.id!),
-                        );
+                              MarkNotificationAsReadEvent(notification.id),
+                            );
                       }
 
                       Navigator.pushNamed(
@@ -277,7 +276,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        notification.title ?? '',
+                                        notification.title,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -306,7 +305,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  notification.body ?? '',
+                                  notification.body,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(

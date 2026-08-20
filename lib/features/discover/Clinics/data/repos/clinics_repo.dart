@@ -14,4 +14,10 @@ abstract class ClinicsRepo {
   });
   Future<List<DoctorModel>> getAllDoctors({String? name});
   Future<DoctorDetailsModel> getDoctorDetails(int doctorId, int clinicId);
+  Future<List<HospitalModel>> getDoctorClinics(int doctorId);
+
+// ============================================================
+// إضافات مطلوبة على clinics_repo_imp.dart (التنفيذ الفعلي)
+// ضيفي هاد الميثود جوا class ClinicsRepoImp implements ClinicsRepo { ... }
+// ============================================================
 }

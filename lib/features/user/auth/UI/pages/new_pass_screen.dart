@@ -95,7 +95,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           fit: BoxFit.contain,
                         ),
                       ),
-
                       const SizedBox(height: 30),
                       Text(
                         "new_password.instruction".tr(),
@@ -108,7 +107,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
                       AppTextField(
                         controller: passwordController,
                         hintText: "new_password.".tr(),
@@ -135,9 +133,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           return null;
                         },
                       ),
-
                       const SizedBox(height: 20),
-
                       AppTextField(
                         controller: confirmPasswordController,
                         hintText: "new_password.Confirm_Password".tr(),
@@ -161,9 +157,7 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           return null;
                         },
                       ),
-
                       const SizedBox(height: 20),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -180,7 +174,6 @@ class NewPassScreenstate extends State<NewPassScreen> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 40),
                       state is AuthBlocLoading
                           ? const Center(
@@ -193,11 +186,11 @@ class NewPassScreenstate extends State<NewPassScreen> {
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBlocBloc>().add(
-                                    ResetPasswordSubmitted(
-                                      passwordController.text,
-                                      confirmPasswordController.text,
-                                    ),
-                                  );
+                                        ResetPasswordSubmitted(
+                                          passwordController.text,
+                                          confirmPasswordController.text,
+                                        ),
+                                      );
                                 }
                               },
                             ),

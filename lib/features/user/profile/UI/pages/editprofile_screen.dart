@@ -220,7 +220,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                       suffixIcon: Icon(Icons.edit_note_rounded),
                     ),
-
                     const SizedBox(height: 75),
                     state is UpdateProfileLoding
                         ? const Center(child: AppLoadingIndicator())
@@ -266,10 +265,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     bloc.add(
                                       UpdateProfileEvent(
                                         ProfileRequestModel(
-                                          firstName: firstNameController.text
-                                              .trim(),
-                                          lastName: lastNameController.text
-                                              .trim(),
+                                          firstName:
+                                              firstNameController.text.trim(),
+                                          lastName:
+                                              lastNameController.text.trim(),
                                           email: emailController.text.trim(),
                                         ),
                                       ),

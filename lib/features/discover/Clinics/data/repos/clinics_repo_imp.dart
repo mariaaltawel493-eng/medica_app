@@ -93,4 +93,46 @@ class ClinicsRepoImp implements ClinicsRepo {
       rethrow;
     }
   }
+  // ============================================================
+  // عدّلي ميثود getDoctorClinics بملف clinics_repo_imp.dart لتصير هيك
+  // بالضبط (استبدلي القديمة كاملة):
+  // ============================================================
+
+  @override
+  Future<List<HospitalModel>> getDoctorClinics(int doctorId) async {
+    try {
+      // ⚠️ بدون clinic_id قصداً — هيك بيرجعلنا قائمة كل عيادات الدكتور
+      final response = await apiService.get('doctors/$doctorId');
+
+      final data = response is Map ? response['data'] : null;
+      final clinicsList = data is Map ? data['clinics'] : null;
+
+      if (clinicsList is! List) return [];
+
+      // ✅ تحويل يدوي — لأنه شكل كل عنصر هون مختلف عن HospitalModel.fromJson
+      // العادية (clinic_id بدل id، clinic_name بدل name...) فمش منقدر
+      // نستخدم HospitalModel.fromJson() القياسية هون مباشرة
+      return clinicsList.map<HospitalModel>((e) {
+        final map = e as Map<String, dynamic>;
+        return HospitalModel(
+          id: _parseInt(map['clinic_id']),
+          name: map['clinic_name']?.toString() ?? '',
+          address: map['clinic_address']?.toString() ?? '',
+          phone: '', // ما إلها قيمة بهاد الـ endpoint
+          logo: null, // ما إلها قيمة بهاد الـ endpoint
+          specializationsCount: 0, // ما إلها قيمة بهاد الـ endpoint
+          averageRating: 0.0, // ما إلها قيمة بهاد الـ endpoint
+        );
+      }).toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // ✅ هيلبر بسيطة لتحويل آمن لأي قيمة إلى int (بدون ما تنهار لو null)
+  int _parseInt(dynamic val) {
+    if (val == null) return 0;
+    if (val is int) return val;
+    return int.tryParse(val.toString()) ?? 0;
+  }
 }

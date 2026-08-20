@@ -31,6 +31,9 @@ class ProfileHeader extends StatelessWidget {
               backgroundColor: isDark
                   ? AppColors.darkcardBackground
                   : AppColors.cardBackground,
+              backgroundImage: imageUrl != null && imageUrl!.isNotEmpty
+                  ? NetworkImage(imageUrl!)
+                  : null,
               child: imageUrl == null || imageUrl!.isEmpty
                   ? Icon(
                       Icons.person,
@@ -39,9 +42,6 @@ class ProfileHeader extends StatelessWidget {
                           ? AppColors.darktextSecondary
                           : AppColors.textSecondary,
                     )
-                  : null,
-              backgroundImage: imageUrl != null && imageUrl!.isNotEmpty
-                  ? NetworkImage(imageUrl!)
                   : null,
             ),
             // زر التعديل الصغير (الأزرق)
@@ -76,9 +76,8 @@ class ProfileHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isDark
-                ? AppColors.darktextSecondary
-                : AppColors.textSecondary,
+            color:
+                isDark ? AppColors.darktextSecondary : AppColors.textSecondary,
           ),
         ),
       ],

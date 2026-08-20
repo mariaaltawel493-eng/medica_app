@@ -15,13 +15,13 @@ class ChatBotInitial extends ChatBotState {
 // 2. حالة التحميل (نمرر لها القائمة الحالية لتظل معروضة بالشاشة أثناء انتظار السيرفر)
 class ChatBotLoading extends ChatBotState {
   const ChatBotLoading(List<ChatMessageModel> currentMessages)
-    : super(messages: currentMessages);
+      : super(messages: currentMessages);
 }
 
 // 3. حالة نجاح جلب الأرشيف من السيرفر
 class ChatHistorySuccess extends ChatBotState {
   const ChatHistorySuccess(List<ChatMessageModel> messages)
-    : super(messages: messages);
+      : super(messages: messages);
 }
 
 // 4. حالة نجاح إرسال رسالة واستقبال رد البوت (شايلة القائمة المحدثة بالرد)
@@ -48,5 +48,5 @@ class ChatClearSuccess extends ChatBotState {
 class ChatBotError extends ChatBotState {
   final String message;
   const ChatBotError(this.message, List<ChatMessageModel> currentMessages)
-    : super(messages: currentMessages);
+      : super(messages: currentMessages);
 }

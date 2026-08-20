@@ -125,11 +125,11 @@ class _RegisterPhoneScreenState extends State<RegisterPhoneScreen> {
                             onPressed: () {
                               if (formkey.currentState!.validate()) {
                                 context.read<AuthBlocBloc>().add(
-                                  RegisterPhoneSubmitted(
-                                    phonecontroller.text,
-                                    "register",
-                                  ),
-                                );
+                                      RegisterPhoneSubmitted(
+                                        phonecontroller.text,
+                                        "register",
+                                      ),
+                                    );
                               }
                             },
                           );

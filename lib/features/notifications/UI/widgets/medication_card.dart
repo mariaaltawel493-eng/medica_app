@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 
@@ -7,7 +6,7 @@ import 'package:medica_app/features/notifications/medication/data/models/medicat
 
 class MedicationCard extends StatelessWidget {
   final MedicationReminderModel
-  reminder; // 🎯 الكائن الكامل الممرر لشاشة التفاصيل
+      reminder; // 🎯 الكائن الكامل الممرر لشاشة التفاصيل
   final String medicineName;
   final String dosage;
   final String time;

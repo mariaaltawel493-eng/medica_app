@@ -4,7 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+<<<<<<< HEAD
 import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
+=======
+import 'package:medica_app/features/booking/ui/pages/book_appointement_flow_screen.dart';
+import 'package:medica_app/features/booking/ui/pages/my_appointements_screen.dart';
+import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
+import 'package:medica_app/features/discover/clinics/UI/pages/hospitals_screen.dart';
+>>>>>>> Sedra
 import 'package:medica_app/features/discover/clinics/data/repos/clinics_repo.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
@@ -18,12 +25,63 @@ class DoctorDetailsScreen extends StatefulWidget {
 }
 
 class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
+<<<<<<< HEAD
   // تم نقل الحدث إلى الـ create الخاص بالـ BlocProvider لتجنب مشاكل الـ Context
+=======
+>>>>>>> Sedra
   @override
   void initState() {
     super.initState();
   }
 
+<<<<<<< HEAD
+=======
+  // ✅ منطق زر "Book" الجديد:
+  // - لو widget.clinicId موجود (جاي من مسار Hospitals->Specializations->Doctors)
+  //   منكمل عادي بدون سؤال، لأنه أصلاً معروف بأي عيادة رح يصير الحجز.
+  // - لو widget.clinicId == null (جاي من قائمة عامة زي Home/All Doctors)
+  //   لازم أول شي نفتح Bottom Sheet يعرض كل العيادات يلي هاد الدكتور
+  //   شغال فيها، ونستنى يختار المستخدم وحدة منهم قبل ما نروح لشاشة الحجز.
+  Future<void> _onBookPressed(BuildContext context, String doctorName) async {
+    int clinicId;
+
+    if (widget.clinicId != null) {
+      clinicId = widget.clinicId!;
+    } else {
+      // ✅ منستخدم HospitalsScreen نفسها (بوضع الاختيار) بدل شيت منفصل —
+      // بترجع clinic.id لما يضغط المستخدم على عيادة، أو null لو رجع بدون اختيار
+      final selectedClinicId = await Navigator.push<int>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => HospitalsScreen(
+            doctorId: widget.doctorId,
+            selectionMode: true,
+          ),
+        ),
+      );
+
+      if (selectedClinicId == null) return;
+
+      clinicId = selectedClinicId;
+    }
+
+    if (!context.mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookAppointmentFlowScreen(
+          args: BookAppointmentArgs(
+            clinicId: clinicId,
+            doctorId: widget.doctorId,
+            doctorName: doctorName,
+          ),
+        ),
+      ),
+    );
+  }
+
+>>>>>>> Sedra
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -84,14 +142,22 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       Image.asset(
+<<<<<<< HEAD
                                         'assets/images/profile.jpg',
+=======
+                                        'assets/images/forgot_password.png',
+>>>>>>> Sedra
                                         width: 120,
                                         height: 120,
                                         fit: BoxFit.cover,
                                       ),
                                 )
                               : Image.asset(
+<<<<<<< HEAD
                                   'assets/images/profile.jpg',
+=======
+                                  'assets/images/forgot_password.png',
+>>>>>>> Sedra
                                   width: 120,
                                   height: 120,
                                   fit: BoxFit.cover,
@@ -273,9 +339,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       width: double.infinity,
                       height: 60,
                       child: ElevatedButton(
+<<<<<<< HEAD
                         onPressed: () {
                           // ربط حجز موعد لاحقاً
                         },
+=======
+                        // ✅ التعديل الوحيد الفعلي: بدل ما نفتح شاشة الحجز
+                        // مباشرة، منستدعي _onBookPressed يلي بتقرر هل
+                        // لازم تسأل عن العيادة أول (لو clinicId مش معروف)
+                        onPressed: () => _onBookPressed(context, doctor.name),
+>>>>>>> Sedra
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(

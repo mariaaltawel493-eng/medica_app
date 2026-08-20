@@ -60,7 +60,6 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                         backgroundImage: profileImage != null
                             ? FileImage(profileImage!)
                             : null,
-
                         child: profileImage == null
                             ? Icon(
                                 Icons.person,
@@ -69,7 +68,6 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                               )
                             : null,
                       ),
-
                       Positioned(
                         bottom: 0,
                         right: 4,
@@ -191,9 +189,8 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                                         Brightness.light, // تحديد إنه فاتح
                                   ),
                             // لون خلفية الديالوج نفسه (المربع الكبير)
-                            dialogBackgroundColor: isDark
-                                ? AppColors.darktextfield
-                                : Colors.white,
+                            dialogBackgroundColor:
+                                isDark ? AppColors.darktextfield : Colors.white,
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 foregroundColor:
@@ -332,15 +329,15 @@ class _FillProfilScreenState extends State<FillProfilScreen> {
                             return;
                           }
                           context.read<AuthBlocBloc>().add(
-                            RegisterFinalSubmitted(
-                              firstnameController.text,
-                              lastnameController.text,
-                              emailController.text,
-                              profileImage,
-                              dobController.text,
-                              selectGender,
-                            ),
-                          );
+                                RegisterFinalSubmitted(
+                                  firstnameController.text,
+                                  lastnameController.text,
+                                  emailController.text,
+                                  profileImage,
+                                  dobController.text,
+                                  selectGender,
+                                ),
+                              );
                         }
                       },
                     );

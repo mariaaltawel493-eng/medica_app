@@ -19,8 +19,8 @@ class MedicineInformationScreen extends StatelessWidget {
     String startDateText = "--";
     String endDateText = "--";
 
-    if (reminder.startDate != null && reminder.startDate!.isNotEmpty) {
-      final parsedStart = DateTime.tryParse(reminder.startDate!);
+    if (reminder.startDate.isNotEmpty) {
+      final parsedStart = DateTime.tryParse(reminder.startDate);
       if (parsedStart != null) {
         startDateText = DateFormat('d MMMM').format(parsedStart);
       }
@@ -52,9 +52,8 @@ class MedicineInformationScreen extends StatelessWidget {
         title: Text(
           "notification.Information".tr(),
           style: TextStyle(
-            color: isDarkMode
-                ? AppColors.darktextPrimary
-                : AppColors.textPrimary,
+            color:
+                isDarkMode ? AppColors.darktextPrimary : AppColors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -211,9 +210,8 @@ class MedicineInformationScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isHeader ? 20 : 15,
             fontWeight: FontWeight.bold,
-            color: isDarkMode
-                ? AppColors.darktextPrimary
-                : AppColors.textPrimary,
+            color:
+                isDarkMode ? AppColors.darktextPrimary : AppColors.textPrimary,
           ),
         ),
       ],

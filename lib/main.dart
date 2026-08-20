@@ -33,7 +33,7 @@ void main() async {
 
   // 3. فحص التوكن المحلي
   String? userToken = await SharedPrefHelper.getData('user_token');
-  print("User Token in Main: ${userToken}");
+  print("User Token in Main: $userToken");
   if (userToken != null && userToken.isNotEmpty) {
     isLoggedIn = true;
   }
@@ -80,7 +80,6 @@ void main() async {
           create: (context) => getIt<NotificationsBloc>(),
         ),
       ],
-
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('ar')],
         path: 'assets/translations',

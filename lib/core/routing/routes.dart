@@ -38,4 +38,10 @@ class Routes {
   static const String ListMedicineScreen = "/List_Medicine";
   static const String CreateNewMedicineScreen = "/add_medicine";
   static const String Historyscreen = "/history_screen";
+  static const String MyAppointmentsScreen = '/my_appointments';
+
+  /// شاشة حجز الموعد الكاملة (تاريخ/ساعة -> باقة -> بيانات المريض ->
+  /// دفع -> PIN) — تحتاج arguments من نوع BookAppointmentArgs
+  /// فريمات 37، 38، 39، 40، 41، 46، 47
+  static const String BookAppointmentScreen = '/book_appointment';
 }

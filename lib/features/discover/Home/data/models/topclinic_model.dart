@@ -1,5 +1,3 @@
-import 'package:medica_app/core/helpers/constants.dart';
-
 class TopClinicModel {
   final int id;
   final String name;
@@ -26,7 +24,6 @@ class TopClinicModel {
       address: json['address'] ?? '',
       phone: json['phone'] ?? '',
       logo: json['logo'],
-
       specializationsCount: json['specializations_count'] ?? 0,
       averageRating: json['average_rating'] ?? 0,
     );

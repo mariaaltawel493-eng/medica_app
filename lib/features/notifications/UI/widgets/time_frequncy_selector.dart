@@ -52,9 +52,8 @@ class _TimeFrequencySelectorState extends State<TimeFrequencySelector> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: isDarkMode
-                    ? AppColors.darkprimary
-                    : AppColors.primary,
+                foregroundColor:
+                    isDarkMode ? AppColors.darkprimary : AppColors.primary,
               ),
             ),
           ),
@@ -136,9 +135,8 @@ class _TimeFrequencySelectorState extends State<TimeFrequencySelector> {
                 label: Text(
                   "notification.Add Time".tr(),
                   style: TextStyle(
-                    color: isDarkMode
-                        ? AppColors.darkprimary
-                        : AppColors.primary,
+                    color:
+                        isDarkMode ? AppColors.darkprimary : AppColors.primary,
                   ),
                 ),
                 backgroundColor:

@@ -1,8 +1,10 @@
-import 'package:http/http.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/features/articles/data/repos/articles_repo.dart';
 import 'package:medica_app/features/articles/data/repos/articles_repo_imp.dart';
 import 'package:medica_app/features/articles/logic/articles_bloc/articles_bloc.dart';
+import 'package:medica_app/features/booking/data/repos/apointements_repo.dart';
+import 'package:medica_app/features/booking/data/repos/apointements_repo_impl.dart';
+import 'package:medica_app/features/booking/logic/appointements_bloc/appointements_bloc.dart';
 import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
 import 'package:medica_app/features/discover/Home/data/repos/home_repo.dart';
 import 'package:medica_app/features/discover/Home/data/repos/home_repoImp.dart';
@@ -31,6 +33,9 @@ import 'package:medica_app/features/user/profile/data/repos/profile_repo.dart';
 import 'package:medica_app/features/user/profile/data/repos/profile_repoImp.dart';
 import 'package:medica_app/features/user/profile/logic/profile_bloc/profile_bloc_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medica_app/features/user/reviews/logic/review_cubit.dart';
+import 'package:medica_app/features/user/reviews/repositories/review_repository.dart';
+import 'package:medica_app/features/user/reviews/services/review_service.dart';
 import 'package:medica_app/features/user/settings/language/cubit/language_cubit.dart';
 import 'package:medica_app/features/user/settings/theme/theme_cubit/theme_cubit.dart';
 
@@ -68,6 +73,15 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<MonitoringReminderRepo>(
     () => MonitoringReminderRepoImpl(getIt<ApiService>()),
   );
+  getIt.registerLazySingleton<AppointmentsRepo>(
+    () => AppointmentsRepoImp(getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<ReviewService>(
+    () => ReviewService(getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<ReviewRepository>(
+    () => ReviewRepository(getIt<ReviewService>()),
+  );
 
   // theme
   getIt.registerLazySingleton<ThemeCubit>(
@@ -100,5 +114,11 @@ void setupServiceLocator() {
 
   getIt.registerFactory(
     () => MonitoringReminderBloc(getIt<MonitoringReminderRepo>()),
+  );
+  getIt.registerLazySingleton(
+    () => AppointmentsBloc(getIt<AppointmentsRepo>()),
+  );
+  getIt.registerFactory<ReviewCubit>(
+    () => ReviewCubit(getIt<ReviewRepository>()),
   );
 }

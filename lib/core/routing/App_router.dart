@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medica_app/core/networking/api_service.dart';
 import 'package:medica_app/core/routing/routes.dart';
+import 'package:medica_app/features/booking/ui/pages/book_appointement_flow_screen.dart';
+import 'package:medica_app/features/booking/ui/pages/my_appointements_screen.dart';
 import 'package:medica_app/features/discover/Clinics/UI/pages/All_doctor_screen.dart';
 import 'package:medica_app/features/discover/Clinics/UI/pages/hospitals_screen.dart';
 import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
@@ -18,7 +20,6 @@ import 'package:medica_app/features/notifications/UI/pages/medicine_information_
 import 'package:medica_app/features/notifications/UI/pages/my_activity_screen.dart'
     hide HistoryScreen;
 import 'package:medica_app/features/notifications/medication/data/models/medication_reminder_model.dart';
-import 'package:medica_app/features/notifications/medication/logic/medication_reminder_bloc/medication_reminder_bloc.dart';
 import 'package:medica_app/features/onboarding/onboarding_screen.dart';
 import 'package:medica_app/features/onboarding/splash_screen.dart';
 import 'package:medica_app/features/user/auth/UI/pages/fill_profil_screen.dart';
@@ -149,6 +150,35 @@ class AppRouter {
         );
       case Routes.Historyscreen:
         return MaterialPageRoute(builder: (_) => const HistoryScreen());
+
+      // ── شاشات المواعيد (Appointments) — مضافة حديثاً ─────────────
+      /// ✅ شاشة "My Appointment" (Upcoming / Completed / Cancelled)
+      /// الاستخدام: Navigator.pushNamed(context, Routes.MyAppointmentsScreen);
+      case Routes.MyAppointmentsScreen:
+        // ملاحظة: MyAppointmentsScreen بيعمل provide لـ AppointmentsBloc
+        // بنفسها داخلياً (شوفي my_appointments_screen.dart)، فما في داعي
+        // نغلفها بـ BlocProvider هون مرة ثانية.
+        return MaterialPageRoute(
+          builder: (_) => const MyAppointmentsScreen(),
+        );
+
+      /// ✅ رحلة حجز الموعد الكاملة
+      /// الاستخدام:
+      /// Navigator.pushNamed(
+      ///   context, Routes.BookAppointmentScreen,
+      ///   arguments: BookAppointmentArgs(
+      ///     clinicId: clinic.id,
+      ///     doctorId: doctor.id,
+      ///     doctorName: doctor.name,
+      ///     doctorImageUrl: doctor.image,
+      ///   ),
+      /// );
+      case Routes.BookAppointmentScreen:
+        final args = settings.arguments as BookAppointmentArgs;
+        return MaterialPageRoute(
+          builder: (_) => BookAppointmentFlowScreen(args: args),
+          settings: settings,
+        );
 
       default:
         MaterialPageRoute(

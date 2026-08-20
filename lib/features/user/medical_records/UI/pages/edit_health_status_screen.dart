@@ -55,8 +55,8 @@ class _EditHealthStatusScreenState extends State<EditHealthStatusScreen> {
     );
 
     context.read<MedicalRecordsBloc>().add(
-      UpdateMedicalProfileEvent(requestModel),
-    );
+          UpdateMedicalProfileEvent(requestModel),
+        );
   }
 
   @override
@@ -124,8 +124,7 @@ class _EditHealthStatusScreenState extends State<EditHealthStatusScreen> {
                 builder: (context, state) {
                   return AppButton(
                     text: 'medical.save_changes'.tr(),
-                    onPressed:
-                        (_hasChanges &&
+                    onPressed: (_hasChanges &&
                             state.actionStatus != ActionStatus.loading)
                         ? _onSave
                         : () {},

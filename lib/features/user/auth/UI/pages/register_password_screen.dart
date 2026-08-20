@@ -33,9 +33,8 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.darkcardBackground
-          : AppColors.scaffoldBackground,
+      backgroundColor:
+          isDark ? AppColors.darkcardBackground : AppColors.scaffoldBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -154,8 +153,8 @@ class RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           context.read<AuthBlocBloc>().add(
-                            RegisterPassword(passwordController.text),
-                          );
+                                RegisterPassword(passwordController.text),
+                              );
                         }
                       },
                     );

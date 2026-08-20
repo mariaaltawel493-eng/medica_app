@@ -201,10 +201,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
                                 context.read<ProfileBlocBloc>().add(
-                                  sendUpdatePhoneOtpEvent(
-                                    type: 'password_change',
-                                  ),
-                                );
+                                      sendUpdatePhoneOtpEvent(
+                                        type: 'password_change',
+                                      ),
+                                    );
                               }
                             },
                           );

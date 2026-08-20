@@ -6,7 +6,7 @@ class AppColors {
   static const Color textPrimary = Color(0xff212121); //لون النص الاساسي
   static const Color textSecondary = Color(0xff757575); //لون النص الثانوي
   static const Color textTertiary = Color(0xff9E9E9E); //لون النص الثالثي
-  static const Color textfield = Color(0xf1e222a);
+  static const Color textfield = Color(0x0f1e222a);
   static const Color scaffoldBackground = Color(0xffFFFFFF); //لون الخلفية
   static const Color cardBackground = Color(0xffFAFAFA); //لون الكارد
 

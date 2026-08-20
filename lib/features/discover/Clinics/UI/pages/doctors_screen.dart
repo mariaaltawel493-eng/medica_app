@@ -4,7 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart'; // أضفنا حزمة GetIt
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
+<<<<<<< HEAD
 import 'package:medica_app/features/discover/Clinics/UI/pages/doctor_details_screen.dart';
+=======
+import 'package:medica_app/features/discover/clinics/UI/pages/doctor_details_screen.dart';
+>>>>>>> Sedra
 import 'package:medica_app/features/discover/clinics/UI/widgets/doctor_card.dart';
 import 'package:medica_app/features/discover/clinics/logic/doctors_bloc/doctors_bloc.dart';
 

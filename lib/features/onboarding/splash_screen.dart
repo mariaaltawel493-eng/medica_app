@@ -46,8 +46,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (mounted) Navigator.pushReplacementNamed(context, Routes.MainScreen);
       } catch (e) {
         //في حال منتهي الصلاحية التوكن
-        if (mounted)
+        if (mounted) {
           Navigator.pushReplacementNamed(context, Routes.LoginScreen);
+        }
       }
     } else if (onboardingSeen) {
       // إذا لم يوجد توكن ولكن الأونبوردينج شوهد سابقاً

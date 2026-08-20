@@ -247,8 +247,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                           onTap: () {
                             setState(() => selectedCategory = 'newest');
                             context.read<ArticlesBloc>().add(
-                              FetchArticlesByCategoryEvent(1),
-                            );
+                                  FetchArticlesByCategoryEvent(1),
+                                );
                           },
                         ),
                         const SizedBox(width: 10),
@@ -258,8 +258,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                           onTap: () {
                             setState(() => selectedCategory = 'Health');
                             context.read<ArticlesBloc>().add(
-                              FetchArticlesByCategoryEvent(2),
-                            );
+                                  FetchArticlesByCategoryEvent(2),
+                                );
                           },
                         ),
                         const SizedBox(width: 10),
@@ -269,8 +269,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                           onTap: () {
                             setState(() => selectedCategory = 'Covid-19');
                             context.read<ArticlesBloc>().add(
-                              FetchArticlesByCategoryEvent(3),
-                            );
+                                  FetchArticlesByCategoryEvent(3),
+                                );
                           },
                         ),
                         const SizedBox(width: 10),
@@ -280,8 +280,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                           onTap: () {
                             setState(() => selectedCategory = 'Lifestyle');
                             context.read<ArticlesBloc>().add(
-                              FetchArticlesByCategoryEvent(4),
-                            );
+                                  FetchArticlesByCategoryEvent(4),
+                                );
                           },
                         ),
                       ],
