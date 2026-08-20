@@ -55,10 +55,7 @@ dependencies:
   firebase_core: ^4.11.0
   firebase_messaging: ^16.4.1
   flutter_local_notifications: ^22.0.1
-<<<<<<< HEAD
-=======
   table_calendar: ^3.2.0
->>>>>>> Sedra
 
 dev_dependencies:
 
