@@ -19,8 +19,6 @@ class HospitalsBloc extends Bloc<HospitalsEvent, HospitalsState> {
       }
     });
 
-<<<<<<< HEAD
-=======
     // ✅ 2. التعديل الجديد: جلب عيادات دكتور معين
     on<FetchDoctorClinicsEvent>((event, emit) async {
       emit(HospitalsLoading());
@@ -32,7 +30,6 @@ class HospitalsBloc extends Bloc<HospitalsEvent, HospitalsState> {
         emit(HospitalsError(e.toString()));
       }
     });
->>>>>>> Sedra
     on<SearchHospitalsEvent>((event, emit) async {
       emit(HospitalsLoading());
       try {

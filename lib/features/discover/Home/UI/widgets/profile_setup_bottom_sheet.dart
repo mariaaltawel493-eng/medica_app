@@ -53,7 +53,7 @@ class ProfileSetupBottomSheet extends StatelessWidget {
 
           // العنوان
           Text(
-            "profile_setup.welcome_title".tr(),
+            "home.profile_setup.welcome_title".tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: isDark ? AppColors.darktextPrimary : AppColors.textPrimary,
@@ -65,7 +65,7 @@ class ProfileSetupBottomSheet extends StatelessWidget {
 
           // الوصف
           Text(
-            "profile_setup.welcome_desc".tr(),
+            "home.profile_setup.welcome_desc".tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: isDark
@@ -78,7 +78,7 @@ class ProfileSetupBottomSheet extends StatelessWidget {
 
           // زر أكمل الآن
           AppButton(
-            text: "profile_setup.complete_now".tr(),
+            text: "home.profile_setup.complete_now".tr(),
             onPressed: () {
               Navigator.pop(context); // إغلاق الشيت أولاً
 
@@ -95,7 +95,7 @@ class ProfileSetupBottomSheet extends StatelessWidget {
               ); // يغلق الشيت فقط ليظهر البانر في الـ HomeScreen
             },
             child: Text(
-              "profile_setup.remind_later".tr(),
+              "home.profile_setup.remind_later".tr(),
               style: TextStyle(
                 color: isDark ? AppColors.darkprimary : AppColors.primary,
                 fontSize: 15,

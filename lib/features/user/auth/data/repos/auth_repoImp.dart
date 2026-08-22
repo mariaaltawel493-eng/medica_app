@@ -21,7 +21,8 @@ class AuthRepoImpl implements AuthRepo {
       String? fcmToken = await FcmHelper.getToken();
       Map<String, dynamic> loginData = loginRequest.toJson();
       loginData['fcm_token'] = fcmToken;
-      final Response = await apiService.post('auth/login', loginData);
+      print('🔥 LOGIN DATA: $loginData');
+      final Response = await apiService.post('auth2/login', loginData);
       return UserModel.fromJson(Response);
     } catch (e) {
       //إعادة رمي الخطأ ليصل إلى blc
@@ -32,7 +33,7 @@ class AuthRepoImpl implements AuthRepo {
   /////////////////OTP////////////////
   @override
   Future<void> sendOtp({required String phone, required String type}) async {
-    await apiService.post('auth/send-otp', {'phone': phone, 'type': type});
+    await apiService.post('auth2/send-otp', {'phone': phone, 'type': type});
   }
 
   @override
@@ -41,7 +42,7 @@ class AuthRepoImpl implements AuthRepo {
     required String code,
     required String type,
   }) async {
-    await apiService.post('auth/verify-otp', {
+    await apiService.post('auth2/verify-otp', {
       'phone': phone,
       'code': code,
       'type': type,
@@ -57,9 +58,9 @@ class AuthRepoImpl implements AuthRepo {
       registerData['fcm_token'] = fcmToken!;
       // الـ apiService هون بترجع Map جاهز (لأنها نادت _handleResponse داخلياً)
       final responseData = await apiService.postMultipart(
-        endpoint: 'auth/register',
+        endpoint: 'auth2/register',
         fields: registerData,
-        File: registerRequest.profileImage,
+        File: registerRequest.profileImage!,
         fileKey: 'profile',
       );
 
@@ -79,7 +80,7 @@ class AuthRepoImpl implements AuthRepo {
   ) async {
     try {
       final response = await apiService.post(
-        'auth/reset-password',
+        'auth2/reset-password',
         resetpassReuest.toJson(),
       );
       if (response['data'] == null) {

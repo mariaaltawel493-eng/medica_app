@@ -113,15 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           child: Row(
                             children: [
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
-                                icon: const Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: 20,
-                                ),
-                                onPressed: () => Navigator.pop(context),
-                              ),
                               const SizedBox(width: 12),
                               Text(
                                 "profile.title".tr(),

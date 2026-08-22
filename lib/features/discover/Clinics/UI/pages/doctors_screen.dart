@@ -4,11 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart'; // أضفنا حزمة GetIt
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-<<<<<<< HEAD
-import 'package:medica_app/features/discover/Clinics/UI/pages/doctor_details_screen.dart';
-=======
 import 'package:medica_app/features/discover/clinics/UI/pages/doctor_details_screen.dart';
->>>>>>> Sedra
 import 'package:medica_app/features/discover/clinics/UI/widgets/doctor_card.dart';
 import 'package:medica_app/features/discover/clinics/logic/doctors_bloc/doctors_bloc.dart';
 
@@ -49,9 +45,8 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
 
     // توفير الـ Bloc للشاشة وحقن حدث الجلب فوراً لنفس النسخة
     return BlocProvider<DoctorsBloc>(
-      create: (context) =>
-          GetIt.I<DoctorsBloc>()
-            ..add(FetchDoctorsEvent(widget.clinicId, widget.specializationId)),
+      create: (context) => GetIt.I<DoctorsBloc>()
+        ..add(FetchDoctorsEvent(widget.clinicId, widget.specializationId)),
       child: Scaffold(
         backgroundColor: isDark
             ? AppColors.darkscaffoldBackground
@@ -96,19 +91,19 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         onChanged: (value) {
                           if (value.trim().isEmpty) {
                             textFieldContext.read<DoctorsBloc>().add(
-                              FetchDoctorsEvent(
-                                widget.clinicId,
-                                widget.specializationId,
-                              ),
-                            );
+                                  FetchDoctorsEvent(
+                                    widget.clinicId,
+                                    widget.specializationId,
+                                  ),
+                                );
                           } else {
                             textFieldContext.read<DoctorsBloc>().add(
-                              SearchDoctorsEvent(
-                                widget.clinicId,
-                                widget.specializationId,
-                                value,
-                              ),
-                            );
+                                  SearchDoctorsEvent(
+                                    widget.clinicId,
+                                    widget.specializationId,
+                                    value,
+                                  ),
+                                );
                           }
                         },
                         decoration: InputDecoration(

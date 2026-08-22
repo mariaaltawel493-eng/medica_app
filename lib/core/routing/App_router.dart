@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medica_app/core/networking/api_service.dart';
+import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/routing/routes.dart';
 import 'package:medica_app/features/booking/ui/pages/book_appointement_flow_screen.dart';
 import 'package:medica_app/features/booking/ui/pages/my_appointements_screen.dart';
@@ -11,7 +12,9 @@ import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/
 import 'package:medica_app/features/discover/Clinics/logic/doctors_bloc/doctors_bloc.dart';
 import 'package:medica_app/features/discover/Clinics/logic/hospitals_bloc/hospitals_bloc.dart';
 import 'package:medica_app/features/discover/Clinics/logic/specializations_bloc/specializations_bloc.dart';
+import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
 import 'package:medica_app/features/discover/Home/UI/pages/main_screen.dart';
+import 'package:medica_app/features/discover/Home/UI/pages/search_screen.dart';
 import 'package:medica_app/features/notifications/UI/pages/create_new_medicine_screen.dart';
 import 'package:medica_app/features/notifications/UI/pages/history_screen.dart';
 
@@ -158,9 +161,7 @@ class AppRouter {
         // ملاحظة: MyAppointmentsScreen بيعمل provide لـ AppointmentsBloc
         // بنفسها داخلياً (شوفي my_appointments_screen.dart)، فما في داعي
         // نغلفها بـ BlocProvider هون مرة ثانية.
-        return MaterialPageRoute(
-          builder: (_) => const MyAppointmentsScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const MyAppointmentsScreen());
 
       /// ✅ رحلة حجز الموعد الكاملة
       /// الاستخدام:
@@ -181,12 +182,7 @@ class AppRouter {
         );
 
       default:
-        MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('Route not found: ${settings.name}')),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
     }
-    return null;
   }
 }

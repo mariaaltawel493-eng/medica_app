@@ -191,7 +191,14 @@
       "specializations": "تخصص",
       "top_doctors": "الأطباء الأكثر تميزاً",
       "my_qr_code": " رمزك الشخصي",
-      "qr_not_available": "عذرا، الرمز غير متاح حاليا"
+      "qr_not_available": "عذرا، الرمز غير متاح حاليا",
+      "profile_setup": {
+    "welcome_title": "أكمل ملفك الشخصي",
+    "welcome_desc": "يرجى إكمال سجلك الطبي للحصول على أفضل تجربة ومساعدة طبية دقيقة.",
+    "complete_now": "أكمل الآن",
+    "remind_later": "ذكرني لاحقاً"
+  }
+        
     },
     "profile_setup": {
       "welcome_title": "دعنا نخصص تجربتك!",
@@ -316,7 +323,14 @@
       "time_hours": "منذ {} ساعة",
       "time_yesterday": "أمس",
       "time_some_time": "منذ فترة",
-      "mark_all_as_read": "تحديدالكل كمقروء"
+      "mark_all_as_read": "تحديدالكل كمقروء",
+      "medicine_deleted_success": "تم حذف الدواء بنجاح",
+      "medicine_updated_success": "تم تحديث الدواء بنجاح",
+      "delete_confirm_title": "تأكيد الحذف",
+      "delete_confirm_message": "هل أنت متأكد أنك تريد حذف هذا الدواء؟",
+      "delete": "حذف",
+      "delete_medicine_btn": "حذف الدواء",
+      "no_monitoring_today": "لا توجد مؤشرات حيوية مجدولة لليوم"
     },
     "nav_bar": {
       "home": "الرئيسية",

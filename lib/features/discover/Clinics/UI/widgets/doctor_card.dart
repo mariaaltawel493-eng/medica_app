@@ -23,6 +23,18 @@ class DoctorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // تصميم الصورة البديلة في حال لم تكن الصورة متوفرة أو كان الرابط معطلاً
+    Widget fallbackImage = Container(
+      width: 90,
+      height: 90,
+      color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+      child: Icon(
+        Icons.person,
+        size: 40,
+        color: isDark ? Colors.grey.shade400 : Colors.grey.shade500,
+      ),
+    );
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -38,26 +50,18 @@ class DoctorCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: profile != null
-                  ? Image.network(
+              // هنا نفحص إذا كان المتغير null أو فارغ
+              child: (profile == null || profile!.trim().isEmpty)
+                  ? fallbackImage
+                  : Image.network(
                       profile!.trim(),
                       width: 90,
                       height: 90,
                       fit: BoxFit.cover,
+                      // هنا نستخدم الصورة البديلة إذا فشل تحميل الرابط
                       errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          width: 90,
-                          height: 90,
-                          color: Colors.grey.shade200,
-                          child: const Icon(Icons.person, size: 40),
-                        );
+                        return fallbackImage;
                       },
-                    )
-                  : Image.asset(
-                      'assets/images/profile.jpg',
-                      width: 90,
-                      height: 90,
-                      fit: BoxFit.cover,
                     ),
             ),
             const SizedBox(width: 15),

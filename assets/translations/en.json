@@ -192,7 +192,11 @@
     "specializations": "Specializations",
     "top_doctors": "Top Doctors",
     "my_qr_code": " My Personal Qr",
-    "qr_not_available": "  Sorry,QR is not available currently"
+    "qr_not_available": "  Sorry,QR is not available currently",
+    "profile_setup.welcome_title": "Complete Your Profile",
+  "profile_setup.welcome_desc": "Please complete your medical records to get the best experience and accurate medical assistance.",
+  "profile_setup.complete_now": "Complete Now",
+  "profile_setup.remind_later": "Remind me later"
   },
   "profile_setup": {
     "welcome_title": "Let's Personalize Your Experience!",
@@ -322,7 +326,14 @@
     "time_hours": "{} hours ago",
     "time_yesterday": "Yesterday",
     "time_some_time": "Some time ago",
-    "mark_all_as_read": "Mark all as read"
+    "mark_all_as_read": "Mark all as read",
+    "medicine_deleted_success": "Medicine deleted successfully",
+  "medicine_updated_success": "Medicine updated successfully",
+  "delete_confirm_title": "Delete Confirmation",
+  "delete_confirm_message": "Are you sure you want to delete this medicine?",
+  "delete": "Delete",
+  "delete_medicine_btn": "Delete Medicine",
+  "no_monitoring_today": "No monitoring scheduled for today"
   },
   "nav_bar": {
     "home": "Home",

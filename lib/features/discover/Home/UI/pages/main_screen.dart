@@ -5,10 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/features/articles/UI/pages/articles_screen.dart';
 import 'package:medica_app/features/articles/logic/articles_bloc/articles_bloc.dart';
-<<<<<<< HEAD
-=======
 import 'package:medica_app/features/booking/ui/pages/my_appointements_screen.dart';
->>>>>>> Sedra
 import 'package:medica_app/features/discover/Home/UI/pages/home_screen.dart';
 
 import 'package:medica_app/features/user/chatBot/UI/chatbot_screen.dart';
@@ -74,13 +71,11 @@ class _MainScreenState extends State<MainScreen> {
           },
           // تحديد نوع الناف بار ليكون ثابتاً ومريحاً في العرض ومطابق للفيجما
           type: BottomNavigationBarType.fixed,
-          backgroundColor: isDark
-              ? AppColors.darkcardBackground
-              : AppColors.cardBackground,
+          backgroundColor:
+              isDark ? AppColors.darkcardBackground : AppColors.cardBackground,
           selectedItemColor: isDark ? AppColors.darkprimary : AppColors.primary,
-          unselectedItemColor: isDark
-              ? AppColors.darktextSecondary
-              : AppColors.textSecondary,
+          unselectedItemColor:
+              isDark ? AppColors.darktextSecondary : AppColors.textSecondary,
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 12,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
 import 'package:medica_app/features/articles/UI/pages/article_details_screen.dart';
+import 'package:medica_app/features/articles/logic/articles_bloc/articles_bloc.dart';
 
 class ArticleItem extends StatelessWidget {
   final String image;
@@ -24,10 +26,14 @@ class ArticleItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        final articlesBloc = context.read<ArticlesBloc>();
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => ArticleDetailsScreen(articleId: articleId),
+            builder: (_) => BlocProvider.value(
+              value: articlesBloc,
+              child: ArticleDetailsScreen(articleId: articleId),
+            ),
           ),
         );
       },

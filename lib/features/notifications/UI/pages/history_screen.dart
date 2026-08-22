@@ -50,8 +50,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       case 'monitoring_reminder':
       case 'vital':
         return 1;
-      case 'appointment_reminder':
-        return 2;
       default:
         return 0;
     }
@@ -130,10 +128,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ? AppColors.darkscaffoldBackground
         : AppColors.scaffoldBackground;
     final cardColor = isDarkMode ? const Color(0xFF1A1F2E) : Colors.white;
-    final textPrimary =
-        isDarkMode ? AppColors.darktextPrimary : AppColors.textPrimary;
-    final textSecondary =
-        isDarkMode ? AppColors.darktextSecondary : AppColors.textSecondary;
+    final textPrimary = isDarkMode
+        ? AppColors.darktextPrimary
+        : AppColors.textPrimary;
+    final textSecondary = isDarkMode
+        ? AppColors.darktextSecondary
+        : AppColors.textSecondary;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -156,8 +156,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           IconButton(
             onPressed: () {
               context.read<NotificationsBloc>().add(
-                    MarkAllNotificationsAsReadEvent(),
-                  );
+                MarkAllNotificationsAsReadEvent(),
+              );
             },
             icon: Icon(Icons.done_all_rounded, color: textPrimary),
             tooltip: 'notification.mark_all_as_read'.tr(),
@@ -176,7 +176,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             // 🌟 استخدمنا الـ ErrorView حصرياً هنا في حالة الخطأ (مثل انقطاع الإنترنت)
             if (state is NotificationsErrorState) {
               return ErrorView(
-                message: state.message.contains('connection') ||
+                message:
+                    state.message.contains('connection') ||
                         state.message.contains('Network')
                     ? "notification.network_error".tr()
                     : state.message,
@@ -218,17 +219,37 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   final tabIndex = _getNotificationTabIndex(notification.type);
                   return GestureDetector(
                     onTap: () {
+                      // 1. نعلم الإشعار كمقروء دائماً
                       if (isUnread) {
                         context.read<NotificationsBloc>().add(
-                              MarkNotificationAsReadEvent(notification.id),
-                            );
+                          MarkNotificationAsReadEvent(notification.id),
+                        );
                       }
 
-                      Navigator.pushNamed(
-                        context,
-                        Routes.MyActivityScreen,
-                        arguments: tabIndex,
-                      );
+                      // 2. نجيب نوع الإشعار مشان نفحصه
+                      final type = notification.type?.toLowerCase();
+
+                      // 3. نحدد فقط الأنواع المسموح لها بالانتقال
+                      final isMedicationOrVital =
+                          type == 'medication_reminder' ||
+                          type == 'medicine' ||
+                          type == 'monitoring_reminder' ||
+                          type == 'vital';
+
+                      // 4. إذا كان دوا أو مؤشر حيوي -> بنقله لصفحة MyActivityScreen
+                      if (isMedicationOrVital) {
+                        final tabIndex = _getNotificationTabIndex(
+                          notification.type,
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          Routes.MyActivityScreen,
+                          arguments: tabIndex,
+                        );
+                      } else {
+                        // 5. أي إشعار ثاني (مواعيد، أو أنواع غير معروفة) رح يوقف هون بأمان تام وما يضرب الكود
+                        return;
+                      }
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 14),

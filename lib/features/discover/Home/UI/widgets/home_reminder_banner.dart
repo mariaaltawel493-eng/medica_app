@@ -34,7 +34,7 @@ class HomeProfileReminderBanner extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  "complete_profile_banner".tr(),
+                  "home.complete_profile_banner".tr(),
                   style: TextStyle(
                     color: isDark ? Colors.amber[200] : Colors.amber[900],
                     fontSize: 14,

@@ -56,6 +56,7 @@ class _SpecializationsScreenState extends State<SpecializationsScreen> {
         body: BlocConsumer<SpecializationsBloc, SpecializationsState>(
           listener: (context, state) {
             if (state is SpecializationsError) {
+              print("spetialziat:${state.message}");
               String errorKey;
               if (state.message.contains('no_internet') ||
                   state.message.contains('Network') ||

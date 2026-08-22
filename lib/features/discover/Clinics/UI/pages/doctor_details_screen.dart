@@ -4,14 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medica_app/core/helpers/AppsnackBar.dart';
 import 'package:medica_app/core/networking/service_locator.dart';
 import 'package:medica_app/core/theme/app_colors.dart';
-<<<<<<< HEAD
-import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
-=======
 import 'package:medica_app/features/booking/ui/pages/book_appointement_flow_screen.dart';
 import 'package:medica_app/features/booking/ui/pages/my_appointements_screen.dart';
 import 'package:medica_app/features/discover/Clinics/logic/dictors_details_bloc/doctor_details_bloc.dart';
 import 'package:medica_app/features/discover/clinics/UI/pages/hospitals_screen.dart';
->>>>>>> Sedra
 import 'package:medica_app/features/discover/clinics/data/repos/clinics_repo.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
@@ -25,38 +21,22 @@ class DoctorDetailsScreen extends StatefulWidget {
 }
 
 class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
-<<<<<<< HEAD
-  // تم نقل الحدث إلى الـ create الخاص بالـ BlocProvider لتجنب مشاكل الـ Context
-=======
->>>>>>> Sedra
   @override
   void initState() {
     super.initState();
   }
 
-<<<<<<< HEAD
-=======
-  // ✅ منطق زر "Book" الجديد:
-  // - لو widget.clinicId موجود (جاي من مسار Hospitals->Specializations->Doctors)
-  //   منكمل عادي بدون سؤال، لأنه أصلاً معروف بأي عيادة رح يصير الحجز.
-  // - لو widget.clinicId == null (جاي من قائمة عامة زي Home/All Doctors)
-  //   لازم أول شي نفتح Bottom Sheet يعرض كل العيادات يلي هاد الدكتور
-  //   شغال فيها، ونستنى يختار المستخدم وحدة منهم قبل ما نروح لشاشة الحجز.
   Future<void> _onBookPressed(BuildContext context, String doctorName) async {
     int clinicId;
 
     if (widget.clinicId != null) {
       clinicId = widget.clinicId!;
     } else {
-      // ✅ منستخدم HospitalsScreen نفسها (بوضع الاختيار) بدل شيت منفصل —
-      // بترجع clinic.id لما يضغط المستخدم على عيادة، أو null لو رجع بدون اختيار
       final selectedClinicId = await Navigator.push<int>(
         context,
         MaterialPageRoute(
-          builder: (_) => HospitalsScreen(
-            doctorId: widget.doctorId,
-            selectionMode: true,
-          ),
+          builder: (_) =>
+              HospitalsScreen(doctorId: widget.doctorId, selectionMode: true),
         ),
       );
 
@@ -81,7 +61,16 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     );
   }
 
->>>>>>> Sedra
+  // ✅ ويدجت مساعدة لعرض الصورة البديلة (أيقونة رمادية)
+  Widget _buildImagePlaceholder() {
+    return Container(
+      width: 120,
+      height: 120,
+      color: Colors.grey.shade200,
+      child: Icon(Icons.person, size: 60, color: Colors.grey.shade500),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -106,6 +95,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
           listener: (context, state) {
             if (state is DoctorDetailsError) {
               String errorKey;
+              // ✅ تم إصلاح الخطأ البرمجي هنا بإضافة ||
               if (state.message.contains('no_internet') ||
                   state.message.contains('Network') ||
                   state.message.contains('connection')) {
@@ -125,6 +115,11 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
             }
             if (state is DoctorDetailsSuccess) {
               final doctor = state.doctor;
+
+              // ✅ التحقق من أن الرابط موجود وليس فارغاً
+              final bool hasValidImage =
+                  doctor.profile != null && doctor.profile!.isNotEmpty;
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -134,34 +129,18 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: doctor.profile != null
+                          child: hasValidImage
                               ? Image.network(
                                   doctor.profile!,
                                   width: 120,
                                   height: 120,
                                   fit: BoxFit.cover,
+                                  // ✅ في حال كان الرابط مكسور يعرض البديل
                                   errorBuilder: (context, error, stackTrace) =>
-                                      Image.asset(
-<<<<<<< HEAD
-                                        'assets/images/profile.jpg',
-=======
-                                        'assets/images/forgot_password.png',
->>>>>>> Sedra
-                                        width: 120,
-                                        height: 120,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      _buildImagePlaceholder(),
                                 )
-                              : Image.asset(
-<<<<<<< HEAD
-                                  'assets/images/profile.jpg',
-=======
-                                  'assets/images/forgot_password.png',
->>>>>>> Sedra
-                                  width: 120,
-                                  height: 120,
-                                  fit: BoxFit.cover,
-                                ),
+                              // ✅ في حال لم يكن هناك رابط من الأساس يعرض البديل
+                              : _buildImagePlaceholder(),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -339,16 +318,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       width: double.infinity,
                       height: 60,
                       child: ElevatedButton(
-<<<<<<< HEAD
-                        onPressed: () {
-                          // ربط حجز موعد لاحقاً
-                        },
-=======
-                        // ✅ التعديل الوحيد الفعلي: بدل ما نفتح شاشة الحجز
-                        // مباشرة، منستدعي _onBookPressed يلي بتقرر هل
-                        // لازم تسأل عن العيادة أول (لو clinicId مش معروف)
                         onPressed: () => _onBookPressed(context, doctor.name),
->>>>>>> Sedra
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(
