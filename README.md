@@ -1,16 +1,69 @@
-# medica_app
+# 🏥 Medica App
 
-A new Flutter project.
+A comprehensive medical clinic management mobile application built with Flutter.
 
-## Getting Started
+## 📱 About the Project
 
-This project is a starting point for a Flutter application.
+Medica is a digital healthcare platform designed to improve the patient experience and facilitate interaction with doctors and clinics.
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🔐 User authentication and profile management
+- 🏥 Discover clinics and doctors
+- 📅 Appointment booking and reminders
+- 💊 Medication management and medication reminders
+- ❤️ Personalized reminders for vital sign measurements
+- 🔔 Appointment and system notifications
+- 📋 Digital medical record
+- 📷 QR Code access to medical records
+- 💬 Chat with doctors
+- 🤖 AI-assisted symptom analysis
+- 🎙️ Voice-to-text symptom input for AI interaction
+- ⭐ Doctor and clinic ratings
+- 🏆 Patient points system
+- 📰 Medical articles and health content
+- 🌍 Multi-language support
+- 🌙 Theme customization
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Technologies
+
+- Flutter
+- Dart
+- BLoC / Cubit
+- REST API
+- HTTP
+- Firebase Cloud Messaging
+- Local Notifications
+- Shared Preferences
+- QR Code
+- Speech-to-Text
+- Image & File Picker
+- Easy Localization
+- GetIt
+- Lottie
+
+## 🏗️ Architecture
+
+The application follows a feature-based architecture with separated presentation, business logic, and data layers.
+
+## 👥 Project
+
+Medica was developed as a collaborative university project.
+
+The Flutter mobile application was developed collaboratively and integrated with a separate backend developed by the team.
+
+## 👩‍💻 My Contribution
+
+Contributed to the Flutter patient application, including:
+
+- BLoC-based state management
+- REST API integration
+- Authentication
+- Appointment and medication features
+- Local notification and reminder system
+- Medical records and QR Code integration
+- AI chatbot API integration
+- Voice-to-text integration for symptom input
+- Chat functionality
+- Patient points and rating features
+- UI and feature integration
